@@ -63,15 +63,18 @@ App = {
             });
     },
 
-    setAddressManagerAddresses: function(){
-        // console.log(App.contractAddresses);
-        for (var contractName in App.contractAddresses) {
-            App.contracts.AddressManager.deployed()
-                .then(function(i){
-                    console.log(contractName, App.contractAddresses[contractName]);
-                    // i.setAddress(contractName, App.contractAddresses[contractName]);
-                    // console.log(i.getAddress(contractName));
+    setAddressManagerAddresses:async function(){
+        for (let contractName in App.contractAddresses) {   //on;y using let solves the issue here(no need of async/await)
+            if (contractName == 'AddressManager') {
+                continue;
+            }
+            await App.contracts.AddressManager.deployed().then(function(i){
+                i.setAddress(contractName, App.contractAddresses[contractName]).then(() => {
+                    i.getAddress(contractName).then((res) => {
+                        console.log(contractName, res);
+                    });
                 });
+            });
         }
     },
 
