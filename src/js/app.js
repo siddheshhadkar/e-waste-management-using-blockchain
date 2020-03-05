@@ -1,68 +1,100 @@
 App = {
-  web3Provider: null,
-  contracts: {},
+    web3Provider: null,
+    contracts: {},
+    contractAddresses: {},
+    account: '0x0',
 
-  init: async function() {
-    // Load pets.
-    $.getJSON('../pets.json', function(data) {
-      var petsRow = $('#petsRow');
-      var petTemplate = $('#petTemplate');
+    init: function(){
+        return App.initWeb3();
+    },
 
-      for (i = 0; i < data.length; i ++) {
-        petTemplate.find('.panel-title').text(data[i].name);
-        petTemplate.find('img').attr('src', data[i].picture);
-        petTemplate.find('.pet-breed').text(data[i].breed);
-        petTemplate.find('.pet-age').text(data[i].age);
-        petTemplate.find('.pet-location').text(data[i].location);
-        petTemplate.find('.btn-adopt').attr('data-id', data[i].id);
+    initWeb3: function(){
+        if(typeof web3!=='undefined'){
+            App.web3Provider = web3.currentProvider;
+            web3 = new Web3(App.web3Provider);
+        }else{
+            App.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545');
+            web3 = new Web3(App.web3Provider);
+        }
+        return App.initContract();
+    },
 
-        petsRow.append(petTemplate.html());
-      }
-    });
+    initContract: function(){
+        $.getJSON('AddressManager.json', function(addressManager){
+            App.contracts.AddressManager = TruffleContract(addressManager);
+            App.contracts.AddressManager.setProvider(App.web3Provider);
+            return App.initAddresses('AddressManager');
+        });
+        $.getJSON('CollectionCentre.json', function(collectionCentre){
+            App.contracts.CollectionCentre = TruffleContract(collectionCentre);
+            App.contracts.CollectionCentre.setProvider(App.web3Provider);
+            return App.initAddresses('CollectionCentre');
+        });
+        $.getJSON('Consumer.json', function(consumer){
+            App.contracts.Consumer = TruffleContract(consumer);
+            App.contracts.Consumer.setProvider(App.web3Provider);
+            return App.initAddresses('Consumer');
+        });
+        $.getJSON('Producer.json', function(producer){
+            App.contracts.Producer = TruffleContract(producer);
+            App.contracts.Producer.setProvider(App.web3Provider);
+            return App.initAddresses('Producer');
+        });
+        $.getJSON('Retailer.json', function(retailer){
+            App.contracts.Retailer = TruffleContract(retailer);
+            App.contracts.Retailer.setProvider(App.web3Provider);
+            return App.initAddresses('Retailer');
+        });
+        $.getJSON('RecycleUnit.json', function(recycleUnit){
+            App.contracts.RecycleUnit = TruffleContract(recycleUnit);
+            App.contracts.RecycleUnit.setProvider(App.web3Provider);
+            return App.initAddresses('RecycleUnit');
+        });
+    },
 
-    return await App.initWeb3();
-  },
+    initAddresses: function(contractName){
+        App.contracts[contractName].deployed()
+            .then((i) => i.address)
+            .then(function(address){
+                App.contractAddresses[contractName] = address;
+                if (Object.keys(App.contractAddresses).length == 6) {
+                    return App.setAddressManagerAddresses();
+                }
+            });
+    },
 
-  initWeb3: async function() {
-    /*
-     * Replace me...
-     */
+    setAddressManagerAddresses: function(){
+        // console.log(App.contractAddresses);
+        for (var contractName in App.contractAddresses) {
+            App.contracts.AddressManager.deployed()
+                .then(function(i){
+                    console.log(contractName, App.contractAddresses[contractName]);
+                    // i.setAddress(contractName, App.contractAddresses[contractName]);
+                    // console.log(i.getAddress(contractName));
+                });
+        }
+    },
 
-    return App.initContract();
-  },
+    listenForEvents: function(){
 
-  initContract: function() {
-    /*
-     * Replace me...
-     */
+    },
 
-    return App.bindEvents();
-  },
+    render: function(){
+        for (var key in App.contractAddresses) {
+            console.log(key, App.contractAddresses[key]);
+        }
 
-  bindEvents: function() {
-    $(document).on('click', '.btn-adopt', App.handleAdopt);
-  },
-
-  markAdopted: function(adopters, account) {
-    /*
-     * Replace me...
-     */
-  },
-
-  handleAdopt: function(event) {
-    event.preventDefault();
-
-    var petId = parseInt($(event.target).data('id'));
-
-    /*
-     * Replace me...
-     */
-  }
-
+        web3.eth.getCoinbase(function(err, account){
+            if(err===null){
+                App.account = account;
+                $('#petsRow').html("Your account address is: " + App.account);
+            }
+        });
+    }
 };
 
-$(function() {
-  $(window).load(function() {
-    App.init();
-  });
-});
+$(function(){
+    $(window).on('load', function(){
+        App.init();
+    });
+})
