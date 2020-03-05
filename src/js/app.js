@@ -1,7 +1,14 @@
 App = {
     web3Provider: null,
     contracts: {},
-    contractAddresses: {},
+    contractAddresses: {
+        AddressManager: '0x0',
+        CollectionCentre: '0x0',
+        Consumer: '0x0',
+        Retailer: '0x0',
+        Producer: '0x0',
+        RecycleUnit: '0x0',
+    },
     account: '0x0',
 
     init: function(){
@@ -20,44 +27,23 @@ App = {
     },
 
     initContract: function(){
-        $.getJSON('AddressManager.json', function(addressManager){
-            App.contracts.AddressManager = TruffleContract(addressManager);
-            App.contracts.AddressManager.setProvider(App.web3Provider);
-            return App.initAddresses('AddressManager');
-        });
-        $.getJSON('CollectionCentre.json', function(collectionCentre){
-            App.contracts.CollectionCentre = TruffleContract(collectionCentre);
-            App.contracts.CollectionCentre.setProvider(App.web3Provider);
-            return App.initAddresses('CollectionCentre');
-        });
-        $.getJSON('Consumer.json', function(consumer){
-            App.contracts.Consumer = TruffleContract(consumer);
-            App.contracts.Consumer.setProvider(App.web3Provider);
-            return App.initAddresses('Consumer');
-        });
-        $.getJSON('Producer.json', function(producer){
-            App.contracts.Producer = TruffleContract(producer);
-            App.contracts.Producer.setProvider(App.web3Provider);
-            return App.initAddresses('Producer');
-        });
-        $.getJSON('Retailer.json', function(retailer){
-            App.contracts.Retailer = TruffleContract(retailer);
-            App.contracts.Retailer.setProvider(App.web3Provider);
-            return App.initAddresses('Retailer');
-        });
-        $.getJSON('RecycleUnit.json', function(recycleUnit){
-            App.contracts.RecycleUnit = TruffleContract(recycleUnit);
-            App.contracts.RecycleUnit.setProvider(App.web3Provider);
-            return App.initAddresses('RecycleUnit');
-        });
+        var counter = 0
+        for(let contractName in App.contractAddresses){
+            $.getJSON(contractName+'.json', function(result){
+                counter++;
+                App.contracts[contractName] = TruffleContract(result);
+                App.contracts[contractName].setProvider(App.web3Provider);
+                return App.initAddresses(contractName, counter);
+            });
+        }
     },
 
-    initAddresses: function(contractName){
+    initAddresses: function(contractName, counter){
         App.contracts[contractName].deployed()
             .then((i) => i.address)
             .then(function(address){
                 App.contractAddresses[contractName] = address;
-                if (Object.keys(App.contractAddresses).length == 6) {
+                if (counter == 6) {
                     return App.setAddressManagerAddresses();
                 }
             });
