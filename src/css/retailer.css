@@ -1,0 +1,33 @@
+*{
+	font-family: 'Comic Sans MS', arial;
+}
+.outerbox{
+	width: 70%;
+	height: 90%;
+	display:flex;
+	justify-content: center;
+	margin: 0 auto 0 auto;
+}
+.singlebox{
+	width: 60%;
+	border-style: solid;
+	background: #99ccff;
+	text-align: center;
+	margin: 20px;
+	border-radius: 1rem;
+}
+.singlebox:hover{
+	transform: scale(1.05); 
+    box-shadow: 1rem 1rem 1rem grey;
+}
+.uppertext{
+	margin: 20px;
+}
+.btn-submit{
+		background: #0000D9;
+        padding: 0.5rem 0.5rem;
+        border: 1px solid;
+        color: white;
+        border-radius: 1rem;
+        margin: 10px;
+}
