@@ -1,15 +1,26 @@
 pragma solidity >=0.4.21 <0.7.0;
 import "./AddressManager.sol";
-import "./Retailer.sol";
 
 contract Consumer{
 
-    mapping(uint => ConsumerDetails) consumers;
-    uint public consumerCount;
-    address public retailerContractAddress;
     address owner;
     AddressManager amInstance;
-    Retailer retailerInstance;
+    uint public consumerProductCount;
+
+    mapping (uint => mapping (address => Product)) public ConsumerProductList;
+
+    struct Product {
+        address producerAddress;
+        address retailerAddress;
+        address consumerAddress;
+        address collectionAddress;
+        string type;
+        uint weightOfGlass;
+        uint weightOfPlastic;
+        uint weightOfNickel;
+        uint weightOfAluminium;
+        bool recycled;
+    }
 
     modifier onlyOwner(){
         require(msg.sender == owner);
@@ -21,20 +32,13 @@ contract Consumer{
         amInstance = AddressManager(address(_addressManager));
     }
 
-    struct ConsumerDetails{
-        uint _id;
-        string _name;
-    }
+    function buyFromRetailer(uint _productId,address _producerid) public {
+        amInstance.ProductList[_productId][_producerid]['consumerAddress']=msg.sender;
+        consumerProductCount++;
+        ConsumerProductList[consumerProductCount][msg.sender]=amInstance.ProductList[_productId][_producerid];
 
-    function addConsumer(string memory _name) public{
-        consumerCount++;
-        consumers[consumerCount] = ConsumerDetails(consumerCount, _name);
     }
-
-    function createRetailerInstance() public onlyOwner payable{
-        retailerContractAddress = amInstance.getAddress("Retailer");
-        retailerInstance = Retailer(address(retailerContractAddress));
-    }
+    
 
     function sellWaste() public{
         //TODO: code for selling waste 

@@ -1,27 +1,17 @@
 pragma solidity >=0.4.21 <0.7.0;
 
 import "./AddressManager.sol";
-import "./Consumer.sol";
-import "./CollectionCentre.sol";
-import "./Retailer.sol";
-import "./RecycleUnit.sol";
  
 contract Producer {
 
-	mapping (uint => address) public soldHistory;
-	mapping (uint => Product)public productStock;
+	mapping (uint => mapping (address => Product)) public ReturnedProduct;
 	
 	address owner;
 	address producer;
 	AddressManager amInstance;
-	uint productCount;
-	uint balanceOfProducer;
-	address public retailerContractAddress;
-	address public recycleUnitContractAddress;
-	address public collectionCentreContractAddress;
-	Retailer retailerInstance;
-	CollectionCentre collectionCentreInstance;
-	RecycleUnit recycleUnitInstance;
+	uint tempproductCount;
+	uint returnedProductCount;
+
 
 	modifier onlyOwner(){
         require(msg.sender == owner);
@@ -34,10 +24,17 @@ contract Producer {
     }
 
     struct Product {
-    	string name;
-    	string typeOfProduct;
+        address producerAddress;
+        address retailerAddress;
+        address consumerAddress;
+        address collectionAddress;
+        string type;
+        uint weightOfGlass;
+        uint weightOfPlastic;
+        uint weightOfNickel;
+        uint weightOfAluminium;
+        bool recycled;
     }
-    
 	
 	constructor(address _addressManager) public {
     	owner=msg.sender;
@@ -49,34 +46,21 @@ contract Producer {
 	}
 	
 
-	function addProduct (string memory _name,string memory _type) public onlyProducer{
-		productCount++;
-		productStock[productCount]=Product(_name,_type);
+	function addProduct (string memory _type,
+		uint _weightOfAluminium,uint _weightOfNickel,
+		uint _weightOfGlass,uint _weightOfPlastic) public onlyProducer {
+		
+		tempproductCount = amInstance.productCount();
+		tempproductCount++;
+		amInstance.ProductList[tempproductCount][msg.sender]=Product(msg.sender,'0x0','0x0','0x0',_type
+			_weightOfGlass,_weightOfPlastic,_weightOfNickel,_weightOfAluminium,false);
 	}
 
-	function createRetailerInstance() public onlyOwner{
-        retailerContractAddress = amInstance.getAddress("Retailer");
-        retailerInstance = Retailer(address(retailerContractAddress));
-    }
-    
-    function createRecycleUnitInstance() public onlyOwner{
-        recycleUnitContractAddress = amInstance.getAddress("RecycleUnit");
-        recycleUnitInstance = RecycleUnit(address(recycleUnitContractAddress));
-    }
-    
-    function createCollectionCentreInstance() public onlyOwner{
-        collectionCentreContractAddress = amInstance.getAddress("CollectionCentre");
-        collectionCentreInstance = CollectionCentre(address(collectionCentreContractAddress));
-    }
+	function addReturnProduct (uint _key) public onlyProducer{
+		returnedProductCount++;
+		ReturnedProduct[returnedProductCount][msg.sender]=amInstance.ProductList[_key][msg.sender];
+	}
 	
-	function sellToRetailer(address _addressRetailer,uint _productId) public payable{
-// 		uint amount=msg.value;
-// 		balanceOfProducer+=amount;
-
-		
-		
-		soldHistory[_productId]=_addressRetailer;
-	}
 
 
 

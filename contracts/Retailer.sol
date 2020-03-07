@@ -1,18 +1,26 @@
 pragma solidity >=0.4.21 <0.7.0;
 import "./AddressManager.sol";
-import "./Consumer.sol";
-import "./Producer.sol";
 
 contract Retailer{
 
-    mapping(uint => RetailerDetails) retailers;
-    uint public retailerCount;
-    address public consumerContractAddress;
-    address public producerContractAddress;
+    mapping (uint => mapping (address => Product)) public RetailerProductList;
+    
+    uint public retailerProductCount;
     address owner;
     AddressManager amInstance;
-    Consumer consumerInstance;
-    Producer producerInstance;
+
+    struct Product {
+        address producerAddress;
+        address retailerAddress;
+        address consumerAddress;
+        address collectionAddress;
+        string type;
+        uint weightOfGlass;
+        uint weightOfPlastic;
+        uint weightOfNickel;
+        uint weightOfAluminium;
+        bool recycled;
+    }
 
     modifier onlyOwner(){
         require(msg.sender == owner);
@@ -24,27 +32,12 @@ contract Retailer{
         amInstance = AddressManager(address(_addressManager));
     }
 
-    struct RetailerDetails{
-        uint _id;
-        string _name;
-    }
+    
 
-    function addRetailer(string memory _name) public onlyOwner{
-        retailerCount++;
-        retailers[retailerCount] = RetailerDetails(retailerCount, _name);
-    }
-
-    function createConsumerInstance() public onlyOwner{
-        consumerContractAddress = amInstance.getAddress("Consumer");
-        consumerInstance = Consumer(address(consumerContractAddress));
-    }
-    function createProducerInstance() public onlyOwner{
-        producerContractAddress = amInstance.getAddress("Producer");
-        producerInstance = Producer(address(producerContractAddress));
-    }
-
-    function buyFromProducer(uint _productId) public {
-        // producerInstance.sellToRetailer()
+    function buyFromProducer(uint _productId,address _producerAddress) public {
+        amInstance.ProductList[_productId][_producerAddress]['retailerAddress']=msg.sender;
+        retailerProductCount++;
+        RetailerProductList[retailerProductCount][msg.sender]=amInstance.ProductList[_productId][_producerAddress];
     }
     
     function makeConsumerPayment() public payable{
