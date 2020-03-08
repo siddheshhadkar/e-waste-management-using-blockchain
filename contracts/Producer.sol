@@ -48,7 +48,7 @@ contract Producer {
 
 	function addProduct(string memory _name,string memory _type,
 		uint _weightOfAluminium, uint _weightOfNickel, uint _weightOfGlass, uint _weightOfPlastic,
-		uint _weightOfCopper, uint _weightOfMagnesium, uint _weightOfLead) public onlyProducer {
+		uint _weightOfCopper, uint _weightOfMagnesium, uint _weightOfLead) public  {
 
 		newProductsCount++;
 		newProducts[newProductsCount]=Product(msg.sender,
@@ -64,4 +64,6 @@ contract Producer {
 		returnedProductsCount++;
 		returnedProducts[returnedProductsCount] = newProducts[_id];
 	}
+
+
 }
