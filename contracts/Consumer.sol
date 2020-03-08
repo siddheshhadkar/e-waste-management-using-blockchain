@@ -14,6 +14,7 @@ contract Consumer{
         address retailerAddress;
         address consumerAddress;
         address collectionAddress;
+        string name;
         string type;
         uint weightOfGlass;
         uint weightOfPlastic;
@@ -33,7 +34,7 @@ contract Consumer{
     }
 
     function buyFromRetailer(uint _productId,address _producerid) public {
-        amInstance.ProductList[_productId][_producerid]['consumerAddress']=msg.sender;
+        amInstance.ProductList[_productId][_producerid].consumerAddress=msg.sender;
         consumerProductCount++;
         ConsumerProductList[consumerProductCount][msg.sender]=amInstance.ProductList[_productId][_producerid];
 

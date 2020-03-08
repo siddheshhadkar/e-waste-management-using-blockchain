@@ -28,6 +28,7 @@ contract Producer {
         address retailerAddress;
         address consumerAddress;
         address collectionAddress;
+        string name;
         string type;
         uint weightOfGlass;
         uint weightOfPlastic;
@@ -46,13 +47,13 @@ contract Producer {
 	}
 	
 
-	function addProduct (string memory _type,
+	function addProduct (string memory _name,string memory _type,
 		uint _weightOfAluminium,uint _weightOfNickel,
 		uint _weightOfGlass,uint _weightOfPlastic) public onlyProducer {
 		
 		tempproductCount = amInstance.productCount();
 		tempproductCount++;
-		amInstance.ProductList[tempproductCount][msg.sender]=Product(msg.sender,'0x0','0x0','0x0',_type
+		amInstance.ProductList[tempproductCount][msg.sender]=Product(msg.sender,'0x0','0x0','0x0',_name,_type
 			_weightOfGlass,_weightOfPlastic,_weightOfNickel,_weightOfAluminium,false);
 	}
 

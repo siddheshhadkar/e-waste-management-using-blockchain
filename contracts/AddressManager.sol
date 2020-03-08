@@ -23,6 +23,7 @@ contract AddressManager{
         address retailerAddress;
         address consumerAddress;
         address collectionAddress;
+        string name;
         string type;
         uint weightOfGlass;
         uint weightOfPlastic;
