@@ -5,9 +5,9 @@ contract Consumer{
 
     address owner;
     AddressManager amInstance;
-    uint public consumerProductCount;
+    uint public consumerProductsCount;
 
-    mapping (uint => mapping (address => Product)) public ConsumerProductList;
+    mapping (uint => Product) public consumerProducts;
 
     struct Product {
         address producerAddress;
@@ -23,7 +23,7 @@ contract Consumer{
         uint weightOfCopper;
         uint weightOfMagnesium;
         uint weightOfLead;
-        bool recycled;
+        // bool recycled;
     }
 
     modifier onlyOwner(){
@@ -36,17 +36,16 @@ contract Consumer{
         amInstance = AddressManager(address(_addressManager));
     }
 
-    function buyFromRetailer(uint _productId,address _producerid) public {
-        amInstance.ProductList[_productId][_producerid].consumerAddress=msg.sender;
-        consumerProductCount++;
-        ConsumerProductList[consumerProductCount][msg.sender]=amInstance.ProductList[_productId][_producerid];
+    // function buyFromRetailer(uint _productId,address _producerid) public {
+    //     amInstance.ProductList[_productId][_producerid].consumerAddress=msg.sender;
+    //     consumerProductCount++;
+    //     ConsumerProductList[consumerProductCount][msg.sender]=amInstance.ProductList[_productId][_producerid];
+    // }
 
-    }
-    
 
     function sellWaste() public{
-        //TODO: code for selling waste 
-        
+        //TODO: code for selling waste
+
         //receivePayment();
     }
 

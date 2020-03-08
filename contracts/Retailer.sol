@@ -3,9 +3,9 @@ import "./AddressManager.sol";
 
 contract Retailer{
 
-    mapping (uint => mapping (address => Product)) public RetailerProductList;
-    
-    uint public retailerProductCount;
+    mapping (uint => Product) public retailerProductsList;
+
+    uint public retailerProductsCount;
     address owner;
     AddressManager amInstance;
 
@@ -23,7 +23,7 @@ contract Retailer{
         uint weightOfCopper;
         uint weightOfMagnesium;
         uint weightOfLead;
-        bool recycled;
+        // bool recycled;
     }
 
     modifier onlyOwner(){
@@ -36,14 +36,12 @@ contract Retailer{
         amInstance = AddressManager(address(_addressManager));
     }
 
-    
+    // function buyFromProducer(uint _productId,address _producerAddress) public {
+    //     amInstance.ProductList[_productId][_producerAddress].retailerAddress=msg.sender;
+    //     retailerProductCount++;
+    //     RetailerProductList[retailerProductCount][msg.sender]=amInstance.ProductList[_productId][_producerAddress];
+    // }
 
-    function buyFromProducer(uint _productId,address _producerAddress) public {
-        amInstance.ProductList[_productId][_producerAddress].retailerAddress=msg.sender;
-        retailerProductCount++;
-        RetailerProductList[retailerProductCount][msg.sender]=amInstance.ProductList[_productId][_producerAddress];
-    }
-    
     function makeConsumerPayment() public payable{
 
     }
@@ -57,6 +55,6 @@ contract Retailer{
     }
 
     function sellItemProducer() public{
-        
+
     }
 }

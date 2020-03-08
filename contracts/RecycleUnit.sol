@@ -34,16 +34,6 @@ contract RecycleUnit{
         RecycleUnits[RecycleUnitCount] = RecycleUnitDetails(RecycleUnitCount, _name);
     }
 
-    function createCollectionCentreInstance() public onlyOwner{
-        collectionCentreContractAddress = amInstance.getAddress("CollectionCentre");
-        collectionCentreInstance = CollectionCentre(address(collectionCentreContractAddress));
-    }
-    
-    function createProducerInstance() public onlyOwner{
-        producerContractAddress = amInstance.getAddress("Producer");
-        producerInstance = Producer(address(producerContractAddress));
-    }
-
     function receiveItemCollectionCentre() public{
 
     }
