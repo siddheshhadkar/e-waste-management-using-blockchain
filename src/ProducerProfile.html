@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Welcome Producer</title>
+	<link rel="stylesheet" href="css/producerprofile.css">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+</head>
+<body>
+	<div class="container" style="width: 100%">
+		<div id="loader">
+		</div>
+		<h4 id="accountaddress" class="w3-blue">Account Address:0x0</h4>
+
+		<div class="mainbox">
+
+			<div class="form-div">
+				<h3>Add Product Form</h3>
+				<form onsubmit="">
+					<div class="formclass">
+						<label for="pname">Name</label>
+					    <input type="text" id="productname" name="productname" placeholder="Product Name">
+
+					    <label for="weight">Weight Of Glass</label>
+					    <input type="number" id="weightglass" name="weightglass" placeholder="Weight(Grams)">
+
+					    <label for="weight">Weight Of Plastic</label>
+					    <input type="number" id="weightplastic" name="weightplastic" placeholder="Weight(Grams)">
+
+						<label for="weight">Weight Of Nickel</label>
+					    <input type="number" id="weightnickel" name="weightnickel" placeholder="Weight(Grams)">
+
+					    <label for="weight">Weight Of Aluminium</label>
+					    <input type="number" id="weightaluminium" name="weightaluminium" placeholder="Weight(Grams)">
+
+					    <label for="weight">Weight Of Copper</label>
+					    <input type="number" id="weightcopper" name="weightcopper" placeholder="Weight(Grams)">
+
+					    <label for="weight">Weight Of Magnesium</label>
+					    <input type="number" id="weightmagnesium" name="weightmagnesium" placeholder="Weight(Grams)">
+
+					    <label for="weight">Weight Of Lead</label>
+					    <input type="number" id="weightlead" name="weightlead" placeholder="Weight(Grams)">
+
+					    <label for="type">Type</label>
+					    <select id="producttype" name="producttype">
+					      <option value="Mobile">Mobile</option>
+					      <option value="Television">Television</option>
+					      <option value="Laptop">Laptop</option>
+					      <option value="Speaker">Speaker</option>
+					    </select>
+  
+					</div>
+					<button type="submit" class="btn-add">Add product</button>
+				</form>
+			</div>
+
+			<div class="list-content">
+				<br><br>
+				<h3 style="text-align: center;">List Of Returned Product</h3>
+				<table class="w3-table-all w3-hoverable w3-card" style="width: 50%;margin: auto 30% auto 30%;">
+						<thead>
+			                <tr class="w3-blue">
+			                  <th scope="col">Name</th>
+			                  <th scope="col">Type</th>
+			                </tr>
+			            </thead>
+			            <tbody id="returnedProductList">
+			            	<tr>
+			            		<td>Redmi K20</td>
+			            		<td>Phone</td>
+			            	</tr>
+			            </tbody>
+				</table>
+			</div>
+			
+
+		</div>
+	</div>
+</body>
+</html>
