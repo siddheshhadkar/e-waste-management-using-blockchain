@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Registration</title>
+	<link rel="stylesheet" href="css/producerprofile.css">
+</head>
+<body>
+	<div class="container" style="width: 100%">
+		<div class="loader">
+			<p>Loading...</p>
+		</div>
+		<div class="mainbox">
+			<div class="form-div" style="width: 100%">
+				<h3>Register</h3>
+					<div class="formclass" style="width: 50%;margin: auto 25% auto 25%; ">
+						<label for="name">Name</label>
+					    <input type="text" id="name" name="name" placeholder="Enter Name">
+
+					    <label for="address">Your Account Address</label>
+					    <input type="text" id="accountAddress" name="accountAddress" placeholder="Account Address" disabled>
+
+					    <label for="type">Register As</label>
+					    <select id="accounttype" name="accounttype">
+					      <option value="Producer">Producer</option>
+					      <option value="Retailer">Retailer</option>
+					      <option value="Consumer">Consumer</option>
+					      <option value="CollectionCentre">Collection Centre</option>
+					      <option value="RecyclingUnit">RecyclingUnit</option>
+					    </select>
+					</div>
+					<button type="submit" class="btn-add" style="width: 50%;margin: auto 25% auto 25%;" onclick="addProducer()">Register</button>
+			</div>
+		</div>
+	</div>
+
+	<script src="js/jquery.min.js"></script>
+	<script src="js/web3.min.js"></script>
+	<script src="js/truffle-contract.js"></script>
+	<script src="js/app.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('.mainbox').hide();
+			setTimeout(function(){
+				$('.loader').hide();
+				$('.mainbox').show();
+				$('#accountAddress').val(App.account);
+			}, 1000);
+
+		});
+
+		function addProducer(){
+			var exists = false;
+			var name = $('#name').val();
+			App.contracts.AddressManager.deployed().then(function(i){
+				i.checkProducer(App.account).then(function(res){
+					exists = res;
+					return i;
+				}).then(function(i){
+					if (!exists) {
+						i.addProducer(App.account, name);
+					}
+				});
+			});
+		}
+	</script>
+</body>
+</html>

@@ -1,7 +1,7 @@
 App = {
     web3Provider: null,
     contracts: {},
-    contractAddresses: {
+    contractAddress: {
         AddressManager: '0x0',
         CollectionCentre: '0x0',
         Consumer: '0x0',
@@ -23,12 +23,22 @@ App = {
             App.web3Provider = new Web3.providers.HttpProvider('http://localhost:7545');
             web3 = new Web3(App.web3Provider);
         }
-        return App.initContract();
+        return App.initAccount();
+    },
+
+    initAccount: function(){
+        web3.eth.getCoinbase(function(err, account){
+            if(err===null){
+                App.account = account;
+                $('#loginAddress').html("Your account address: " + App.account);
+                return App.initContract();
+            }
+        });
     },
 
     initContract: function(){
         var counter = 0
-        for(let contractName in App.contractAddresses){
+        for(let contractName in App.contractAddress){
             $.getJSON(contractName+'.json', function(result){
                 counter++;
                 App.contracts[contractName] = TruffleContract(result);
@@ -42,18 +52,17 @@ App = {
         App.contracts[contractName].deployed()
             .then((i) => i.address)
             .then(function(address){
-                App.contractAddresses[contractName] = address;
-               
+                App.contractAddress[contractName] = address;
             });
     },
 
-
+    //call this when initializing contracts
     listenForEvents: function(){
 
     },
 
     render: function(){
-        
+
     }
 };
 
