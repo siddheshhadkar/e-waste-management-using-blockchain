@@ -7,8 +7,6 @@
 </head>
 <body>
 	<div class="container" style="width: 100%">
-		<div id="loader">
-		</div>
 		<h4 id="accountaddress" class="w3-blue">Account Address:0x0</h4>
 
 		<div class="mainbox">
@@ -16,7 +14,7 @@
 			<div class="form-div">
 				<h3>Add Product Form</h3>
 				<form onsubmit="">
-					<div class="formclass">
+					<div class="formclass" style="width: 50%;margin: auto 25% auto 25%; ">
 						<label for="pname">Name</label>
 					    <input type="text" id="productname" name="productname" placeholder="Product Name">
 
@@ -50,14 +48,14 @@
 					    </select>
   
 					</div>
-					<button type="submit" class="btn-add">Add product</button>
+					<button type="submit" class="btn-add" style="width: 50%;margin: auto 25% auto 25%; ">Add product</button>
 				</form>
 			</div>
 
 			<div class="list-content">
 				<br><br>
 				<h3 style="text-align: center;">List Of Returned Product</h3>
-				<table class="w3-table-all w3-hoverable w3-card" style="width: 50%;margin: auto 30% auto 30%;">
+				<table class="w3-table-all w3-hoverable w3-card" style="width: 50%;margin: auto 25% auto 25%;">
 						<thead>
 			                <tr class="w3-blue">
 			                  <th scope="col">Name</th>
@@ -65,6 +63,10 @@
 			                </tr>
 			            </thead>
 			            <tbody id="returnedProductList">
+			            	<tr>
+			            		<td>Redmi K20</td>
+			            		<td>Phone</td>
+			            	</tr>
 			            	<tr>
 			            		<td>Redmi K20</td>
 			            		<td>Phone</td>
