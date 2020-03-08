@@ -6,13 +6,14 @@ contract AddressManager{
     mapping (uint =>mapping (address => Product)) public ProductList;
     
     mapping (uint => producer) public ProducerList;
-    mapping (address => bool) public RetailerList;
+    mapping (uint => retailer) public RetailerList;
     mapping (address => bool) public ConsumerList;
     mapping (address => bool) public RecycleUnitList;
     mapping (address => bool) public CollectionCentreList;  
 
     uint public productCount;
-    uint public producerCount;  
+    uint public producerCount;
+    uint public retailerCount;  
 
     modifier onlyOwner(){
         require(msg.sender == owner);
@@ -24,6 +25,13 @@ contract AddressManager{
         bool ispresent;
         string name;
     }
+
+    struct retailer {
+       address addr;
+       bool ispresent;
+       string name;
+    }
+    
 
     struct Product {
         address producerAddress;
@@ -54,8 +62,9 @@ contract AddressManager{
         ProducerList[producerCount]=producer(_pAddress,true,_name);
     }
 
-    function addRetailer (address _rAddress) public onlyOwner {
-        RetailerList[_rAddress]=true;
+    function addRetailer (address _rAddress,string memory _name) public onlyOwner {
+        retailerCount++;
+        RetailerList[retailerCount]=retailer(_rAddress,true,_name);
     }
 
     function addConsumer (address _cAddress) public onlyOwner {
