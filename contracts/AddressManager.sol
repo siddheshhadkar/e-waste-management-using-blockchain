@@ -29,6 +29,9 @@ contract AddressManager{
         uint weightOfPlastic;
         uint weightOfNickel;
         uint weightOfAluminium;
+        uint weightOfCopper;
+        uint weightOfMagnesium;
+        uint weightOfLead;
         bool recycled;
     }
     
