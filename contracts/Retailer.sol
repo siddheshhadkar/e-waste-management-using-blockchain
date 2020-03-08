@@ -15,7 +15,7 @@ contract Retailer{
         address consumerAddress;
         address collectionAddress;
         string name;
-        string type;
+        string typeOfProduct;
         uint weightOfGlass;
         uint weightOfPlastic;
         uint weightOfNickel;

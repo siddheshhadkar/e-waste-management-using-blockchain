@@ -43,42 +43,17 @@ App = {
             .then((i) => i.address)
             .then(function(address){
                 App.contractAddresses[contractName] = address;
-                if (counter == 6) {
-                    return App.setAddressManagerAddresses();
-                }
+               
             });
     },
 
-    setAddressManagerAddresses:async function(){
-        for (let contractName in App.contractAddresses) {   //on;y using let solves the issue here(no need of async/await)
-            if (contractName == 'AddressManager') {
-                continue;
-            }
-            await App.contracts.AddressManager.deployed().then(function(i){
-                i.setAddress(contractName, App.contractAddresses[contractName]).then(() => {
-                    i.getAddress(contractName).then((res) => {
-                        console.log(contractName, res);
-                    });
-                });
-            });
-        }
-    },
 
     listenForEvents: function(){
 
     },
 
     render: function(){
-        for (var key in App.contractAddresses) {
-            console.log(key, App.contractAddresses[key]);
-        }
-
-        web3.eth.getCoinbase(function(err, account){
-            if(err===null){
-                App.account = account;
-                $('#petsRow').html("Your account address is: " + App.account);
-            }
-        });
+        
     }
 };
 

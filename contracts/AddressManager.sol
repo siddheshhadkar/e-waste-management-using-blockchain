@@ -7,13 +7,17 @@ contract AddressManager{
     
     mapping (uint => producer) public ProducerList;
     mapping (uint => retailer) public RetailerList;
-    mapping (address => bool) public ConsumerList;
-    mapping (address => bool) public RecycleUnitList;
-    mapping (address => bool) public CollectionCentreList;  
+    mapping (uint => consumer) public ConsumerList;
+    mapping (uint => recycleunit) public RecycleUnitList;
+    mapping (uint => collectioncentre) public CollectionCentreList;  
 
     uint public productCount;
+
     uint public producerCount;
-    uint public retailerCount;  
+    uint public retailerCount; 
+    uint public consumerCount;
+    uint public recyleUnitCount;
+    uint public collectionCentreCount;   
 
     modifier onlyOwner(){
         require(msg.sender == owner);
@@ -21,12 +25,30 @@ contract AddressManager{
     }
 
     struct producer{
-        address account;
+        address addr;
         bool ispresent;
         string name;
     }
 
     struct retailer {
+       address addr;
+       bool ispresent;
+       string name;
+    }
+
+    struct consumer {
+       address addr;
+       bool ispresent;
+       string name;
+    }
+
+    struct recycleunit {
+       address addr;
+       bool ispresent;
+       string name;
+    }
+
+    struct collectioncentre {
        address addr;
        bool ispresent;
        string name;
@@ -39,7 +61,7 @@ contract AddressManager{
         address consumerAddress;
         address collectionAddress;
         string name;
-        string type;
+        string typeOfProduct;
         uint weightOfGlass;
         uint weightOfPlastic;
         uint weightOfNickel;
@@ -57,48 +79,81 @@ contract AddressManager{
 
     //adding accounts
 
-    function addProducer (address _pAddress,string memory _name) public onlyOwner {
+    function addProducer (address _pAddress,string memory _name) public {
         producerCount++;
         ProducerList[producerCount]=producer(_pAddress,true,_name);
     }
 
-    function addRetailer (address _rAddress,string memory _name) public onlyOwner {
+    function addRetailer (address _rAddress,string memory _name) public  {
         retailerCount++;
         RetailerList[retailerCount]=retailer(_rAddress,true,_name);
     }
 
-    function addConsumer (address _cAddress) public onlyOwner {
-        ConsumerList[_cAddress]=true;
+    function addConsumer (address _cAddress,string memory _name) public {
+        consumerCount++;
+        ConsumerList[consumerCount]=consumer(_cAddress,true,_name);
     }
 
-    function addRecycleUint (address _rAddress) public onlyOwner {
-        RecycleUnitList[_rAddress]=true;
+    function addRecycleUint (address _rAddress,string memory _name) public {
+        recyleUnitCount++;
+        RecycleUnitList[recyleUnitCount]=recycleunit(_rAddress,true,_name);
     }
 
-    function addCollectionCentre (address _cAddress) public onlyOwner {
-        CollectionCentreList[_cAddress]=true;
+    function addCollectionCentre (address _cAddress,string memory _name) public  {
+        collectionCentreCount++;
+        CollectionCentreList[collectionCentreCount]=collectioncentre(_cAddress,true,_name);
     }
 
     //validate users
 
-    function checkProducer (uint _producerid) public returns(bool) {
-        return(ProductList[_producerid].ispresent);
+    function checkProducer (address _pAddress) public returns(bool) {
+        uint _producerid;
+        for (uint i=1;i<=producerCount;i++){
+            if(ProducerList[i].addr==_pAddress){
+                _producerid=i;
+            }
+        }
+        return(ProducerList[_producerid].ispresent);
     }
 
     function checkRetailer (address _rAddress) public returns(bool) {
-        return(RetailerList[_rAddress]);
+        uint _retailerid;
+        for (uint i=1;i<=retailerCount;i++){
+            if(RetailerList[i].addr==_rAddress){
+                _retailerid=i;
+            }
+        }
+        return(RetailerList[_retailerid].ispresent);
     }
     
-    function checkConsumer (address _pAddress) public returns(bool) {
-        return(ConsumerList[_pAddress]);
+    function checkConsumer (address _cAddress) public returns(bool) {
+        uint _consumerid;
+        for (uint i=1;i<=consumerCount;i++){
+            if(ConsumerList[i].addr==_cAddress){
+                _consumerid=i;
+            }
+        }
+        return(ConsumerList[_consumerid].ispresent);
     }
 
     function checkRecycleUnit (address _rAddress) public returns(bool) {
-        return(RecycleUnitList[_rAddress]);
+        uint _recycleunitid;
+        for (uint i=1;i<=recyleUnitCount;i++){
+            if(RecycleUnitList[i].addr==_rAddress){
+                _recycleunitid=i;
+            }
+        }
+        return(RecycleUnitList[_recycleunitid].ispresent);
     }
 
     function checkCollectionCentre (address _cAddress) public returns(bool) {
-        return(CollectionCentreList[_cAddress]);
+        uint _collectionid;
+        for (uint i=1;i<=collectionCentreCount;i++){
+            if(CollectionCentreList[i].addr==_cAddress){
+                _collectionid=i;
+            }
+        }
+        return(CollectionCentreList[_collectionid].ispresent);
     }
 
     
