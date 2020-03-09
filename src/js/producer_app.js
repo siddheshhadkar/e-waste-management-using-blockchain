@@ -11,11 +11,13 @@ ProApp={
         var producttype = $('#producttype').val();
 
         App.contracts.Producer.deployed().then(function (instance) {
+            console.log(App.account);
+            console.log(productname,producttype,weightaluminium,weightnickel,weightglass);
             instance.addProduct(productname,producttype,weightaluminium,weightnickel,
                 weightglass,weightplastic
-                ,weightcopper,weightmagnesium,weightlead);
+                ,weightcopper,weightmagnesium,weightlead,{ from: App.account });
             console.log("Product Added");
-        })
+        });
 
     },
 
@@ -24,9 +26,10 @@ ProApp={
             if(err===null){
                 App.account = account;
                 $('#accountaddress').html("Your account address: " + App.account);
-                
+                console.log(App.account);
             }
         });
+
     }
 }
 

@@ -9,7 +9,11 @@
 	<div class="container" style="width: 100%">
 		<h4 id="accountaddress" class="w3-blue">Account Address:0x0</h4>
 
+		<div class="loader">
+				<p>Loading...</p>
+		</div>
 		<div class="mainbox">
+			
 
 			<div class="form-div" style="width: 100%">
 				<h3>Buy Product</h3>
@@ -63,5 +67,24 @@
 
 		</div>
 	</div>
+
+	<script src="js/jquery.min.js"></script>
+	<script src="js/web3.min.js"></script>
+	<script src="js/truffle-contract.js"></script>
+	<script src="js/app.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('.mainbox').hide();
+			$('#accountaddress').hide();
+			setTimeout(function(){
+				$('.loader').hide();
+				$('.mainbox').show();
+				$('#accountaddress').show();
+				$('#accountaddress').html('Your Account Address: '+App.account);
+				console.log(App.account);
+			}, 1000);
+
+		});
+	</script>
 </body>
 </html>

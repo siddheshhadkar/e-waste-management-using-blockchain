@@ -3,13 +3,26 @@
     <head>
         <meta charset="utf-8">
         <title>Homepage</title>
+        <link rel="stylesheet" href="css/retailer.css">
     </head>
     <body>
         <h1>Welcome</h1>
 
-        <button type="button" name="loginButton" onclick="window.location.href='./login.html'">Login</button>
-        <button type="button" name="registerButton" onclick="window.location.href='./register.html'">Register</button>
+        <div class="container">
+        <div class="outerbox">
+            <div class="singlebox">
+                <p class="uppertext">Already Have An Account?</p>
+                <button type="button" class="btn-submit" name="loginButton" onclick="window.location.href='./login.html'">Login</button>
+            </div>
+            <div class="singlebox">
+                <p class="uppertext">Create New Account</p>
+                <button type="button" class="btn-submit" name="registerButton" onclick="window.location.href='./register.html'">Register</button>
 
+            </div>  
+        </div>
+    </div>
+
+       
         <script src="js/jquery.min.js"></script>
         <script src="js/web3.min.js"></script>
         <script src="js/truffle-contract.js"></script>
