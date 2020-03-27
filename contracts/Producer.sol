@@ -8,8 +8,8 @@ contract Producer {
 // 	mapping (uint => Product) public returnedProducts;
 
     address owner;
-	// AddressManager amInstance;
-	uint newProductsCount;
+	AddressManager amInstance;
+	uint public newProductsCount;
 // 	uint returnedProductsCount;
 
 
