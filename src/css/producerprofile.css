@@ -1,28 +1,60 @@
+/**{
+  font-family: 'Comic Sans MS', arial;
+}*/
+.sidenav {
+  height: 100%;
+  width: 20%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.sidenav a {
+  padding: 6px 6px 6px 32px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #818181;
+  display: block;
+}
+
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
 .container{
-	overflow: auto;
-	margin: 10px 10px;
+  overflow: auto;
+  margin: 5px 5px;
 }
 #accountaddress{
-	text-align: center;
+  margin-left: 20%;
+  text-align: center;
 }
 .mainbox{
-	display:flex;
-	flex-wrap: wrap;
-	align-content: center;
+  display:flex;
+  flex-wrap: wrap;
+  align-content: center;
 }
-.formclass{
-	width: 100%;
-	border-radius: 5px;
-  	background-color: #f2f2f2;
-  	padding: 20px;
+.formclass1{
+  border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+}
+.formclass2{
+  border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
 }
 .list-content{
-	width: 100%;
+  width: 100%;
 
 }
 
 h3{
-	text-align: center;
+  text-align: center;
 }
 
 input[type=text], select {
@@ -48,7 +80,7 @@ input[type=number], select {
 .btn-add {
   width: 100%;
   background-color: #1e90ff;
-  color: white;
+  color: white; 
   padding: 14px 20px;
   margin: 8px 0;
   border: none;
