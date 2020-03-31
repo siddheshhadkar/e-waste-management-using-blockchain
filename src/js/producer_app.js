@@ -70,6 +70,7 @@ ProApp={
         var pid=0;
         App.contracts.Producer.deployed().then(function (instance) {
             pInstance=instance;
+            console.log(instance);
             return pInstance.getProductCount();
         }).then(function (pCount) {
             var productList=$('#productList');
@@ -80,7 +81,7 @@ ProApp={
             console.log(pCount);
             pCount=pCount.s;
             console.log(pCount);
-            for(var i=1;i<pCount;i++){
+            for(var i=0;i<pCount;i++){
                 
                 console.log(i);
                 pInstance.ProductList(i).then(function (singleProduct) {
@@ -107,7 +108,7 @@ ProApp={
             var returnList=$('#returnedProductList');
             returnList.empty();
 
-            for(var i=1;i<pCount;i++){
+            for(var i=0;i<pCount;i++){
                 pInstance.ProductList(i).then(function (singleProduct) {
 
                     if (App.account==singleProduct[0] && singleProduct[5]==true && singleProduct[6]==true) {
