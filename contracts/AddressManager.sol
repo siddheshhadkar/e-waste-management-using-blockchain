@@ -4,133 +4,125 @@ contract AddressManager{
 
     address owner;
 
-    mapping (uint => producer) public producers;
-    mapping (uint => retailer) public retailers;
-    mapping (uint => consumer) public consumers;
-    mapping (uint => recycleunit) public recycleUnits;
-    mapping (uint => collectioncentre) public collectionCentres;
+    User[] public Producers;
+    User[] public Retailers;
+    User[] public Consumers;
+    User[] public RecycleUnits;
+    // mapping (uint => collectioncentre) public collectionCentres;
 
-    uint public productCount;
+    // uint public productCount;
 
-    uint public producerCount;
-    uint public retailerCount;
-    uint public consumerCount;
-    uint public recyleUnitCount;
-    uint public collectionCentreCount;
+    // uint public producerCount;
+    // uint public retailerCount;
+    // uint public consumerCount;
+    // uint public recyleUnitCount;
+    // uint public collectionCentreCount;
 
     modifier onlyOwner(){
         require(msg.sender == owner);
         _;
     }
 
-    struct producer{
+    struct User{
         address addr;
         bool ispresent;
         string name;
     }
 
-    struct retailer {
-       address addr;
-       bool ispresent;
-       string name;
-    }
-
-    struct consumer {
-       address addr;
-       bool ispresent;
-       string name;
-    }
-
-    struct recycleunit {
-       address addr;
-       bool ispresent;
-       string name;
-    }
-
-    struct collectioncentre {
-       address addr;
-       bool ispresent;
-       string name;
-    }
+    
 
     constructor() public{
         owner = msg.sender;
     }
 
     function addProducer (address _pAddress,string memory _name) public {
-        producerCount++;
-        producers[producerCount]=producer(_pAddress,true,_name);
+        Producers.push(User(_pAddress,true,_name));
     }
 
     function addRetailer (address _rAddress,string memory _name) public  {
-        retailerCount++;
-        retailers[retailerCount]=retailer(_rAddress,true,_name);
+        Retailers.push(User(_rAddress,true,_name));
     }
 
     function addConsumer (address _cAddress,string memory _name) public {
-        consumerCount++;
-        consumers[consumerCount]=consumer(_cAddress,true,_name);
+        Consumers.push(User(_cAddress,true,_name));
     }
 
     function addRecycleUint (address _rAddress,string memory _name) public {
-        recyleUnitCount++;
-        recycleUnits[recyleUnitCount]=recycleunit(_rAddress,true,_name);
+        RecycleUnits.push(User(_rAddress,true,_name));
     }
 
-    function addCollectionCentre (address _cAddress,string memory _name) public  {
-        collectionCentreCount++;
-        collectionCentres[collectionCentreCount]=collectioncentre(_cAddress,true,_name);
+    // function addCollectionCentre (address _cAddress,string memory _name) public  {
+    //     collectionCentreCount++;
+    //     collectionCentres[collectionCentreCount]=collectioncentre(_cAddress,true,_name);
+    // }
+
+    //returning length
+    function getProducerCount ()public view returns(uint){
+        return Producers.length;
     }
+
+    function getRetailerCount ()public view returns(uint){
+        return Retailers.length;
+    }
+
+    function getConsumerCount ()public view returns(uint){
+        return Consumers.length;
+    }
+
+    function getRecyclingUintCount ()public view returns(uint){
+        return RecycleUnits.length;
+    }
+
 
     //validate users
 
     function checkProducer (address _pAddress) public view returns(bool) {
         uint _producerid;
-        for (uint i=1;i<=producerCount;i++){
-            if(producers[i].addr==_pAddress){
+        for (uint i=0;i<=Producers.length;i++){
+            if(Producers[i].addr==_pAddress){
                 _producerid=i;
             }
         }
-        return(producers[_producerid].ispresent);
+        return(Producers[_producerid].ispresent);
     }
 
     function checkRetailer (address _rAddress) public view returns(bool) {
         uint _retailerid;
-        for (uint i=1;i<=retailerCount;i++){
-            if(retailers[i].addr==_rAddress){
+        for (uint i=0;i<=Retailers.length;i++){
+            if(Retailers[i].addr==_rAddress){
                 _retailerid=i;
             }
         }
-        return(retailers[_retailerid].ispresent);
+        return(Retailers[_retailerid].ispresent);
     }
 
     function checkConsumer (address _cAddress) public view returns(bool) {
         uint _consumerid;
-        for (uint i=1;i<=consumerCount;i++){
-            if(consumers[i].addr==_cAddress){
+        for (uint i=0;i<=Consumers.length;i++){
+            if(Consumers[i].addr==_cAddress){
                 _consumerid=i;
             }
         }
-        return(consumers[_consumerid].ispresent);
+        return(Consumers[_consumerid].ispresent);
     }
 
     function checkRecycleUnit (address _rAddress) public view returns(bool) {
         uint _recycleunitid;
-        for (uint i=1;i<=recyleUnitCount;i++){
-            if(recycleUnits[i].addr==_rAddress){
+        for (uint i=0;i<=RecycleUnits.length;i++){
+            if(RecycleUnits[i].addr==_rAddress){
                 _recycleunitid=i;
             }
         }
-        return(recycleUnits[_recycleunitid].ispresent);
+        return(RecycleUnits[_recycleunitid].ispresent);
     }
 
-    function checkCollectionCentre (address _cAddress) public view returns(bool) {
-        uint _collectionid;
-        for (uint i=1;i<=collectionCentreCount;i++){
-            if(collectionCentres[i].addr==_cAddress){
-                _collectionid=i;
-            }
-        }
-        return(collectionCentres[_collectionid].ispresent);
-    }
+    // function checkCollectionCentre (address _cAddress) public view returns(bool) {
+    //     uint _collectionid;
+    //     for (uint i=1;i<=collectionCentreCount;i++){
+    //         if(collectionCentres[i].addr==_cAddress){
+    //             _collectionid=i;
+    //         }
+    //     }
+    //     return(collectionCentres[_collectionid].ispresent);
+    // }
 }

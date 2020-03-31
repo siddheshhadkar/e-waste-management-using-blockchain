@@ -9,8 +9,10 @@ ProApp={
         var weightmagnesium = $('#weightmagnesium').val();
         var weightlead = $('#weightlead').val();
         var producttype = $('#producttype').val();
+        var price = $('#price').val();
+
         if(productname!="" && weightglass!="" && weightplastic!="" && weightnickel!=""
-                && weightaluminium!="" && weightcopper!="" && weightmagnesium!="" && weightlead!=""){
+                && weightaluminium!="" && weightcopper!="" && weightmagnesium!="" && weightlead!="" && price!=""){
             
 
             App.contracts.Producer.deployed().then(function (instance) {
@@ -18,9 +20,9 @@ ProApp={
                     
                     instance.addProduct(productname,producttype,weightaluminium,weightnickel,
                     weightglass,weightplastic
-                    ,weightcopper,weightmagnesium,weightlead,{ from: App.account });
-                    alert("Product Added");
-                    console.log("Product Added");
+                    ,weightcopper,weightmagnesium,weightlead,price,{from:App.account});
+                    // alert("Product Added");
+                    // console.log("Product Added");
                
             });
 
@@ -36,10 +38,10 @@ ProApp={
                 App.account = account;
                 $('#accountaddress').html("Your account address: " + App.account);
                 $('.mainbox').hide();
-                setTimeout(function(){
-                $('.mainbox').show();
-                ProApp.render();
-            }, 1000);
+                    setTimeout(function(){
+                    $('.mainbox').show();
+                    ProApp.render();
+                }, 1000);
             }
         });
 
@@ -50,7 +52,7 @@ ProApp={
         if (productid!="") {
             App.contracts.Producer.deployed().then(function (instance) {
                 pInstance=instance;
-                pInstance.newProducts(productid).then(function (singleProduct) {
+                pInstance.ProductList(productid).then(function (singleProduct) {
                     if(App.account==singleProduct[0] && singleProduct[5]==true && singleProduct[6]==false){
                         pInstance.addReturnProduct(productid);
                         console.log("Added to returned")
@@ -65,24 +67,31 @@ ProApp={
     },
     render:function () {
         var pInstance;
-        var pid=1;
+        var pid=0;
         App.contracts.Producer.deployed().then(function (instance) {
             pInstance=instance;
-            return pInstance.newProductsCount();
+            return pInstance.getProductCount();
         }).then(function (pCount) {
             var productList=$('#productList');
             productList.empty();
 
-            for(var i=1;i<=pCount;i++){
+            console.log(pInstance.ProductList(0));
+
+            console.log(pCount);
+            pCount=pCount.s;
+            console.log(pCount);
+            for(var i=1;i<pCount;i++){
                 
-                pInstance.newProducts(i).then(function (singleProduct) {
+                console.log(i);
+                pInstance.ProductList(i).then(function (singleProduct) {
+                    console.log(singleProduct);
 
                     if (App.account==singleProduct[0] && singleProduct[5]==false && singleProduct[6]==false) {
                         var id=pid;
                         var name=singleProduct[3];
                         var type=singleProduct[4];
 
-                        // console.log(id,name,type);
+                        console.log(id,name,type);
 
                         var productTemplate = "<tr><th>" + id + "</th><td>" + name + "</td><td>" + type + "</td></tr>";
                         productList.append(productTemplate);
@@ -94,12 +103,12 @@ ProApp={
             }
             return pCount;
         }).then(function (pCount) {
-            var rid=1;
+            var rid=0;
             var returnList=$('#returnedProductList');
             returnList.empty();
 
-            for(var i=1;i<=pCount;i++){
-                pInstance.newProducts(i).then(function (singleProduct) {
+            for(var i=1;i<pCount;i++){
+                pInstance.ProductList(i).then(function (singleProduct) {
 
                     if (App.account==singleProduct[0] && singleProduct[5]==true && singleProduct[6]==true) {
                         var id=pid;

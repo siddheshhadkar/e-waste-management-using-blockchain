@@ -31,9 +31,11 @@ App = {
             if(err===null){
                 App.account = account;
                 $('#loginAddress').html("Your account address: " + App.account);
+                console.log('badme',App.account);
                 return App.initContract();
             }
         });
+        // console.log(App.account);
     },
 
     initContract: function(){

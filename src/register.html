@@ -25,7 +25,6 @@
 					      <option value="Producer">Producer</option>
 					      <option value="Retailer">Retailer</option>
 					      <option value="Consumer">Consumer</option>
-					      <option value="CollectionCentre">Collection Centre</option>
 					      <option value="RecyclingUnit">RecyclingUnit</option>
 					    </select>
 					</div>
@@ -58,6 +57,7 @@
 					return i;
 				}).then(function(i){
 					if (!exists) {
+						console.log(name,App.account);
 						i.addProducer(App.account, name);
 					}
 				});

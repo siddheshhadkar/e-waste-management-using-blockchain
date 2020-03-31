@@ -30,10 +30,10 @@ contract Producer {
         bool returnedToProducer;
         uint reusePercentage;
         uint[7] weights;
+        uint price;
     }
 
-    Product[] public newProducts;
-    Product[] public returnedProducts;
+    Product[] public ProductList;
 
 	constructor(address _addressManager) public {
         owner=msg.sender;
@@ -42,7 +42,7 @@ contract Producer {
 
 	function addProduct(string memory _name,string memory _type,
 		uint _weightOfAluminium, uint _weightOfNickel, uint _weightOfGlass, uint _weightOfPlastic,
-		uint _weightOfCopper, uint _weightOfMagnesium, uint _weightOfLead) public  {
+		uint _weightOfCopper, uint _weightOfMagnesium, uint _weightOfLead,uint _price) public  {
 
         uint[7] memory temp;
 
@@ -54,35 +54,35 @@ contract Producer {
         temp[5]=_weightOfMagnesium;
         temp[6]=_weightOfLead;
 
-		newProducts.push(Product(msg.sender,
+		ProductList.push(Product(msg.sender,
 			address(0),
 			address(0),
 			_name,_type,
-			false,false,0,temp));
+			false,false,0,temp,_price));
 	}
 
-	function getNewProductCount() public view returns(uint){
-	    return newProducts.length;
-	}
-
-	function getReturnedProductCount() public view returns(uint){
-	    return returnedProducts.length;
+	function getProductCount() public view returns(uint){
+	    return ProductList.length;
 	}
 
 	function addReturnProduct(uint _id) public {
-	    newProducts[_id].returnedToProducer=true;
+	    ProductList[_id].returnedToProducer=true;
+	}
+
+	function addReturnProductToRetailer(uint _id) public {
+	    ProductList[_id].returnedToRetailer=true;
 	}
 
 	function soldToRetailer(uint _id,address _retailer) public{
-	    newProducts[_id].retailerAddress=_retailer;
+	    ProductList[_id].retailerAddress=_retailer;
 	}
 
 	function soldToConsumer(uint _id,address _consumer) public{
-	    newProducts[_id].consumerAddress=_consumer;
+	    ProductList[_id].consumerAddress=_consumer;
 	}
 
     function addPercentage(uint _id,uint _percentage) public{
-        newProducts[_id].reusePercentage=_percentage;
+        ProductList[_id].reusePercentage=_percentage;
     }
 
     //Consumer Methods
