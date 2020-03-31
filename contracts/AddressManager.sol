@@ -78,7 +78,10 @@ contract AddressManager{
 
     function checkProducer (address _pAddress) public view returns(bool) {
         uint _producerid;
-        for (uint i=0;i<=Producers.length;i++){
+        if(Producers.length==0){
+            return(false);
+        }
+        for (uint i=0;i<Producers.length;i++){
             if(Producers[i].addr==_pAddress){
                 _producerid=i;
             }
@@ -88,7 +91,10 @@ contract AddressManager{
 
     function checkRetailer (address _rAddress) public view returns(bool) {
         uint _retailerid;
-        for (uint i=0;i<=Retailers.length;i++){
+        if(Retailers.length==0){
+            return(false);
+        }
+        for (uint i=0;i<Retailers.length;i++){
             if(Retailers[i].addr==_rAddress){
                 _retailerid=i;
             }
@@ -98,7 +104,10 @@ contract AddressManager{
 
     function checkConsumer (address _cAddress) public view returns(bool) {
         uint _consumerid;
-        for (uint i=0;i<=Consumers.length;i++){
+        if(Consumers.length==0){
+            return(false);
+        }
+        for (uint i=0;i<Consumers.length;i++){
             if(Consumers[i].addr==_cAddress){
                 _consumerid=i;
             }
@@ -108,7 +117,10 @@ contract AddressManager{
 
     function checkRecycleUnit (address _rAddress) public view returns(bool) {
         uint _recycleunitid;
-        for (uint i=0;i<=RecycleUnits.length;i++){
+        if(RecycleUnits.length==0){
+            return(false);
+        }
+        for (uint i=0;i<RecycleUnits.length;i++){
             if(RecycleUnits[i].addr==_rAddress){
                 _recycleunitid=i;
             }

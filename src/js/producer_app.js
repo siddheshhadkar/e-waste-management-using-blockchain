@@ -16,7 +16,7 @@ ProApp={
             
 
             App.contracts.Producer.deployed().then(function (instance) {
-                // console.log(App.account);
+                    console.log(App.account);
                     
                     instance.addProduct(productname,producttype,weightaluminium,weightnickel,
                     weightglass,weightplastic
@@ -70,25 +70,26 @@ ProApp={
         var pid=0;
         App.contracts.Producer.deployed().then(function (instance) {
             pInstance=instance;
-            console.log(instance);
+
             return pInstance.getProductCount();
         }).then(function (pCount) {
             var productList=$('#productList');
             productList.empty();
 
-            console.log(pInstance.ProductList(0));
 
             console.log(pCount);
             pCount=pCount.s;
             console.log(pCount);
+
             for(var i=0;i<pCount;i++){
+            
                 
-                console.log(i);
                 pInstance.ProductList(i).then(function (singleProduct) {
-                    console.log(singleProduct);
+                    
 
                     if (App.account==singleProduct[0] && singleProduct[5]==false && singleProduct[6]==false) {
                         var id=pid;
+                        console.log(singleProduct);
                         var name=singleProduct[3];
                         var type=singleProduct[4];
 
@@ -98,6 +99,7 @@ ProApp={
                         productList.append(productTemplate);
 
                     }
+
                     pid++;
                 
                 })

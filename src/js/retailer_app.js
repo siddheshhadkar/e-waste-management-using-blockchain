@@ -6,17 +6,20 @@ RecApp={
                 $('#accountaddress').html("Your account address: " + App.account);
                 $('.mainbox').hide();
                 setTimeout(function(){
-                $('.mainbox').show();
-                RecApp.render();
-            }, 1000);
+                    $('.mainbox').show();
+                    RecApp.render();
+                }, 1000);
             }
         });
 
     },
     render:function (argument) {
+        
         var amInstance;
+        var pAddress;
+        var pInstance;
 
-        App.contracts.AddressManager.deployed().then()(function (instance) {
+        App.contracts.AddressManager.deployed().then(function (instance) {
             amInstance=instance;
             return amInstance.getProducerCount();
         }).then(function (producerCount) {
@@ -25,14 +28,45 @@ RecApp={
 
             producerCount=producerCount.s;
             for (var i = 0; i < producerCount; i++) {
-                amInstance.Producers(i).then(function (argument) {
-                    var name=Producers[2];
-                    var address=Producers[0];
+                amInstance.Producers(i).then(function (singleProducer) {
+                    var name=singleProducer[2];
+                    var address=singleProducer[0];
                     var producerOption = "<option value='" + address + "' >" + name + "</ option>"
                     producerSelect.append(producerOption);
                 })
             }
-        });
+        }).then(function () {
+            App.contracts.Producer.deployed().then(function (instance) {
+                pInstance=instance;
+                return pInstance.getProductCount();
+            }).then(function (pCount) {
+
+                var pAddress=$('#producerSelect').val();
+
+                pCount=pCount.s;
+                var nameSet=new Set();
+
+                for (var i = 0; i <pCount; i++) {
+                    pInstance.ProductList(i).then(function (singleProduct) {
+                        if(singleProduct[1]== 0x0000000000000000000000000000000000000000 && 
+                            singleProduct[0]==pAddress){
+                                nameSet.add(singleProduct[3]);
+                        }
+                    })
+                }
+
+                var productlistSelect = $('#productlistSelect');
+                productlistSelect.empty(); 
+
+                function appendToList(value) {
+                    var productOption = "<option value='" + value + "' >" + value + "</ option>"
+                    productlistSelect.append(productOption);
+                    
+                }
+                nameSet.forEach(appendToList);
+                console.log(nameSet);
+            })
+        })
     },
         
 }

@@ -52,7 +52,9 @@
 			var exists = false;
 			var name = $('#name').val();
 			App.contracts.AddressManager.deployed().then(function(i){
+
 				i.checkProducer(App.account).then(function(res){
+					console.log(res);
 					exists = res;
 					return i;
 				}).then(function(i){
