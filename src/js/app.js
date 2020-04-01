@@ -3,11 +3,7 @@ App = {
     contracts: {},
     contractAddress: {
         AddressManager: '0x0',
-        CollectionCentre: '0x0',
-        Consumer: '0x0',
-        Retailer: '0x0',
-        Producer: '0x0',
-        RecycleUnit: '0x0',
+        Producer: '0x0'
     },
     account: '0x0',
 
