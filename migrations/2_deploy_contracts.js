@@ -7,12 +7,6 @@ var Retailer = artifacts.require("./Retailer.sol");
 
 module.exports = async function(deployer) {
     await deployer.deploy(AddressManager);
-
     address = AddressManager.address;
-
-    await deployer.deploy(CollectionCentre, address);
-    await deployer.deploy(Consumer, address);
     await deployer.deploy(Producer, address);
-    await deployer.deploy(RecycleUnit, address);
-    await deployer.deploy(Retailer, address);
 };

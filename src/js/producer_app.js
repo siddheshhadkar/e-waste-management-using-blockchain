@@ -13,17 +13,17 @@ ProApp={
 
         if(productname!="" && weightglass!="" && weightplastic!="" && weightnickel!=""
                 && weightaluminium!="" && weightcopper!="" && weightmagnesium!="" && weightlead!="" && price!=""){
-            
+
 
             App.contracts.Producer.deployed().then(function (instance) {
                     console.log(App.account);
-                    
+
                     instance.addProduct(productname,producttype,weightaluminium,weightnickel,
                     weightglass,weightplastic
                     ,weightcopper,weightmagnesium,weightlead,price,{from:App.account});
                     // alert("Product Added");
                     // console.log("Product Added");
-               
+
             });
 
         }else{
@@ -48,7 +48,7 @@ ProApp={
     },
     addReturnProduct:function () {
         var productid=$('#productid').val();
-        var pInstance;    
+        var pInstance;
         if (productid!="") {
             App.contracts.Producer.deployed().then(function (instance) {
                 pInstance=instance;
@@ -70,23 +70,17 @@ ProApp={
         var pid=0;
         App.contracts.Producer.deployed().then(function (instance) {
             pInstance=instance;
-
             return pInstance.getProductCount();
         }).then(function (pCount) {
             var productList=$('#productList');
             productList.empty();
-
 
             console.log(pCount);
             pCount=pCount.s;
             console.log(pCount);
 
             for(var i=0;i<pCount;i++){
-            
-                
                 pInstance.ProductList(i).then(function (singleProduct) {
-                    
-
                     if (App.account==singleProduct[0] && singleProduct[5]==false && singleProduct[6]==false) {
                         var id=pid;
                         console.log(singleProduct);
@@ -101,7 +95,7 @@ ProApp={
                     }
 
                     pid++;
-                
+
                 })
             }
             return pCount;
@@ -112,7 +106,6 @@ ProApp={
 
             for(var i=0;i<pCount;i++){
                 pInstance.ProductList(i).then(function (singleProduct) {
-
                     if (App.account==singleProduct[0] && singleProduct[5]==true && singleProduct[6]==true) {
                         var id=pid;
                         var name=singleProduct[3];
@@ -122,18 +115,15 @@ ProApp={
 
                         var productTemplate = "<tr><th>" + id + "</th><td>" + name + "</td><td>" + type + "</td></tr>";
                         productList.append(productTemplate);
-
                     }
                     rid++;
-                
                 })
             }
-
         })
     },
 }
 
- 
+
 $(document).ready(function(){
     $(window).on('load', function(){
         ProApp.loadAddress();
