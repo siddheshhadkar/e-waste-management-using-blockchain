@@ -21,14 +21,15 @@
 					    <input type="text" id="accountAddress" name="accountAddress" placeholder="Account Address" disabled>
 
 					    <label for="type">Register As</label>
-					    <select id="accounttype" name="accounttype">
-					      <option value="Producer">Producer</option>
-					      <option value="Retailer">Retailer</option>
-					      <option value="Consumer">Consumer</option>
-					      <option value="RecyclingUnit">RecyclingUnit</option>
+					    <select id="accountType" name="accountType">
+							<option value="NULL" disabled selected>Select an option</option>
+					    	<option value="Producer">Producer</option>
+					    	<option value="Retailer">Retailer</option>
+					    	<option value="Consumer">Consumer</option>
+					    	<option value="RecyclingUnit">RecyclingUnit</option>
 					    </select>
 					</div>
-					<button type="submit" class="btn-add" style="width: 50%;margin: auto 25% auto 25%;" onclick="addProducer()">Register</button>
+					<button type="submit" class="btn-add" style="width: 50%;margin: auto 25% auto 25%;" onclick="addUser()">Register</button>
 			</div>
 		</div>
 	</div>
@@ -37,34 +38,6 @@
 	<script src="js/web3.min.js"></script>
 	<script src="js/truffle-contract.js"></script>
 	<script src="js/app.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function(){
-			$('.mainbox').hide();
-			setTimeout(function(){
-				$('.loader').hide();
-				$('.mainbox').show();
-				$('#accountAddress').val(App.account);
-			}, 1000);		
-
-		});
-
-		function addProducer(){
-			var exists = false;
-			var name = $('#name').val();
-			App.contracts.AddressManager.deployed().then(function(i){
-
-				i.checkProducer(App.account).then(function(res){
-					console.log(res);
-					exists = res;
-					return i;
-				}).then(function(i){
-					if (!exists) {
-						console.log(name,App.account);
-						i.addProducer(App.account, name);
-					}
-				});
-			});
-		}
-	</script>
+	<script src="js/register.js"></script>
 </body>
 </html>
