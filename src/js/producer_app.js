@@ -50,6 +50,7 @@ ProApp={
         var productid=$('#productid').val();
         var pInstance;
         if (productid!="") {
+
             App.contracts.Producer.deployed().then(function (instance) {
                 pInstance=instance;
                 pInstance.ProductList(productid).then(function (singleProduct) {
@@ -76,14 +77,14 @@ ProApp={
             productList.empty();
 
             console.log(pCount);
-            pCount=pCount.s;
-            console.log(pCount);
+            // pCount=pCount.s;
+            // console.log(pCount);
 
             for(var i=0;i<pCount;i++){
                 pInstance.ProductList(i).then(function (singleProduct) {
                     if (App.account==singleProduct[0] && singleProduct[5]==false && singleProduct[6]==false) {
                         var id=pid;
-                        console.log(singleProduct);
+                        // console.log(singleProduct);
                         var name=singleProduct[3];
                         var type=singleProduct[4];
 
@@ -91,9 +92,9 @@ ProApp={
 
                         var productTemplate = "<tr><th>" + id + "</th><td>" + name + "</td><td>" + type + "</td></tr>";
                         productList.append(productTemplate);
-
+                        console.log(pCount);
                     }
-
+                    
                     pid++;
 
                 })

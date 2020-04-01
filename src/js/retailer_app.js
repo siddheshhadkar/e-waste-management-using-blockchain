@@ -26,9 +26,12 @@ RecApp={
             var producerSelect = $('#producerSelect');
             producerSelect.empty();
 
-            producerCount=producerCount.s;
+            // console.log(producerCount);
+            // producerCount=producerCount.s;
+            // console.log(producerCount);
+
             for (var i = 0; i < producerCount; i++) {
-                amInstance.Producers(i).then(function (singleProducer) {
+                amInstance.producers(i).then(function (singleProducer) {
                     var name=singleProducer[2];
                     var address=singleProducer[0];
                     var producerOption = "<option value='" + address + "' >" + name + "</ option>"
@@ -43,7 +46,7 @@ RecApp={
 
                 var pAddress=$('#producerSelect').val();
 
-                pCount=pCount.s;
+                // pCount=pCount.s;
                 var nameSet=new Set();
 
                 for (var i = 0; i <pCount; i++) {
