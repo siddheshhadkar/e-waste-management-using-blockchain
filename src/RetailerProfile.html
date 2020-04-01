@@ -29,15 +29,15 @@
 				<br>
 				<div id="addformtitle" style="text-align: center;font-size: 20px; width: 40%;margin: auto 20% auto 40%; ">Buy Product</div>
 
-				<form onsubmit="">
+				<form onsubmit="RecApp.buyProduct(); return false;">
 					<div class="formclass1" style="width: 40%;margin: auto 20% auto 40%; ">
 
 						<label for="pid">Producer Address</label>
-					    <select id="producerSelect">
+					    <select id="producerSelect" onchange="RecApp.updateProducer(); return false;">
 					    </select>
 
 						<label for="type">Type</label>
-					    <select id="producttype" name="producttype">
+					    <select id="productSelect" name="productSelect" onchange="RecApp.updateProducer(); return false;">
 					      <option value="Mobile">Mobile</option>
 					      <option value="Television">Television</option>
 					      <option value="Laptop">Laptop</option>
@@ -45,7 +45,7 @@
 					    </select>
 
 					    <label for="product">Select Product</label>
-					    <select id="productlistSelect">
+					    <select id="productlistSelect" onchange="RecApp.updateProduct.updateCount(); return false;">
 					    </select>
 
 					    <label for="quan">Quantity</label>
