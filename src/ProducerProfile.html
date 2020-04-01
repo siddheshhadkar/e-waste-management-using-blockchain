@@ -28,11 +28,8 @@
 		</div>
 
 		<div class="mainbox" style="width: 80% margin-left:20%">
-
 			<div class="form-div">
-
 				<div id="addformtitle" style="text-align: center;font-size: 20px; width: 40%;margin: auto 20% auto 40%; ">Add Product Form</div>
-
 				<form onsubmit="ProApp.addProduct(); return false;">
 					<div class="formclass1" style="width: 40%;margin: auto 20% auto 40%; ">
 						<label for="pname">Name</label>
@@ -64,12 +61,11 @@
 
 					    <label for="type">Type</label>
 					    <select id="producttype" name="producttype">
-					      <option value="Mobile">Mobile</option>
-					      <option value="Television">Television</option>
-					      <option value="Laptop">Laptop</option>
-					      <option value="Speaker">Speaker</option>
+							<option value="Mobile">Mobile</option>
+							<option value="Television">Television</option>
+							<option value="Laptop">Laptop</option>
+							<option value="Speaker">Speaker</option>
 					    </select>
-
 					</div>
 					<button type="submit" class="btn-add" style="width: 40%;margin: auto 20% auto 40%; ">Add product</button>
 				</form>
@@ -103,7 +99,6 @@
 				</form>
 			</div>
 
-
 			<div class="list-content">
 				<br><br>
 				<div style="text-align: center;font-size: 20px; width: 40%;margin: auto 20% auto 40%;" id="returnedproducttile">List Of Returned Product</div>
@@ -116,20 +111,16 @@
 			                </tr>
 			            </thead>
 			            <tbody id="returnedProductList">
-
 			            </tbody>
 				</table>
 			</div>
-
-
 		</div>
 	</div>
 
-		<script src="js/jquery.min.js"></script>
+	<script src="js/jquery.min.js"></script>
     <script src="js/web3.min.js"></script>
     <script src="js/truffle-contract.js"></script>
     <script src="js/app.js"></script>
     <script src="js/producer_app.js"></script>
-
 </body>
 </html>

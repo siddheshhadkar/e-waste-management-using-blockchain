@@ -1,6 +1,5 @@
 ProApp={
     addProduct:function () {
-        var productname = $('#productname').val();
         var weightglass = $('#weightglass').val();
         var weightplastic = $('#weightplastic').val();
         var weightnickel = $('#weightnickel').val();
@@ -8,13 +7,9 @@ ProApp={
         var weightcopper = $('#weightcopper').val();
         var weightmagnesium = $('#weightmagnesium').val();
         var weightlead = $('#weightlead').val();
-        var producttype = $('#producttype').val();
         var price = $('#price').val();
 
-        if(productname!="" && weightglass!="" && weightplastic!="" && weightnickel!=""
-                && weightaluminium!="" && weightcopper!="" && weightmagnesium!="" && weightlead!="" && price!=""){
-
-
+        if(productname!="" && weightglass!="" && weightplastic!="" && weightnickel!="" && weightaluminium!="" && weightcopper!="" && weightmagnesium!="" && weightlead!="" && price!=""){
             App.contracts.Producer.deployed().then(function (instance) {
                     console.log(App.account);
 
@@ -94,7 +89,7 @@ ProApp={
                         productList.append(productTemplate);
                         console.log(pCount);
                     }
-                    
+
                     pid++;
 
                 })

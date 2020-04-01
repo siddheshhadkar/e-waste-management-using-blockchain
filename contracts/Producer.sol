@@ -10,7 +10,7 @@ contract Producer {
 	modifier onlyOwner(){
          require(msg.sender == owner);
          _;
-     }
+    }
 
     // 0 weightOfGlass;
     // 1 weightOfPlastic;
