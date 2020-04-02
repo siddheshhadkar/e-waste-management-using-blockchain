@@ -56,10 +56,7 @@ App = {
     listenForEvents: function(){
 
     },
-
-    render: function(){
-
-    },
+    
     makeTransaction:function (receiver,sender,amount) {
         amount=Number(amount);
         console.log(amount);
