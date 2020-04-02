@@ -5,7 +5,6 @@ import "./AddressManager.sol";
 contract Producer {
 
     address owner;
-	AddressManager amInstance;
 
 	modifier onlyOwner(){
          require(msg.sender == owner);
@@ -35,9 +34,8 @@ contract Producer {
 
     Product[] public ProductList;
 
-	constructor(address _addressManager) public {
+	constructor() public {
         owner=msg.sender;
-    	amInstance=AddressManager(address(_addressManager));
 	}
 
 	function addProduct(string memory _name,string memory _type,
