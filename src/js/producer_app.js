@@ -82,7 +82,8 @@ ProApp={
 
             for(var i=0;i<pCount;i++){
                 pInstance.ProductList(i).then(function (singleProduct) {
-                    if (App.account==singleProduct[0] && singleProduct[5]==false && singleProduct[6]==false) {
+                    if (App.account==singleProduct[0] && singleProduct[5]==false && singleProduct[6]==false
+                        && singleProduct[1]== "0x0000000000000000000000000000000000000000") {
                         var id=pid;
                         // console.log(singleProduct);
                         var name=singleProduct[3];

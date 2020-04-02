@@ -59,6 +59,22 @@ App = {
 
     render: function(){
 
+    },
+    makeTransaction:function (receiver,sender,amount) {
+        amount=Number(amount);
+        console.log(amount);
+        web3.eth.sendTransaction({
+            to:receiver,
+            from:sender,
+            value:web3.toWei(amount,'ether')
+        },function (error,result) {
+            if (!error) {
+                return "success";
+            }else{
+                console.log(error);
+                return "failure";
+            }
+        });
     }
 };
 

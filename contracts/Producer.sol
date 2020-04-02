@@ -70,9 +70,24 @@ contract Producer {
 	function addReturnProductToRetailer(uint _id) public {
 	    ProductList[_id].returnedToRetailer=true;
 	}
+	 function compareStrings (string memory a, string memory b) public view returns (bool) {
+        return (keccak256(abi.encodePacked((a))) == keccak256(abi.encodePacked((b))) );
 
-	function soldToRetailer(uint _id,address _retailer) public{
-	    ProductList[_id].retailerAddress=_retailer;
+    }
+
+	function soldToRetailer(address _producer,string memory _name,string memory _type,uint _quantity) public returns (uint,address){
+        uint _sum=0;
+        for(uint i=0;i<ProductList.length;i++){
+            if(ProductList[i].producerAddress==_producer && 
+            compareStrings(ProductList[i].typeOfProduct,_type) && 
+            compareStrings(ProductList[i].name,_name) 
+            && _quantity>0){
+                ProductList[i].retailerAddress=msg.sender;
+                _quantity--;
+                _sum=_sum+ProductList[i].price;
+            }
+        }
+        return (_sum,msg.sender);    
 	}
 
 	function soldToConsumer(uint _id,address _consumer) public{
