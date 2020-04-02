@@ -62,17 +62,19 @@ RecApp={
                 }else{
                     alert("Fine");
                     App.contracts.Producer.deployed().then(function (instance) {
-                        instance.soldToRetailer(pAddress,productname,pType,quantity).then(
-                            function(amount,rAddress) {
-                                var res=App.makeTransaction(pAddress,rAddress,amount);
-                                 if(res=="success"){
-                                        alert("Transaction Process Completed");
-                                    }else{
-                                        alert("Transaction Process Failed");
-                                    }
-                        })
+                        instance.soldToRetailer(pAddress,productname,pType,quantity).then(function (argument) {
+                            return instance.cost()
+                        }).then(function (amount) {
+                        console.log(amount);
+                        var res=App.makeTransaction(pAddress,App.account,amount);
+                        if(res=="success"){
+                            alert("Transaction Process Completed");
+                            }else{
+                                alert("Transaction Process Failed");
+                            }
                     })
-                }
+                })
+            }
             }else{
                 alert("Fill empty fields");
             }

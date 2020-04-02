@@ -11,6 +11,8 @@ contract Producer {
          _;
     }
 
+    uint public cost;
+
     // 0 weightOfGlass;
     // 1 weightOfPlastic;
     // 2 weightOfNickel;
@@ -75,19 +77,21 @@ contract Producer {
 
     }
 
-	function soldToRetailer(address _producer,string memory _name,string memory _type,uint _quantity) public returns (uint,address){
+   
+	function soldToRetailer(address _producer,string memory _name,string memory _type,uint _quantity) public{
         uint _sum=0;
         for(uint i=0;i<ProductList.length;i++){
             if(ProductList[i].producerAddress==_producer && 
             compareStrings(ProductList[i].typeOfProduct,_type) && 
             compareStrings(ProductList[i].name,_name) 
-            && _quantity>0){
+            && _quantity>0 && ProductList[i].retailerAddress==address(0)){
                 ProductList[i].retailerAddress=msg.sender;
                 _quantity--;
                 _sum=_sum+ProductList[i].price;
+                
             }
         }
-        return (_sum,msg.sender);    
+        cost=_sum;    
 	}
 
 	function soldToConsumer(uint _id,address _consumer) public{
