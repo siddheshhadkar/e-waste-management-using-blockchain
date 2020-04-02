@@ -150,6 +150,7 @@ RecApp={
          if (RecApp.frequency[type]==undefined) {
             alert("Available Stock: 0");
          }else{
+            RecApp.QuantityAvailable=RecApp.frequency[type];
             alert("Available Stock: "+RecApp.frequency[type]);
          }
     },
