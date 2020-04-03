@@ -59,23 +59,6 @@ contract AddressManager{
         }
     }
 
-    //returning length
-    function getProducerCount() public view returns(uint){
-        return producers.length;
-    }
-
-    function getRetailerCount() public view returns(uint){
-        return retailers.length;
-    }
-
-    function getConsumerCount() public view returns(uint){
-        return consumers.length;
-    }
-
-    function getRecyclingUintCount() public view returns(uint){
-        return recycleUnits.length;
-    }
-
     //validate users
     function checkProducer(address _address) public view returns(bool) {
         if(producers.length == 0){
@@ -126,6 +109,56 @@ contract AddressManager{
                 }
             }
             return false;
+        }
+    }
+
+    //returning length
+    function getProducerCount() public view returns(uint){
+        return producers.length;
+    }
+
+    function getRetailerCount() public view returns(uint){
+        return retailers.length;
+    }
+
+    function getConsumerCount() public view returns(uint){
+        return consumers.length;
+    }
+
+    function getRecyclingUintCount() public view returns(uint){
+        return recycleUnits.length;
+    }
+
+    //return names
+    function getProducerName(address _address) public view returns(string memory){
+        for(uint i=0; i<producers.length; i++){
+            if(producers[i].addr == _address){
+                return producers[i].name;
+            }
+        }
+    }
+
+    function getRetailerName(address _address) public view returns(string memory){
+        for(uint i=0; i<retailers.length; i++){
+            if(retailers[i].addr == _address){
+                return retailers[i].name;
+            }
+        }
+    }
+
+    function getConsumerName(address _address) public view returns(string memory){
+        for(uint i=0; i<consumers.length; i++){
+            if(consumers[i].addr == _address){
+                return consumers[i].name;
+            }
+        }
+    }
+
+    function getRecycleUnitName(address _address) public view returns(string memory){
+        for(uint i=0; i<recycleUnits.length; i++){
+            if(recycleUnits[i].addr == _address){
+                return recycleUnits[i].name;
+            }
         }
     }
 }

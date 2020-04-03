@@ -3,18 +3,30 @@ RecApp={
     frequency:{},
 
     loadAddress:function (argument) {
+        $('.container').hide();
         web3.eth.getCoinbase(function(err, account){
             if(err===null){
+                var amInstance;
                 App.account = account;
-                $('#accountaddress').html("Your account address: " + App.account);
-                $('.mainbox').hide();
                 setTimeout(function(){
-                    $('.mainbox').show();
-                    RecApp.render();
-                }, 1000);
+                    App.contracts.AddressManager.deployed().then(function(i){
+                        amInstance = i;
+                        amInstance.checkRetailer(App.account).then(function(exists){
+                            if (!exists) {
+                                alert("Please log in with a Retailer account to access this page");
+                            }else{
+                                amInstance.getRetailerName(App.account).then(function(accountName){
+                                    $('#accountaddress').html("Your account name: " + accountName);
+                                    $('.loader').hide();
+                                    $('.container').show();
+                                    RecApp.render();
+                                })
+                            }
+                        })
+                    });
+                }, 500);
             }
         });
-
     },
 
     render:function (argument) {
@@ -50,7 +62,6 @@ RecApp={
         RecApp.frequency={};
 
         if (pAddress!=null && pType!=null&& productlistSelect!=null && quantity!="") {
-            console.log(quantity,RecApp.QuantityAvailable);
             if(quantity>RecApp.QuantityAvailable || quantity==0){
                 alert("Enter Valid Quantity");
             }else{
@@ -59,16 +70,16 @@ RecApp={
                     instance.soldToRetailer(pAddress,productname,pType,quantity).then(function (argument) {
                         return instance.cost();
                     }).then(function (amount) {
-                    console.log(amount);
-                    var res=App.makeTransaction(pAddress,App.account,amount);
-                    if(res=="success"){
-                        alert("Transaction Process Completed");
-                    }else{
-                        alert("Transaction Process Failed");
-                    }
+                        console.log(amount);
+                        var res=App.makeTransaction(pAddress,App.account,amount);
+                        if(res=="success"){
+                            alert("Transaction Process Completed");
+                        }else{
+                            alert("Transaction Process Failed");
+                        }
+                    })
                 })
-            })
-        }
+            }
         }else{
             alert("Fill empty fields");
         }
@@ -92,17 +103,15 @@ RecApp={
             var producerOption = "<option value='" + null + "'disabled selected >" +"Select an option" + "</ option>"
             productlistSelect.append(producerOption);
 
-            for (var i = 0; i <pCount; i++) {
-                pInstance.ProductList(i).then(function (singleProduct) {
-                    if(singleProduct[1]== "0x0000000000000000000000000000000000000000" &&
-                        singleProduct[0]==pAddress && singleProduct[4]==pType){
+            for (let i = 0; i <pCount; i++) {
+                pInstance.ProductList(i).then(function(singleProduct) {
+                    if(singleProduct[1]=="0x0000000000000000000000000000000000000000" && singleProduct[0]==pAddress && singleProduct[4]==pType){
                         console.log(singleProduct);
                         if(singleProduct[3] in RecApp.frequency){
                             RecApp.frequency[singleProduct[3]]+=1;
                         }else{
                             RecApp.frequency[singleProduct[3]]=1;
                         }
-
                         nameSet.add(singleProduct[3]);
                         var productlistSelect = $('#productlistSelect');
                         productlistSelect.empty();
@@ -111,17 +120,15 @@ RecApp={
                             var productOption = "<option value='" + values + "' >" + values + "</ option>";
                             console.log(values);
                             productlistSelect.append(productOption);
-
                         }
                         nameSet.forEach(printOne);
-                        // console.log(RecApp.frequency);
                     }
                 });
             }
             setTimeout(function(){
                 var type=$('#productlistSelect').val();
-                 // console.log(frequency[type]);
-
+                console.log("from loop", RecApp.frequency);
+                console.log("type", type);
                  if (RecApp.frequency[type]==undefined) {
                     RecApp.QuantityAvailable=0;
                     alert("Available Stock: 0");
@@ -129,6 +136,7 @@ RecApp={
                     RecApp.QuantityAvailable=RecApp.frequency[type];
                     alert("Available Stock: "+RecApp.frequency[type]);
                  }
+
             }, 1000);
         })
     },

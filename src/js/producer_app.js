@@ -13,23 +13,36 @@ ProApp={
 
         if(productname!="" && weightglass!="" && weightplastic!="" && weightnickel!="" && weightaluminium!="" && weightcopper!="" && weightmagnesium!="" && weightlead!="" && price!=""){
             App.contracts.Producer.deployed().then(function (instance) {
-                    instance.addProduct(productname, producttype, weightaluminium, weightnickel, weightglass, weightplastic, weightcopper, weightmagnesium, weightlead, price, {from:App.account});
+                instance.addProduct(productname, producttype, weightaluminium, weightnickel, weightglass, weightplastic, weightcopper, weightmagnesium, weightlead, price, {from:App.account});
             });
         }else{
             alert("Fill empty fields");
         }
     },
 
-    loadAddress:function (argument) {
+    loadAddress:function() {
+        $('.container').hide();
         web3.eth.getCoinbase(function(err, account){
             if(err===null){
+                var amInstance;
                 App.account = account;
-                $('#accountaddress').html("Your account address: " + App.account);
-                $('.mainbox').hide();
-                    setTimeout(function(){
-                    $('.mainbox').show();
-                    ProApp.render();
-                }, 1000);
+                setTimeout(function(){
+                    App.contracts.AddressManager.deployed().then(function(i){
+                        amInstance = i;
+                        amInstance.checkProducer(App.account).then(function(exists){
+                            if (!exists) {
+                                alert("Please log in with a Producer account to access this page");
+                            }else{
+                                amInstance.getProducerName(App.account).then(function(accountName){
+                                    $('#accountaddress').html("Your account name: " + accountName);
+                                    $('.loader').hide();
+                                    $('.container').show();
+                                    ProApp.render();
+                                })
+                            }
+                        })
+                    });
+                }, 500);
             }
         });
     },
@@ -101,7 +114,5 @@ ProApp={
 }
 
 $(document).ready(function(){
-    $(window).on('load', function(){
-        ProApp.loadAddress();
-    });
+    ProApp.loadAddress();
 });
