@@ -25,7 +25,7 @@
 				<div id="addformtitle" style="text-align: center;font-size: 20px; width: 40%;margin: auto 20% auto 40%; ">Buy Product</div>
 				<form onsubmit="RecApp.buyProduct(); return false;">
 					<div class="formclass1" style="width: 40%;margin: auto 20% auto 40%; ">
-						<label for="pid">Producer Address</label>
+						<label for="pid">Producer Name</label>
 					    <select id="producerSelect" onchange="RecApp.updateProducer(); return false;">
 					    	<option value="NULL" disabled selected>Select a producer</option>
 					    </select>
@@ -71,10 +71,15 @@
 			<div class="form-div" style="width: 100%">
 				<br><br>
 				<div style="text-align: center;font-size: 20px; width: 40%;margin: auto 20% auto 40%;" id="retformtitle">Add Returned Product Form</div>
-				<form onsubmit="">
+				<form onsubmit="RecApp.addReturnProduct(); return false;">
 					<div class="formclass2" style="width: 40%;margin: auto 20% auto 40%; ">
+					    
 					    <label for="productid">Product Id</label>
 					    <input type="number" id="productid" name="productid" placeholder="Enter ID">
+
+					    <label for="quan">Percentage of Price</label>
+					    <input type="number" id="percent" name="percent" placeholder="Enter percentage(0-100)" min="1" max="100">
+
 					</div>
 					<button type="submit" class="btn-add" style="width: 40%;margin: auto 20% auto 40%;">Submit</button>
 				</form>
@@ -93,7 +98,9 @@
 			                </tr>
 			            </thead>
 			            <tbody id="returnedProductList">
-
+			            	<tr>
+			            		
+			            	</tr>
 			            </tbody>
 				</table>
 			</div>
@@ -102,7 +109,7 @@
 		</div>
 	</div>
 
-		<script src="js/jquery.min.js"></script>
+	<script src="js/jquery.min.js"></script>
     <script src="js/web3.min.js"></script>
     <script src="js/truffle-contract.js"></script>
     <script src="js/app.js"></script>

@@ -6,60 +6,78 @@
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 <body>
-	<div class="container" style="width: 100%">
-		<h4 id="accountaddress" class="w3-blue">Account Address:0x0</h4>
+	<div class="loader">
+		<h4 id="loaderText" class="w3-blue">Loading...</h4>
+	</div>
 
-		<div class="loader">
-				<p>Loading...</p>
-		</div>
+	<div class="container" style="width: 100%">
+		
+
+		<h4 id="accountaddress" class="w3-blue">Account Address:0x0</h4>
 		<div class="mainbox">
 			
 
 			<div class="form-div" style="width: 100%">
 				<h3>Buy Product</h3>
-				<form onsubmit="">
+				<form onsubmit="ConApp.buyProduct(); return false;">
 					<div class="formclass" style="width: 50%;margin: auto 25% auto 25%; ">
-					    <label for="type">Type</label>
-					    <select id="producttype" name="producttype">
-					      <option value="Mobile">Mobile</option>
-					      <option value="Television">Television</option>
-					      <option value="Laptop">Laptop</option>
-					      <option value="Speaker">Speaker</option>
+					    <label for="pid">Retailer Name</label>
+					    <select id="retailerSelect" onchange="ConApp.updateRetailer(); return false;">
+					    	<option value="NULL" disabled selected>Select a producer</option>
 					    </select>
 
-					    <label for="retailer">Select Retailer</label>
-					    <select id="retailerlistSelect">
+						<label for="type">Type</label>
+					    <select id="productType" name="productType" onchange="RecApp.updateProducer(); return false;">
+						     <option value="Mobile">Mobile</option>
+						     <option value="Television">Television</option>
+						     <option value="Laptop">Laptop</option>
+						     <option value="Speaker">Speaker</option>
 					    </select>
 
 					    <label for="product">Select Product</label>
-					    <select id="productlistSelect">
-					    	<option value="k20">K20</option>
+
+					    <select id="productlistSelect" onchange="ConApp.updateCount(); return false;">
+					    	<option value="NULL" disabled selected>Select an option</option>
 					    </select>
+
+					    <label for="quan">Quantity</label>
+					    <input type="number" id="quantity" name="quantity" placeholder="Quantity">
+
   
 					</div>
 					<button type="submit" class="btn-add" style="width: 50%;margin: auto 25% auto 25%; ">Buy product</button>
 				</form>
 			</div>
 
-			<div class="list-content">
+			<div class="list-content" style="width: 100%">
 				<br><br>
 				<h3 style="text-align: center;">Products Owned</h3>
 				<table class="w3-table-all w3-hoverable w3-card" style="width: 50%;margin: auto 25% auto 25%;">
 						<thead>
 			                <tr class="w3-blue">
-			                  <th scope="col">Name</th>
-			                  <th scope="col">Type</th>
+			                	<th scope="col">ID</th>
+			                 	<th scope="col">Name</th>
+			                	<th scope="col">Type</th>
+			                </tr>
+			            </thead>
+			            <tbody id="productList">
+              			</tbody>
+				</table>
+			</div>
+
+			<div class="list-content">
+				<br><br>
+				<div style="text-align: center;font-size: 20px; width: 50%;margin: auto 25% auto 25%;" id="returnedproducttile">List Of Returned Product</div>
+				<table class="w3-table-all w3-hoverable w3-card" style="width: 50%;margin: auto 25% auto 25%;">
+						<thead>
+			                <tr class="w3-blue">
+			                	<th scope="col">ID</th>
+			                	<th scope="col">Name</th>
+			                  	<th scope="col">Type</th>
 			                </tr>
 			            </thead>
 			            <tbody id="returnedProductList">
-			            	<tr>
-			            		<td>Redmi K20</td>
-			            		<td>Phone</td>
-			            	</tr>
-			            	<tr>
-			            		<td>Redmi K20</td>
-			            		<td>Phone</td>
-			            	</tr>
+
 			            </tbody>
 				</table>
 			</div>
@@ -69,22 +87,9 @@
 	</div>
 
 	<script src="js/jquery.min.js"></script>
-	<script src="js/web3.min.js"></script>
-	<script src="js/truffle-contract.js"></script>
-	<script src="js/app.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function(){
-			$('.mainbox').hide();
-			$('#accountaddress').hide();
-			setTimeout(function(){
-				$('.loader').hide();
-				$('.mainbox').show();
-				$('#accountaddress').show();
-				$('#accountaddress').html('Your Account Address: '+App.account);
-				console.log(App.account);
-			}, 1000);
-
-		});
-	</script>
+    <script src="js/web3.min.js"></script>
+    <script src="js/truffle-contract.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/consumer_app.js"></script>
 </body>
 </html>

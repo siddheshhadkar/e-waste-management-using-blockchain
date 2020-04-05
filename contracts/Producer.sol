@@ -85,6 +85,7 @@ contract Producer {
             compareStrings(ProductList[i].typeOfProduct,_type) && 
             compareStrings(ProductList[i].name,_name) 
             && _quantity>0 && ProductList[i].retailerAddress==address(0)){
+
                 ProductList[i].retailerAddress=msg.sender;
                 _quantity--;
                 _sum=_sum+ProductList[i].price;
@@ -94,8 +95,21 @@ contract Producer {
         cost=_sum;    
 	}
 
-	function soldToConsumer(uint _id,address _consumer) public{
-	    ProductList[_id].consumerAddress=_consumer;
+	function soldToConsumer(address _retailer,string memory _name,string memory _type,uint _quantity) public{
+	    uint _sum=0;
+        for(uint i=0;i<ProductList.length;i++){
+            if(ProductList[i].retailerAddress==_retailer && 
+            compareStrings(ProductList[i].typeOfProduct,_type) && 
+            compareStrings(ProductList[i].name,_name) 
+            && _quantity>0 && ProductList[i].consumerAddress==address(0) ){
+                
+                ProductList[i].consumerAddress=msg.sender;
+                _quantity--;
+                _sum=_sum+ProductList[i].price;
+                
+            }
+        }
+        cost=_sum;
 	}
 
     function addPercentage(uint _id,uint _percentage) public{

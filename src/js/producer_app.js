@@ -13,7 +13,10 @@ ProApp={
 
         if(productname!="" && weightglass!="" && weightplastic!="" && weightnickel!="" && weightaluminium!="" && weightcopper!="" && weightmagnesium!="" && weightlead!="" && price!=""){
             App.contracts.Producer.deployed().then(function (instance) {
-                instance.addProduct(productname, producttype, weightaluminium, weightnickel, weightglass, weightplastic, weightcopper, weightmagnesium, weightlead, price, {from:App.account});
+                instance.addProduct(productname, producttype, weightaluminium, weightnickel, weightglass, weightplastic, weightcopper, weightmagnesium, weightlead, price, {from:App.account}).then(function (receipt) {
+                    ProApp.render();
+                })
+                
             });
         }else{
             alert("Fill empty fields");
@@ -53,12 +56,20 @@ ProApp={
         if (productid!="") {
             App.contracts.Producer.deployed().then(function(instance) {
                 pInstance=instance;
-                pInstance.ProductList(productid).then(function (singleProduct) {
-                    if(App.account==singleProduct[0] && singleProduct[5]==true && singleProduct[6]==false){
-                        pInstance.addReturnProduct(productid);
-                        console.log("Added to returned")
-                    }else{
+                pInstance.getProductCount().then(function (count) {
+                    if(count<productid){
                         alert("Enter Valid Product Id");
+                    }else{
+                        pInstance.ProductList(productid).then(function (singleProduct) {
+                            if(App.account==singleProduct[0] && singleProduct[5]==true && singleProduct[6]==false){
+                                pInstance.addReturnProduct(productid).then(function (receipt) {
+                                    console.log("Added to returned");
+                                    ProApp.render();
+                                })
+                            }else{
+                                alert("Enter Valid Product Id");
+                            }
+                        })
                     }
                 })
             });
@@ -100,11 +111,11 @@ ProApp={
             for(let i=0;i<pCount;i++){
                 pInstance.ProductList(i).then(function (singleProduct) {
                     if (App.account==singleProduct[0] && singleProduct[5]==true && singleProduct[6]==true) {
-                        var id=pid;
+                        var id=rid;
                         var name=singleProduct[3];
                         var type=singleProduct[4];
-                        var productTemplate = "<tr><th>" + id + "</th><td>" + name + "</td><td>" + type + "</td></tr>";
-                        productList.append(productTemplate);
+                        var productTemplate = "<tr><td>" + id + "</td><td>" + name + "</td><td>" + type + "</td></tr>";
+                        returnList.append(productTemplate);
                     }
                     rid++;
                 })

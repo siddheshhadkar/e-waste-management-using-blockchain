@@ -59,7 +59,7 @@ App = {
     
     makeTransaction:function (receiver,sender,amount) {
         amount=Number(amount);
-        console.log(amount);
+        // console.log(amount);
         web3.eth.sendTransaction({
             to:receiver,
             from:sender,

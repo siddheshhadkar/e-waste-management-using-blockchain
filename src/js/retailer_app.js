@@ -51,7 +51,54 @@ RecApp={
                     producerSelect.append(producerOption);
                 })
             }
-        })
+        });
+
+        var pInstance;
+        var pid=0;
+        App.contracts.Producer.deployed().then(function(instance) {
+            pInstance=instance;
+            return pInstance.getProductCount();
+        }).then(function(pCount) {
+            var productList=$('#productList');
+            productList.empty();
+
+            for(let i=0;i<pCount;i++){
+                pInstance.ProductList(i).then(function (singleProduct) {
+                    // console.log(singleProduct);
+                    if (App.account==singleProduct[1] && singleProduct[5]==false && singleProduct[6]==false
+                        && singleProduct[2]== "0x0000000000000000000000000000000000000000") {
+                        // console.log("inside",singleProduct);
+                        var id=pid;
+                        var name=singleProduct[3];
+                        var type=singleProduct[4];
+                        var productTemplate = "<tr><td>" + id + "</td><td>" + name + "</td><td>" + type + "</td></tr>";
+                        productList.append(productTemplate);
+                    }
+                    pid++;
+                })
+            }
+            return pCount;
+        }).then(function (pCount) {
+            var rid=0;
+            var returnList=$('#returnedProductList');
+            returnList.empty();
+
+            for(let i=0;i<pCount;i++){
+                pInstance.ProductList(i).then(function (singleProduct) {
+                    if (App.account==singleProduct[1] && singleProduct[5]==true && singleProduct[6]==false) {
+                        var id=rid;
+                        var name=singleProduct[3];
+                        var type=singleProduct[4];
+                        console.log(id,name,type);
+                        var productTemplate = "<tr><td>" + id + "</td><td>" + name + "</td><td>" + type + "</td></tr>";
+                        returnList.append(productTemplate);
+                    }
+                    rid++;
+                })
+            }
+        });
+
+
     },
 
     buyProduct:function () {
@@ -59,24 +106,31 @@ RecApp={
         var pType=$('#productType').val();
         var productname = $('#productlistSelect').val();
         var quantity = $('#quantity').val();
-        RecApp.frequency={};
+        var pInstance;
 
         if (pAddress!=null && pType!=null&& productlistSelect!=null && quantity!="") {
             if(quantity>RecApp.QuantityAvailable || quantity==0){
                 alert("Enter Valid Quantity");
             }else{
-                alert("Fine");
+                // alert("Fine");
                 App.contracts.Producer.deployed().then(function (instance) {
-                    instance.soldToRetailer(pAddress,productname,pType,quantity).then(function (argument) {
+                    pInstance=instance
+                    instance.soldToRetailer(pAddress,productname,pType,quantity).then(function (receipt) {
                         return instance.cost();
                     }).then(function (amount) {
                         console.log(amount);
-                        var res=App.makeTransaction(pAddress,App.account,amount);
-                        if(res=="success"){
-                            alert("Transaction Process Completed");
-                        }else{
-                            alert("Transaction Process Failed");
-                        }
+                        web3.eth.sendTransaction({
+                            to:pAddress,
+                            from:App.account,
+                            value:web3.toWei(amount,'ether')
+                        },function (error,result) {
+                            if (!error) {
+                                alert("Transaction successful");
+                                RecApp.render();
+                            }else{
+                                alert("Transaction Failed");
+                            }
+                        })
                     })
                 })
             }
@@ -106,7 +160,7 @@ RecApp={
             for (let i = 0; i <pCount; i++) {
                 pInstance.ProductList(i).then(function(singleProduct) {
                     if(singleProduct[1]=="0x0000000000000000000000000000000000000000" && singleProduct[0]==pAddress && singleProduct[4]==pType){
-                        console.log(singleProduct);
+                        // console.log("inside",singleProduct);
                         if(singleProduct[3] in RecApp.frequency){
                             RecApp.frequency[singleProduct[3]]+=1;
                         }else{
@@ -118,7 +172,7 @@ RecApp={
 
                         function printOne(values) {
                             var productOption = "<option value='" + values + "' >" + values + "</ option>";
-                            console.log(values);
+                            // console.log(values);
                             productlistSelect.append(productOption);
                         }
                         nameSet.forEach(printOne);
@@ -149,7 +203,59 @@ RecApp={
             RecApp.QuantityAvailable=RecApp.frequency[type];
             alert("Available Stock: "+RecApp.frequency[type]);
         }
-    }
+    },
+
+    addReturnProduct:function() {
+        var productid=$('#productid').val();
+        var percent=$('#percent').val();
+        var pInstance;
+        if (productid!="") {
+            App.contracts.Producer.deployed().then(function(instance) {
+                pInstance=instance;
+                pInstance.getProductCount().then(function (count) {
+                    if(count<productid){
+                       alert("Enter Valid Product Id"); 
+                    }
+                    else{
+                        pInstance.ProductList(productid).then(function (singleProduct) {
+                    if(App.account==singleProduct[1] && singleProduct[5]==false && singleProduct[6]==false
+                        && singleProduct[2]!="0x0000000000000000000000000000000000000000"){
+                        pInstance.addReturnProductToRetailer(productid).then(function (receipt) {
+                            pInstance.ProductList(productid).then(function (singleProduct) {
+                                console.log("object",singleProduct);
+                                console.log("price",singleProduct[8]);
+
+                                var amount=(singleProduct[8]*percent)/100;
+                                console.log(amount);
+                                web3.eth.sendTransaction({
+                                    to:singleProduct[2],
+                                    from:App.account,
+                                    value:web3.toWei(amount,'ether')
+                                },function (error,result) {
+                                    if (!error) {
+                                        alert("Transaction successful");
+                                        RecApp.render();
+                                    }else{
+                                        alert("Transaction Failed");
+                                    }
+                                })
+                            })
+                        })
+                        
+                    }else{
+                        alert("Enter Valid Product Id");
+                    }
+                })
+
+
+                    }
+                })
+                
+            });
+        }else{
+            alert("Fill empty fields");
+        }
+    },
 }
 
 $(document).ready(function(){
