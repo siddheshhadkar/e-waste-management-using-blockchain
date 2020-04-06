@@ -13,6 +13,16 @@ contract Producer {
 
     uint public cost;
 
+     struct weightStruct{
+        uint weightOfGlass;
+        uint weightOfPlastic;
+        uint weightOfNickel;
+        uint weightOfAluminium;
+        uint weightOfCopper;
+        uint weightOfMagnesium;
+        uint weightOfLead;
+    }
+
     // 0 weightOfGlass;
     // 1 weightOfPlastic;
     // 2 weightOfNickel;
@@ -30,11 +40,11 @@ contract Producer {
         bool returnedToRetailer;
         bool returnedToProducer;
         uint reusePercentage;
-        uint[7] weights;
         uint price;
     }
 
     Product[] public ProductList;
+    weightStruct[] public weights;
 
 	constructor() public {
         owner=msg.sender;
@@ -44,21 +54,15 @@ contract Producer {
 		uint _weightOfAluminium, uint _weightOfNickel, uint _weightOfGlass, uint _weightOfPlastic,
 		uint _weightOfCopper, uint _weightOfMagnesium, uint _weightOfLead,uint _price) public  {
 
-        uint[7] memory temp;
-
-        temp[0]=_weightOfGlass;
-        temp[1]=_weightOfPlastic;
-        temp[2]=_weightOfNickel;
-        temp[3]=_weightOfAluminium;
-        temp[4]=_weightOfCopper;
-        temp[5]=_weightOfMagnesium;
-        temp[6]=_weightOfLead;
-
 		ProductList.push(Product(msg.sender,
 			address(0),
 			address(0),
 			_name,_type,
-			false,false,0,temp,_price));
+			false,false,0,_price));
+
+        weights.push(weightStruct(_weightOfGlass,_weightOfPlastic,
+            _weightOfNickel,_weightOfAluminium,_weightOfCopper,
+            _weightOfMagnesium,_weightOfLead));
 	}
 
 	function getProductCount() public view returns(uint){
