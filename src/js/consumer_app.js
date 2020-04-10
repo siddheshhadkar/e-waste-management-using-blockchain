@@ -13,7 +13,7 @@ ConApp={
                         amInstance = i;
                         amInstance.checkConsumer(App.account).then(function(exists){
                             if (!exists) {
-                                alert("Please log in with a Producer account to access this page");
+                                alert("Please log in with a Consumer account to access this page");
                             }else{
                                 amInstance.getConsumerName(App.account).then(function(accountName){
                                     $('#accountaddress').html("Your account name: " + accountName);
@@ -184,27 +184,30 @@ ConApp={
             if(quantity>ConApp.QuantityAvailable || quantity==0){
                 alert("Enter Valid Quantity");
             }else{
-                // alert("Fine");
                 App.contracts.Producer.deployed().then(function (instance) {
                     pInstance=instance;
-                    instance.soldToConsumer(rAddress,productname,pType,quantity).then(function (receipt) {
-                        return instance.cost();
-                    }).then(function (amount) {
-                        console.log(amount);
-                        web3.eth.sendTransaction({
-                            to:rAddress,
-                            from:App.account,
-                            value:web3.toWei(amount,'ether')
-                        },function (error,result) {
-                            if (!error) {
-                                alert("Transaction successful");
-                                ConApp.render();
-                            }else{
-                                alert("Transaction Failed");
-                            }
-                        })
+                    instance.getCostForConsumer(rAddress,productname,pType,quantity).then(function (amount) {
+                        var proceed=confirm("Total Cost of product(s):"+amount+" ethers\nPress ok to continue");
+                        if (proceed) {
+                                web3.eth.sendTransaction({
+                                to:rAddress,
+                                from:App.account,
+                                value:web3.toWei(amount,'ether')
+                            },function (error,result) {
+                                if (!error) {
+                                    pInstance.soldToConsumer(rAddress,productname,pType,quantity).then(function (receipt) {
+                                        alert("Transaction Successful");
+                                        ConApp.render();
+                                    })
+                                    
+                                }else{
+                                    alert("Transaction Failed");
+                                }
+                            })
+                        }
                     })
                 })
+                
 
             }
         }else{
@@ -219,3 +222,24 @@ $(document).ready(function(){
         ConApp.loadAddress();
     });
 });
+
+// App.contracts.Producer.deployed().then(function (instance) {
+//                     pInstance=instance;
+//                     instance.soldToConsumer(rAddress,productname,pType,quantity).then(function (receipt) {
+//                         return instance.cost();
+//                     }).then(function (amount) {
+//                         console.log(amount);
+//                         web3.eth.sendTransaction({
+//                             to:rAddress,
+//                             from:App.account,
+//                             value:web3.toWei(amount,'ether')
+//                         },function (error,result) {
+//                             if (!error) {
+//                                 alert("Transaction successful");
+//                                 ConApp.render();
+//                             }else{
+//                                 alert("Transaction Failed");
+//                             }
+//                         })
+//                     })
+//                 })

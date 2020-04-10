@@ -11,7 +11,6 @@ contract Producer {
          _;
     }
 
-    uint public cost;
 
      struct weightStruct{
         uint weightOfGlass;
@@ -81,9 +80,26 @@ contract Producer {
 
     }
 
+    function getCostForRetailer(address _producer,string memory _name,string memory _type,uint _quantity) public view returns (uint){
+        uint _sum=0;
+        for(uint i=0;i<ProductList.length;i++){
+            if(ProductList[i].producerAddress==_producer && 
+            compareStrings(ProductList[i].typeOfProduct,_type) && 
+            compareStrings(ProductList[i].name,_name) 
+            && _quantity>0 && ProductList[i].retailerAddress==address(0)){
+
+                // ProductList[i].retailerAddress=msg.sender;
+                _quantity--;
+                _sum=_sum+ProductList[i].price;
+                
+            }
+        }
+        return _sum;    
+    }
+
    
 	function soldToRetailer(address _producer,string memory _name,string memory _type,uint _quantity) public{
-        uint _sum=0;
+        
         for(uint i=0;i<ProductList.length;i++){
             if(ProductList[i].producerAddress==_producer && 
             compareStrings(ProductList[i].typeOfProduct,_type) && 
@@ -92,15 +108,30 @@ contract Producer {
 
                 ProductList[i].retailerAddress=msg.sender;
                 _quantity--;
+                
+            }
+        }
+          
+	}
+
+    function getCostForConsumer(address _retailer,string memory _name,string memory _type,uint _quantity) public view returns (uint){
+        uint _sum=0;
+        for(uint i=0;i<ProductList.length;i++){
+            if(ProductList[i].retailerAddress==_retailer && 
+            compareStrings(ProductList[i].typeOfProduct,_type) && 
+            compareStrings(ProductList[i].name,_name) 
+            && _quantity>0 && ProductList[i].consumerAddress==address(0) ){
+                
+                _quantity--;
                 _sum=_sum+ProductList[i].price;
                 
             }
         }
-        cost=_sum;    
-	}
+        return _sum;
+    }
 
 	function soldToConsumer(address _retailer,string memory _name,string memory _type,uint _quantity) public{
-	    uint _sum=0;
+	    
         for(uint i=0;i<ProductList.length;i++){
             if(ProductList[i].retailerAddress==_retailer && 
             compareStrings(ProductList[i].typeOfProduct,_type) && 
@@ -109,11 +140,9 @@ contract Producer {
                 
                 ProductList[i].consumerAddress=msg.sender;
                 _quantity--;
-                _sum=_sum+ProductList[i].price;
-                
+                        
             }
         }
-        cost=_sum;
 	}
 
     function addPercentage(uint _id,uint _percentage) public{

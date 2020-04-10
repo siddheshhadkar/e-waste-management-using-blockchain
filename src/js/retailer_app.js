@@ -1,4 +1,4 @@
-RecApp={
+   RecApp={
     QuantityAvailable:null,
     frequency:{},
 
@@ -102,35 +102,44 @@ RecApp={
     },
 
     buyProduct:function () {
+
         var pAddress=$('#producerSelect').val();
         var pType=$('#productType').val();
         var productname = $('#productlistSelect').val();
         var quantity = $('#quantity').val();
         var pInstance;
 
-        if (pAddress!=null && pType!=null&& productlistSelect!=null && quantity!="") {
+        console.log(pAddress,pType,productname,quantity);
+
+        if (pAddress!=null && pType!=null && productlistSelect!=null && quantity!="") {
+            
             if(quantity>RecApp.QuantityAvailable || quantity==0){
                 alert("Enter Valid Quantity");
             }else{
-                // alert("Fine");
+               
                 App.contracts.Producer.deployed().then(function (instance) {
-                    pInstance=instance
-                    instance.soldToRetailer(pAddress,productname,pType,quantity).then(function (receipt) {
-                        return instance.cost();
-                    }).then(function (amount) {
-                        console.log(amount);
-                        web3.eth.sendTransaction({
-                            to:pAddress,
-                            from:App.account,
-                            value:web3.toWei(amount,'ether')
-                        },function (error,result) {
-                            if (!error) {
-                                alert("Transaction successful");
-                                RecApp.render();
-                            }else{
-                                alert("Transaction Failed");
-                            }
-                        })
+                    pInstance=instance;
+
+                    console.log(pAddress,pType,productname,quantity,"inside");
+                    pInstance.getCostForRetailer(pAddress,productname,pType,quantity).then(function (amount) {
+                        var proceed=confirm("Total Cost of product(s):"+amount+" ethers\nPress ok to continue");
+                        if (proceed) {
+                                web3.eth.sendTransaction({
+                                to:pAddress,
+                                from:App.account,
+                                value:web3.toWei(amount,'ether')
+                                },function (error,result) {
+                                    if (!error) {
+                                        pInstance.soldToRetailer(pAddress,productname,pType,quantity).then(function (receipt) {
+                                            alert("Transaction Successful");
+                                            RecApp.render();
+                                        })
+                                        
+                                    }else{
+                                        alert("Transaction Failed");
+                                }
+                            })
+                        }
                     })
                 })
             }
@@ -220,12 +229,8 @@ RecApp={
                         pInstance.ProductList(productid).then(function (singleProduct) {
                     if(App.account==singleProduct[1] && singleProduct[5]==false && singleProduct[6]==false
                         && singleProduct[2]!="0x0000000000000000000000000000000000000000"){
-                        pInstance.addReturnProductToRetailer(productid).then(function (receipt) {
-                            pInstance.ProductList(productid).then(function (singleProduct) {
-                                console.log("object",singleProduct);
-                                console.log("price",singleProduct[8]);
-
-                                var amount=(singleProduct[8]*percent)/100;
+                            
+                            var amount=(singleProduct[8]*percent)/100;
                                 console.log(amount);
                                 web3.eth.sendTransaction({
                                     to:singleProduct[2],
@@ -233,14 +238,15 @@ RecApp={
                                     value:web3.toWei(amount,'ether')
                                 },function (error,result) {
                                     if (!error) {
-                                        alert("Transaction successful");
-                                        RecApp.render();
+                                        pInstance.addReturnProductToRetailer(productid).then(function (receipt) {
+                                            alert("Transaction successful");
+                                            RecApp.render();
+                                        })
                                     }else{
                                         alert("Transaction Failed");
                                     }
                                 })
-                            })
-                        })
+
                         
                     }else{
                         alert("Enter Valid Product Id");
@@ -263,3 +269,4 @@ $(document).ready(function(){
         RecApp.loadAddress();
     });
 });
+
