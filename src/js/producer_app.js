@@ -15,8 +15,8 @@ ProApp={
             App.contracts.Producer.deployed().then(function (instance) {
                 instance.addProduct(productname, producttype, weightaluminium, weightnickel, weightglass, weightplastic, weightcopper, weightmagnesium, weightlead, price, {from:App.account}).then(function (receipt) {
                     ProApp.render();
-                })
-                
+                });
+
             });
         }else{
             alert("Fill empty fields");
@@ -41,9 +41,9 @@ ProApp={
                                     $('.loader').hide();
                                     $('.container').show();
                                     ProApp.render();
-                                })
+                                });
                             }
-                        })
+                        });
                     });
                 }, 500);
             }
@@ -65,13 +65,13 @@ ProApp={
                                 pInstance.addReturnProduct(productid).then(function (receipt) {
                                     console.log("Added to returned");
                                     ProApp.render();
-                                })
+                                });
                             }else{
                                 alert("Enter Valid Product Id");
                             }
-                        })
+                        });
                     }
-                })
+                });
             });
         }else{
             alert("Fill empty fields");
@@ -100,7 +100,7 @@ ProApp={
                         productList.append(productTemplate);
                     }
                     pid++;
-                })
+                });
             }
             return pCount;
         }).then(function (pCount) {
@@ -118,10 +118,10 @@ ProApp={
                         returnList.append(productTemplate);
                     }
                     rid++;
-                })
+                });
             }
-        })
-    },
+        });
+    }
 }
 
 $(document).ready(function(){

@@ -1,4 +1,4 @@
-   RecApp={
+RecApp={
     QuantityAvailable:null,
     frequency:{},
 
@@ -49,7 +49,7 @@
                     var address=singleProducer[0];
                     var producerOption = "<option value='" + address + "' >" + name + "</ option>"
                     producerSelect.append(producerOption);
-                })
+                });
             }
         });
 
@@ -64,10 +64,8 @@
 
             for(let i=0;i<pCount;i++){
                 pInstance.ProductList(i).then(function (singleProduct) {
-                    // console.log(singleProduct);
                     if (App.account==singleProduct[1] && singleProduct[5]==false && singleProduct[6]==false
                         && singleProduct[2]== "0x0000000000000000000000000000000000000000") {
-                        // console.log("inside",singleProduct);
                         var id=pid;
                         var name=singleProduct[3];
                         var type=singleProduct[4];
@@ -75,7 +73,7 @@
                         productList.append(productTemplate);
                     }
                     pid++;
-                })
+                });
             }
             return pCount;
         }).then(function (pCount) {
@@ -89,59 +87,45 @@
                         var id=rid;
                         var name=singleProduct[3];
                         var type=singleProduct[4];
-                        console.log(id,name,type);
                         var productTemplate = "<tr><td>" + id + "</td><td>" + name + "</td><td>" + type + "</td></tr>";
                         returnList.append(productTemplate);
                     }
                     rid++;
-                })
+                });
             }
         });
-
-
     },
 
     buyProduct:function () {
-
         var pAddress=$('#producerSelect').val();
         var pType=$('#productType').val();
         var productname = $('#productlistSelect').val();
         var quantity = $('#quantity').val();
         var pInstance;
 
-        console.log(pAddress,pType,productname,quantity);
-
         if (pAddress!=null && pType!=null && productlistSelect!=null && quantity!="") {
-            
             if(quantity>RecApp.QuantityAvailable || quantity==0){
                 alert("Enter Valid Quantity");
             }else{
-               
                 App.contracts.Producer.deployed().then(function (instance) {
                     pInstance=instance;
-
-                    console.log(pAddress,pType,productname,quantity,"inside");
                     pInstance.getCostForRetailer(pAddress,productname,pType,quantity).then(function (amount) {
                         var proceed=confirm("Total Cost of product(s):"+amount+" ethers\nPress ok to continue");
-                        if (proceed) {
-                                web3.eth.sendTransaction({
-                                to:pAddress,
+                        if(proceed) {
+                            pInstance.soldToRetailer(pAddress,productname,pType,quantity, {
                                 from:App.account,
-                                value:web3.toWei(amount,'ether')
-                                },function (error,result) {
-                                    if (!error) {
-                                        pInstance.soldToRetailer(pAddress,productname,pType,quantity).then(function (receipt) {
-                                            alert("Transaction Successful");
-                                            RecApp.render();
-                                        })
-                                        
-                                    }else{
-                                        alert("Transaction Failed");
+                                value:web3.toWei(amount, 'ether')
+                            }).then(function(receipt){
+                                if (receipt!=undefined) {
+                                    alert("Transaction successful");
+                                    RecApp.render();
                                 }
-                            })
+                            });
+                        }else{
+                            alert("User cancelled transaction");
                         }
-                    })
-                })
+                    });
+                });
             }
         }else{
             alert("Fill empty fields");
@@ -149,6 +133,7 @@
     },
 
     updateProducer:function() {
+        $('.container').hide();
         var pAddress;
         var pInstance;
         App.contracts.Producer.deployed().then(function(instance) {
@@ -169,45 +154,42 @@
             for (let i = 0; i <pCount; i++) {
                 pInstance.ProductList(i).then(function(singleProduct) {
                     if(singleProduct[1]=="0x0000000000000000000000000000000000000000" && singleProduct[0]==pAddress && singleProduct[4]==pType){
-                        // console.log("inside",singleProduct);
                         if(singleProduct[3] in RecApp.frequency){
                             RecApp.frequency[singleProduct[3]]+=1;
                         }else{
                             RecApp.frequency[singleProduct[3]]=1;
                         }
                         nameSet.add(singleProduct[3]);
-                        var productlistSelect = $('#productlistSelect');
-                        productlistSelect.empty();
-
-                        function printOne(values) {
-                            var productOption = "<option value='" + values + "' >" + values + "</ option>";
-                            // console.log(values);
-                            productlistSelect.append(productOption);
-                        }
-                        nameSet.forEach(printOne);
                     }
                 });
             }
             setTimeout(function(){
-                var type=$('#productlistSelect').val();
-                console.log("from loop", RecApp.frequency);
-                console.log("type", type);
-                 if (RecApp.frequency[type]==undefined) {
+                function printOne(values) {
+                    var productOption = "<option value='" + values + "' >" + values + "</ option>";
+                    productlistSelect.append(productOption);
+                }
+                nameSet.forEach(printOne);
+                $('.loader').hide();
+                $('.container').show();
+
+                var pName=$('#productlistSelect').val();
+                 if (RecApp.frequency[pName]==undefined) {
                     RecApp.QuantityAvailable=0;
                     alert("Available Stock: 0");
+                    // TODO: field showinng available stock wherever applicable instead of alert
                  }else{
-                    RecApp.QuantityAvailable=RecApp.frequency[type];
-                    alert("Available Stock: "+RecApp.frequency[type]);
+                    RecApp.QuantityAvailable=RecApp.frequency[pName];
+                    alert("Available Stock: "+RecApp.frequency[pName]);
                  }
-
-            }, 1000);
-        })
+            }, 500);
+        });
     },
 
     updateCount:function () {
         var type=$('#productlistSelect').val();
         if (RecApp.frequency[type]==undefined) {
             alert("Available Stock: 0");
+            // TODO: field showinng available stock wherever applicable instead of alert
         }else{
             RecApp.QuantityAvailable=RecApp.frequency[type];
             alert("Available Stock: "+RecApp.frequency[type]);
@@ -223,40 +205,27 @@
                 pInstance=instance;
                 pInstance.getProductCount().then(function (count) {
                     if(count<productid){
-                       alert("Enter Valid Product Id"); 
+                       alert("Enter Valid Product Id");
                     }
                     else{
                         pInstance.ProductList(productid).then(function (singleProduct) {
-                    if(App.account==singleProduct[1] && singleProduct[5]==false && singleProduct[6]==false
-                        && singleProduct[2]!="0x0000000000000000000000000000000000000000"){
-                            
-                            var amount=(singleProduct[8]*percent)/100;
-                                console.log(amount);
-                                web3.eth.sendTransaction({
-                                    to:singleProduct[2],
-                                    from:App.account,
-                                    value:web3.toWei(amount,'ether')
-                                },function (error,result) {
-                                    if (!error) {
-                                        pInstance.addReturnProductToRetailer(productid).then(function (receipt) {
-                                            alert("Transaction successful");
-                                            RecApp.render();
-                                        })
-                                    }else{
-                                        alert("Transaction Failed");
+                            if(App.account==singleProduct[1] && singleProduct[5]==false && singleProduct[6]==false && singleProduct[2]!="0x0000000000000000000000000000000000000000"){
+                                var amount=(singleProduct[8]*percent)/100;
+                                pInstance.addReturnProductToRetailer(productid, singleProduct[2], percent, {
+                                    from: App.account,
+                                    value: web3.toWei(amount, 'ether')
+                                }).then(function(receipt){
+                                    if (receipt!=undefined) {
+                                        alert("Transaction successful");
+                                        RecApp.render();
                                     }
                                 })
-
-                        
-                    }else{
-                        alert("Enter Valid Product Id");
+                            }else{
+                                alert("Enter Valid Product Id");
+                            }
+                        });
                     }
-                })
-
-
-                    }
-                })
-                
+                });
             });
         }else{
             alert("Fill empty fields");
@@ -269,4 +238,3 @@ $(document).ready(function(){
         RecApp.loadAddress();
     });
 });
-

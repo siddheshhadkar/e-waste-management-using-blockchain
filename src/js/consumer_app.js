@@ -64,18 +64,11 @@ ConApp={
             productList.empty();
 
             for(let i=0;i<pCount;i++){
-            	// console.log("product",singleProduct);
                 pInstance.ProductList(i).then(function (singleProduct) {
-                    // console.log("product",singleProduct);
                     if (App.account==singleProduct[2] && singleProduct[5]==false && singleProduct[6]==false) {
-                        console.log(singleProduct,"inside");
-
                         var id=pid;
                         var name=singleProduct[3];
                         var type=singleProduct[4];
-
-                        console.log(id,name,type);
-
                         var productTemplate = "<tr><td>" + id + "</td><td>" + name + "</td><td>" + type + "</td></tr>";
                         productList.append(productTemplate);
                     }
@@ -89,9 +82,8 @@ ConApp={
             returnList.empty();
 
             for(let i=0;i<pCount;i++){
-                
+
                 pInstance.ProductList(i).then(function (singleProduct) {
-                    console.log("product",singleProduct);
                     if (App.account==singleProduct[2] && singleProduct[5]==true) {
                         var id=rid;
                         var name=singleProduct[3];
@@ -128,7 +120,6 @@ ConApp={
             for (let i = 0; i <pCount; i++) {
                 pInstance.ProductList(i).then(function(singleProduct) {
                     if(singleProduct[2]=="0x0000000000000000000000000000000000000000" && singleProduct[1]==rAddress && singleProduct[4]==pType){
-                        console.log(singleProduct);
                         if(singleProduct[3] in ConApp.frequency){
                             ConApp.frequency[singleProduct[3]]+=1;
                         }else{
@@ -140,7 +131,6 @@ ConApp={
 
                         function printOne(values) {
                             var productOption = "<option value='" + values + "' >" + values + "</ option>";
-                            // console.log(values);
                             productlistSelect.append(productOption);
                         }
                         nameSet.forEach(printOne);
@@ -149,8 +139,6 @@ ConApp={
             }
             setTimeout(function(){
                 var type=$('#productlistSelect').val();
-                // console.log("from loop", ConApp.frequency);
-                // console.log("type", type);
                  if (ConApp.frequency[type]==undefined) {
                     ConApp.QuantityAvailable=0;
                     alert("Available Stock: 0");
@@ -188,33 +176,24 @@ ConApp={
                     pInstance=instance;
                     instance.getCostForConsumer(rAddress,productname,pType,quantity).then(function (amount) {
                         var proceed=confirm("Total Cost of product(s):"+amount+" ethers\nPress ok to continue");
-                        if (proceed) {
-                                web3.eth.sendTransaction({
-                                to:rAddress,
-                                from:App.account,
-                                value:web3.toWei(amount,'ether')
-                            },function (error,result) {
-                                if (!error) {
-                                    pInstance.soldToConsumer(rAddress,productname,pType,quantity).then(function (receipt) {
-                                        alert("Transaction Successful");
-                                        ConApp.render();
-                                    })
-                                    
-                                }else{
-                                    alert("Transaction Failed");
-                                }
-                            })
+                        if(proceed){
+							pInstance.soldToConsumer(rAddress,productname,pType,quantity, {
+								from: App.account,
+								value: web3.toWei(amount, 'ether')
+							}).then(function(receipt){
+								if(receipt!=undefined){
+									alert("Transaction successful");
+									ConApp.render();
+								}
+							});
                         }
-                    })
-                })
-                
-
+                    });
+                });
             }
         }else{
             alert("Fill empty fields");
         }
-    },
-
+    }
 }
 
 $(document).ready(function(){
