@@ -20,9 +20,9 @@ ConApp={
                                     $('.loader').hide();
                                     $('.container').show();
                                     ConApp.render();
-                                })
+                                });
                             }
-                        })
+                        });
                     });
                 }, 500);
             }
@@ -45,12 +45,11 @@ ConApp={
 
             for (let i = 0; i < retailerCount; i++) {
                 amInstance.retailers(i).then(function (singleProducer) {
-
                     var name=singleProducer[2];
                     var address=singleProducer[0];
                     var producerOption = "<option value='" + address + "' >" + name + "</ option>"
                     retailerSelect.append(producerOption);
-                })
+                });
             }
         });
 
@@ -73,7 +72,7 @@ ConApp={
                         productList.append(productTemplate);
                     }
                     pid++;
-                })
+                });
             }
             return pCount;
         }).then(function (pCount) {
@@ -82,7 +81,6 @@ ConApp={
             returnList.empty();
 
             for(let i=0;i<pCount;i++){
-
                 pInstance.ProductList(i).then(function (singleProduct) {
                     if (App.account==singleProduct[2] && singleProduct[5]==true) {
                         var id=rid;
@@ -95,8 +93,6 @@ ConApp={
                 })
             }
         });
-
-
     },
 
     updateRetailer:function() {
@@ -147,7 +143,7 @@ ConApp={
                     alert("Available Stock: "+ConApp.frequency[type]);
                  }
 
-            }, 1000);
+            }, 500);
         })
     },
 
@@ -201,24 +197,3 @@ $(document).ready(function(){
         ConApp.loadAddress();
     });
 });
-
-// App.contracts.Producer.deployed().then(function (instance) {
-//                     pInstance=instance;
-//                     instance.soldToConsumer(rAddress,productname,pType,quantity).then(function (receipt) {
-//                         return instance.cost();
-//                     }).then(function (amount) {
-//                         console.log(amount);
-//                         web3.eth.sendTransaction({
-//                             to:rAddress,
-//                             from:App.account,
-//                             value:web3.toWei(amount,'ether')
-//                         },function (error,result) {
-//                             if (!error) {
-//                                 alert("Transaction successful");
-//                                 ConApp.render();
-//                             }else{
-//                                 alert("Transaction Failed");
-//                             }
-//                         })
-//                     })
-//                 })

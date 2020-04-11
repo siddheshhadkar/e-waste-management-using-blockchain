@@ -31,16 +31,16 @@ contract Producer {
     // 6 weightOfLead;
 
     struct Product {
-        address producerAddress;
-        address retailerAddress;
-        address consumerAddress;
-        string name;
-        string typeOfProduct;
-        bool returnedToRetailer;
-        bool returnedToProducer;
-        uint reusePercentage;
-        uint price;
-        uint percentConsumer;
+        address producerAddress;    //0
+        address retailerAddress;    //1
+        address consumerAddress;    //2
+        string name;                //3
+        string typeOfProduct;       //4
+        bool returnedToRetailer;    //5
+        bool returnedToProducer;    //6
+        uint reusePercentage;       //7
+        uint price;                 //8
+        uint percentConsumer;       //9
     }
 
     Product[] public ProductList;
@@ -119,8 +119,14 @@ contract Producer {
         _retailer.transfer(msg.value);
 	}
 
-    function addPercentage(uint _id,uint _percentage) public{
+    function addPercentage(uint _id,uint _percentage) public payable{
         ProductList[_id].reusePercentage=_percentage;
+        address payable _retailer = address(uint160(ProductList[_id].retailerAddress));
+        uint _percentConsumer = ProductList[_id].percentConsumer;
+        uint _price = ProductList[_id].price;
+        uint _amount = _percentConsumer*_price*10**16 + _percentage*_price*10**15;
+        _retailer.transfer(_amount);
+        msg.sender.transfer(msg.value - _amount);
     }
 
     //Consumer Methods
