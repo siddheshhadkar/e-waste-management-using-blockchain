@@ -133,7 +133,6 @@ RecApp={
     },
 
     updateProducer:function() {
-        $('.container').hide();
         var pAddress;
         var pInstance;
         App.contracts.Producer.deployed().then(function(instance) {
@@ -142,6 +141,7 @@ RecApp={
         }).then(function (pCount) {
             var pAddress=$('#producerSelect').val();
             var pType=$('#productType').val();
+            // var pName=$('#productlistSelect').val();
             var nameSet=new Set();
             RecApp.frequency={};
 
@@ -160,28 +160,26 @@ RecApp={
                             RecApp.frequency[singleProduct[3]]=1;
                         }
                         nameSet.add(singleProduct[3]);
+                        productlistSelect.empty();
+                        function printOne(values) {
+                            var productOption = "<option value='" + values + "' >" + values + "</ option>";
+                            productlistSelect.append(productOption);
+                         }
+                        nameSet.forEach(printOne);
                     }
                 });
             }
             setTimeout(function(){
-                function printOne(values) {
-                    var productOption = "<option value='" + values + "' >" + values + "</ option>";
-                    productlistSelect.append(productOption);
-                }
-                nameSet.forEach(printOne);
-                $('.loader').hide();
-                $('.container').show();
-
-                var pName=$('#productlistSelect').val();
-                 if (RecApp.frequency[pName]==undefined) {
-                    RecApp.QuantityAvailable=0;
-                    alert("Available Stock: 0");
-                    // TODO: field showinng available stock wherever applicable instead of alert
-                 }else{
-                    RecApp.QuantityAvailable=RecApp.frequency[pName];
-                    alert("Available Stock: "+RecApp.frequency[pName]);
-                 }
-            }, 500);
+               var pName=$('#productlistSelect').val();
+                    if (RecApp.frequency[pName]==undefined) {
+                        RecApp.QuantityAvailable=0;
+                        alert("Available Stock: 0");
+                            // TODO: field showinng available stock wherever applicable instead of alert
+                    }else{
+                        RecApp.QuantityAvailable=RecApp.frequency[pName];
+                        alert("Available Stock: "+RecApp.frequency[pName]);
+                    }
+            }, 1000);
         });
     },
 

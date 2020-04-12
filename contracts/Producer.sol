@@ -119,14 +119,17 @@ contract Producer {
         _retailer.transfer(msg.value);
 	}
 
-    function addPercentage(uint _id,uint _percentage) public payable{
-        ProductList[_id].reusePercentage=_percentage;
-        address payable _retailer = address(uint160(ProductList[_id].retailerAddress));
+     function getValue(uint _id,uint _percentage) public view returns(uint){
         uint _percentConsumer = ProductList[_id].percentConsumer;
         uint _price = ProductList[_id].price;
         uint _amount = _percentConsumer*_price*10**16 + _percentage*_price*10**15;
-        _retailer.transfer(_amount);
-        msg.sender.transfer(msg.value - _amount);
+        return _amount;
+    }
+
+    function addPercentage(uint _id,uint _percentage) public payable{
+        ProductList[_id].reusePercentage=_percentage;
+        address payable _retailer = address(uint160(ProductList[_id].retailerAddress));
+        _retailer.transfer(msg.value);
     }
 
     //Consumer Methods

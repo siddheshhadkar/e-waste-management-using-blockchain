@@ -75,16 +75,19 @@ RecycApp={
                 						var reusedpercentage=(totalReused/totalweight)*100;
                 						reusedpercentage=Math.round(reusedpercentage);
 
-										var proceed=confirm("4 ethers will be deducted from your account now\nRemaining ether will be reverted back to your account");
+										var proceed=confirm("Press OK to continue");
 										if(proceed) {
-											pInstance.addPercentage(productid, reusedpercentage, {
-												from: App.account,
-												value: web3.toWei(4, 'ether')
-											}).then(function(receipt){
-												if(receipt!=undefined) {
-													alert("Transaction successful");
-												}
+											pInstance.getValue(productid, reusedpercentage).then(function (amount) {
+												pInstance.addPercentage(productid, reusedpercentage, {
+													from: App.account,
+													value: amount
+												}).then(function(receipt){
+													if(receipt!=undefined) {
+														alert("Transaction successful");
+													}
+												})
 											});
+											
 										}else{
 											alert("User cancelled transaction");
 										}
