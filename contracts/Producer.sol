@@ -41,6 +41,7 @@ contract Producer {
         uint reusePercentage;       //7
         uint price;                 //8
         uint percentConsumer;       //9
+        bool markedByAdmin;         //10
     }
 
     Product[] public ProductList;
@@ -59,7 +60,7 @@ contract Producer {
     }
 
 	function addProduct(string memory _name,string memory _type, uint _weightOfAluminium, uint _weightOfNickel, uint _weightOfGlass, uint _weightOfPlastic, uint _weightOfCopper, uint _weightOfMagnesium, uint _weightOfLead,uint _price) public  {
-		ProductList.push(Product(msg.sender, address(0), address(0), _name,_type, false, false, 0, _price, 0));
+		ProductList.push(Product(msg.sender, address(0), address(0), _name,_type, false, false, 0, _price, 0,false));
         weights.push(weightStruct(_weightOfGlass,_weightOfPlastic, _weightOfNickel,_weightOfAluminium,_weightOfCopper, _weightOfMagnesium,_weightOfLead));
 	}
 
@@ -131,6 +132,24 @@ contract Producer {
         address payable _retailer = address(uint160(ProductList[_id].retailerAddress));
         _retailer.transfer(msg.value);
     }
+
+    function sendIncentives (uint[] memory _products,address payable _producer) public payable {
+        //marking products marked by admin
+        for(uint i=0;i<_products.length;i++){
+            ProductList[_products[i]].markedByAdmin=true;
+        }
+        _producer.transfer(msg.value);        
+    }
+
+    function penalizeProducer (uint[] memory _products,address _producer) public {
+         //marking products marked by admin
+        for(uint i=0;i<_products.length;i++){
+            ProductList[_products[i]].markedByAdmin=true;
+        }
+        
+    }
+    
+    
 
     //Consumer Methods
     function fetchProductReferenceConsumer(address _address) public view returns(uint){

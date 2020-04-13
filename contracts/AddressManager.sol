@@ -1,9 +1,9 @@
 pragma solidity >=0.4.21 <0.7.0;
 
 contract AddressManager{
-    address owner;
+    address public owner;
 
-    User[] public producers;
+    producer[] public producers;
     User[] public retailers;
     User[] public consumers;
     User[] public recycleUnits;
@@ -11,6 +11,13 @@ contract AddressManager{
     modifier onlyOwner(){
         require(msg.sender == owner);
         _;
+    }
+
+    struct producer{
+        address addr;
+        bool ispresent;
+        string name;
+        uint penalize;
     }
 
     struct User{
@@ -25,7 +32,7 @@ contract AddressManager{
 
     function addProducer(address _pAddress,string memory _name) public returns(bool){
         if(!checkProducer(_pAddress)){
-            producers.push(User(_pAddress, true, _name));
+            producers.push(producer(_pAddress, true, _name,0));
             return true;
         }else{
             return false;
@@ -130,10 +137,10 @@ contract AddressManager{
     }
 
     //return names
-    function getProducerName(address _address) public view returns(string memory){
+    function getProducerName(address _address) public view returns(string memory,uint){
         for(uint i=0; i<producers.length; i++){
             if(producers[i].addr == _address){
-                return producers[i].name;
+                return (producers[i].name,producers[i].penalize);
             }
         }
     }
@@ -161,4 +168,32 @@ contract AddressManager{
             }
         }
     }
+
+    function addPenalizeAmount(uint _amount,address _producer) public {
+        for(uint i=0; i<producers.length; i++){
+            if(producers[i].addr == _producer){
+                producers[i].penalize=_amount;
+            }
+        }
+    }
+
+    function payPenalizeAmount(address _producer) public payable {
+        for(uint i=0; i<producers.length; i++){
+            if(producers[i].addr == _producer){
+                producers[i].penalize=0;
+            }
+        }
+        address payable _admin=address(uint160(owner));
+        _admin.transfer(msg.value);
+    }
+
+    function getPenalizeAmount(address _producer)public view returns(uint){
+        for(uint i=0; i<producers.length; i++){
+            if(producers[i].addr == _producer){
+                return producers[i].penalize;
+            }
+        }
+    }
+    
+    
 }

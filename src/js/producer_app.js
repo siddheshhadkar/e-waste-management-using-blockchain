@@ -25,6 +25,7 @@ ProApp={
 
     loadAddress:function() {
         $('.container').hide();
+        $('.penalizeform').hide();
         web3.eth.getCoinbase(function(err, account){
             if(err===null){
                 var amInstance;
@@ -36,11 +37,18 @@ ProApp={
                             if (!exists) {
                                 alert("Please log in with a Producer account to access this page");
                             }else{
-                                amInstance.getProducerName(App.account).then(function(accountName){
-                                    $('#accountaddress').html("Your account name: " + accountName);
+                                amInstance.getProducerName(App.account).then(function(data){
+                                    $('#accountaddress').html("Your account name: " + data[0]);
                                     $('.loader').hide();
-                                    $('.container').show();
-                                    ProApp.render();
+                            
+                                    if (data[1]==0) {
+
+                                        $('.container').show();
+                                        ProApp.render();
+                                    }else{
+                                        $('.penalizeform').show();
+                                        alert("You are penalized");
+                                    }
                                 });
                             }
                         });
@@ -121,6 +129,26 @@ ProApp={
                 });
             }
         });
+    },
+
+    payPenalty:function () {
+        var amInstance;
+        App.contracts.AddressManager.deployed().then(function (instance) {
+            amInstance=instance;
+            amInstance.getPenalizeAmount(App.account).then(function (amount) {
+                amInstance.payPenalizeAmount(App.account,{
+                    from:App.account,
+                    value:web3.toWei(amount,'ether')
+                }).then(function (receipt) {
+                    if (receipt!=undefined) {
+                        alert("Transaction Successful");
+                        $('.container').show();
+                        ProApp.render();
+                        $('.penalizeform').hide();
+                    }
+                })
+            })
+        })
     }
 }
 

@@ -40,7 +40,7 @@ ConApp={
         }).then(function (retailerCount) {
             var retailerSelect = $('#retailerSelect');
             retailerSelect.empty();
-            var producerOption = "<option value='" + null + "'disabled selected >" +"Select Producer" + "</ option>"
+            var producerOption = "<option value='" + null + "'disabled selected >" +"Select Retailer" + "</ option>"
             retailerSelect.append(producerOption);
 
             for (let i = 0; i < retailerCount; i++) {
