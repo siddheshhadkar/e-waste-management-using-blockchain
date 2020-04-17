@@ -12,7 +12,7 @@ ProApp={
         var price = $('#price').val();
 
         if(productname!="" && weightglass!="" && weightplastic!="" && weightnickel!="" && weightaluminium!="" && weightcopper!="" && weightmagnesium!="" && weightlead!="" && price!=""){
-            App.contracts.Producer.deployed().then(function (instance) {
+            App.contracts.NodeContract.deployed().then(function (instance) {
                 instance.addProduct(productname, producttype, weightaluminium, weightnickel, weightglass, weightplastic, weightcopper, weightmagnesium, weightlead, price, {from:App.account}).then(function (receipt) {
                     ProApp.render();
                 });
@@ -28,19 +28,19 @@ ProApp={
         $('.penalizeform').hide();
         web3.eth.getCoinbase(function(err, account){
             if(err===null){
-                var amInstance;
+                var acInstance;
                 App.account = account;
                 setTimeout(function(){
-                    App.contracts.AddressManager.deployed().then(function(i){
-                        amInstance = i;
-                        amInstance.checkProducer(App.account).then(function(exists){
+                    App.contracts.AdminContract.deployed().then(function(i){
+                        acInstance = i;
+                        acInstance.checkProducer(App.account).then(function(exists){
                             if (!exists) {
                                 alert("Please log in with a Producer account to access this page");
                             }else{
-                                amInstance.getProducerName(App.account).then(function(data){
+                                acInstance.getProducerName(App.account).then(function(data){
                                     $('#accountaddress').html("Your account name: " + data[0]);
                                     $('.loader').hide();
-                            
+
                                     if (data[1]==0) {
 
                                         $('.container').show();
@@ -62,7 +62,7 @@ ProApp={
         var productid=$('#productid').val();
         var pInstance;
         if (productid!="") {
-            App.contracts.Producer.deployed().then(function(instance) {
+            App.contracts.NodeContract.deployed().then(function(instance) {
                 pInstance=instance;
                 pInstance.getProductCount().then(function (count) {
                     if(count<productid){
@@ -89,7 +89,7 @@ ProApp={
     render:function () {
         var pInstance;
         var pid=0;
-        App.contracts.Producer.deployed().then(function(instance) {
+        App.contracts.NodeContract.deployed().then(function(instance) {
             pInstance=instance;
             return pInstance.getProductCount();
         }).then(function(pCount) {
@@ -132,11 +132,11 @@ ProApp={
     },
 
     payPenalty:function () {
-        var amInstance;
-        App.contracts.AddressManager.deployed().then(function (instance) {
-            amInstance=instance;
-            amInstance.getPenalizeAmount(App.account).then(function (amount) {
-                amInstance.payPenalizeAmount(App.account,{
+        var acInstance;
+        App.contracts.AdminContract.deployed().then(function (instance) {
+            acInstance=instance;
+            acInstance.getPenalizeAmount(App.account).then(function (amount) {
+                acInstance.payPenalizeAmount(App.account,{
                     from:App.account,
                     value:web3.toWei(amount,'ether')
                 }).then(function (receipt) {

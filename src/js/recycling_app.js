@@ -3,16 +3,16 @@ RecycApp={
         $('.container').hide();
         web3.eth.getCoinbase(function(err, account){
             if(err===null){
-                var amInstance;
+                var acInstance;
                 App.account = account;
                 setTimeout(function(){
-                    App.contracts.AddressManager.deployed().then(function(i){
-                        amInstance = i;
-                        amInstance.checkRecycleUnit(App.account).then(function(exists){
+                    App.contracts.AdminContract.deployed().then(function(i){
+                        acInstance = i;
+                        acInstance.checkRecycleUnit(App.account).then(function(exists){
                             if (!exists) {
                                 alert("Please log in with a Recycling Unit account to access this page");
                             }else{
-                                amInstance.getRecycleUnitName(App.account).then(function(accountName){
+                                acInstance.getRecycleUnitName(App.account).then(function(accountName){
                                     $('#accountaddress').html("Your account name: " + accountName);
                                     $('.loader').hide();
                                     $('.container').show();
@@ -37,7 +37,7 @@ RecycApp={
         var weightlead = $('#weightlead').val();
 
         if(productid!="" && weightglass!="" && weightnickel!="" && weightcopper!="" && weightmagnesium!="" && weightlead!=""){
-                App.contracts.Producer.deployed().then(function (instance) {
+                App.contracts.NodeContract.deployed().then(function (instance) {
                 	pInstance=instance;
                 	return instance.getProductCount();
                 }).then(function (count) {
@@ -87,7 +87,7 @@ RecycApp={
 													}
 												})
 											});
-											
+
 										}else{
 											alert("User cancelled transaction");
 										}

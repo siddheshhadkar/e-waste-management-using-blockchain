@@ -33,7 +33,7 @@ function addUser(){
 function addProducer(){
     var exists = false;
     var name = $('#name').val();
-    App.contracts.AddressManager.deployed().then(function(i){
+    App.contracts.AdminContract.deployed().then(function(i){
         i.checkProducer(App.account).then(function(res){
             exists = res;
             return i;
@@ -50,7 +50,7 @@ function addProducer(){
 function addRetailer(){
     var exists = false;
     var name = $('#name').val();
-    App.contracts.AddressManager.deployed().then(function(i){
+    App.contracts.AdminContract.deployed().then(function(i){
         i.checkRetailer(App.account).then(function(res){
             exists = res;
             return i;
@@ -67,7 +67,7 @@ function addRetailer(){
 function addConsumer(){
     var exists = false;
     var name = $('#name').val();
-    App.contracts.AddressManager.deployed().then(function(i){
+    App.contracts.AdminContract.deployed().then(function(i){
         i.checkConsumer(App.account).then(function(res){
             exists = res;
             return i;
@@ -84,7 +84,7 @@ function addConsumer(){
 function addRecycleUnit(){
     var exists = false;
     var name = $('#name').val();
-    App.contracts.AddressManager.deployed().then(function(i){
+    App.contracts.AdminContract.deployed().then(function(i){
         i.checkRecycleUnit(App.account).then(function(res){
             exists = res;
             return i;

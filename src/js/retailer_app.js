@@ -6,16 +6,16 @@ RecApp={
         $('.container').hide();
         web3.eth.getCoinbase(function(err, account){
             if(err===null){
-                var amInstance;
+                var acInstance;
                 App.account = account;
                 setTimeout(function(){
-                    App.contracts.AddressManager.deployed().then(function(i){
-                        amInstance = i;
-                        amInstance.checkRetailer(App.account).then(function(exists){
+                    App.contracts.AdminContract.deployed().then(function(i){
+                        acInstance = i;
+                        acInstance.checkRetailer(App.account).then(function(exists){
                             if (!exists) {
                                 alert("Please log in with a Retailer account to access this page");
                             }else{
-                                amInstance.getRetailerName(App.account).then(function(accountName){
+                                acInstance.getRetailerName(App.account).then(function(accountName){
                                     $('#accountaddress').html("Your account name: " + accountName);
                                     $('.loader').hide();
                                     $('.container').show();
@@ -30,13 +30,13 @@ RecApp={
     },
 
     render:function (argument) {
-        var amInstance;
+        var acInstance;
         var pAddress;
         var pInstance;
 
-        App.contracts.AddressManager.deployed().then(function (instance) {
-            amInstance=instance;
-            return amInstance.getProducerCount();
+        App.contracts.AdminContract.deployed().then(function (instance) {
+            acInstance=instance;
+            return acInstance.getProducerCount();
         }).then(function (producerCount) {
             var producerSelect = $('#producerSelect');
             producerSelect.empty();
@@ -44,7 +44,7 @@ RecApp={
             producerSelect.append(producerOption);
 
             for (let i = 0; i < producerCount; i++) {
-                amInstance.producers(i).then(function (singleProducer) {
+                acInstance.producers(i).then(function (singleProducer) {
                     var name=singleProducer[2];
                     var address=singleProducer[0];
                     var producerOption = "<option value='" + address + "' >" + name + "</ option>"
@@ -55,7 +55,7 @@ RecApp={
 
         var pInstance;
         var pid=0;
-        App.contracts.Producer.deployed().then(function(instance) {
+        App.contracts.NodeContract.deployed().then(function(instance) {
             pInstance=instance;
             return pInstance.getProductCount();
         }).then(function(pCount) {
@@ -107,7 +107,7 @@ RecApp={
             if(quantity>RecApp.QuantityAvailable || quantity==0){
                 alert("Enter Valid Quantity");
             }else{
-                App.contracts.Producer.deployed().then(function (instance) {
+                App.contracts.NodeContract.deployed().then(function (instance) {
                     pInstance=instance;
                     pInstance.getCostForRetailer(pAddress,productname,pType,quantity).then(function (amount) {
                         var proceed=confirm("Total Cost of product(s):"+amount+" ethers\nPress ok to continue");
@@ -135,7 +135,7 @@ RecApp={
     updateProducer:function() {
         var pAddress;
         var pInstance;
-        App.contracts.Producer.deployed().then(function(instance) {
+        App.contracts.NodeContract.deployed().then(function(instance) {
             pInstance=instance;
             return pInstance.getProductCount();
         }).then(function (pCount) {
@@ -199,7 +199,7 @@ RecApp={
         var percent=$('#percent').val();
         var pInstance;
         if (productid!="") {
-            App.contracts.Producer.deployed().then(function(instance) {
+            App.contracts.NodeContract.deployed().then(function(instance) {
                 pInstance=instance;
                 pInstance.getProductCount().then(function (count) {
                     if(count<productid){

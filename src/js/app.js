@@ -2,8 +2,8 @@ App = {
     web3Provider: null,
     contracts: {},
     contractAddress: {
-        AddressManager: '0x0',
-        Producer: '0x0'
+        AdminContract: '0x0',
+        NodeContract: '0x0'
     },
     account: '0x0',
 
@@ -56,7 +56,7 @@ App = {
     listenForEvents: function(){
 
     },
-    
+
     makeTransaction:function (receiver,sender,amount) {
         amount=Number(amount);
         // console.log(amount);

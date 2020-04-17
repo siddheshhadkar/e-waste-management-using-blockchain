@@ -1,8 +1,6 @@
 pragma solidity >=0.4.21 <0.7.0;
 
-import "./AddressManager.sol";
-
-contract Producer {
+contract NodeContract {
 
     address owner;
     uint currentPayableAmount;
@@ -13,22 +11,14 @@ contract Producer {
     }
 
      struct weightStruct{
-        uint weightOfGlass;
-        uint weightOfPlastic;
-        uint weightOfNickel;
-        uint weightOfAluminium;
-        uint weightOfCopper;
-        uint weightOfMagnesium;
-        uint weightOfLead;
+        uint weightOfGlass;         //0
+        uint weightOfPlastic;       //1
+        uint weightOfNickel;        //2
+        uint weightOfAluminium;     //3
+        uint weightOfCopper;        //4
+        uint weightOfMagnesium;     //5
+        uint weightOfLead;          //6
     }
-
-    // 0 weightOfGlass;
-    // 1 weightOfPlastic;
-    // 2 weightOfNickel;
-    // 3 weightOfAluminium;
-    // 4 weightOfCopper;
-    // 5 weightOfMagnesium;
-    // 6 weightOfLead;
 
     struct Product {
         address producerAddress;    //0
@@ -138,7 +128,7 @@ contract Producer {
         for(uint i=0;i<_products.length;i++){
             ProductList[_products[i]].markedByAdmin=true;
         }
-        _producer.transfer(msg.value);        
+        _producer.transfer(msg.value);
     }
 
     function penalizeProducer (uint[] memory _products,address _producer) public {
@@ -146,10 +136,8 @@ contract Producer {
         for(uint i=0;i<_products.length;i++){
             ProductList[_products[i]].markedByAdmin=true;
         }
-        
+
     }
-    
-    
 
     //Consumer Methods
     function fetchProductReferenceConsumer(address _address) public view returns(uint){

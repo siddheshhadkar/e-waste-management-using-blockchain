@@ -1,7 +1,7 @@
-var AddressManager = artifacts.require("./AddressManager.sol");
-var Producer = artifacts.require("./Producer.sol");
+var AdminContract = artifacts.require("./AdminContract.sol");
+var NodeContract = artifacts.require("./NodeContract.sol");
 
 module.exports = async function(deployer) {
-    await deployer.deploy(AddressManager);
-    await deployer.deploy(Producer);
+    await deployer.deploy(AdminContract);
+    await deployer.deploy(NodeContract);
 };

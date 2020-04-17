@@ -1,6 +1,6 @@
 pragma solidity >=0.4.21 <0.7.0;
 
-contract AddressManager{
+contract AdminContract{
     address public owner;
 
     producer[] public producers;
@@ -194,6 +194,6 @@ contract AddressManager{
             }
         }
     }
-    
-    
+
+
 }

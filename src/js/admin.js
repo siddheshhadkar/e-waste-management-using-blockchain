@@ -3,12 +3,12 @@ adminApp={
 	loadAddress:function () {
         web3.eth.getCoinbase(function(err, account){
             if(err===null){
-                var amInstance;
+                var acInstance;
                 App.account = account;
                 setTimeout(function(){
-                    App.contracts.AddressManager.deployed().then(function(i){
-                        amInstance = i;
-                        return amInstance.owner();
+                    App.contracts.AdminContract.deployed().then(function(i){
+                        acInstance = i;
+                        return acInstance.owner();
                     }).then(function (adminAddress) {
                     	if(adminAddress==App.account){
                     		$('#adminaddress').html("Your account address: " + adminAddress);
@@ -27,12 +27,12 @@ adminApp={
         $('#chart').hide();
         $('.list-content').hide();
         $('.form-div2').hide();
-        var amInstance;
+        var acInstance;
         var pAddress;
 
-        App.contracts.AddressManager.deployed().then(function (instance) {
-            amInstance=instance;
-            return amInstance.getProducerCount();
+        App.contracts.AdminContract.deployed().then(function (instance) {
+            acInstance=instance;
+            return acInstance.getProducerCount();
         }).then(function (producerCount) {
             var producerSelect = $('#producerSelect');
             producerSelect.empty();
@@ -40,7 +40,7 @@ adminApp={
             producerSelect.append(producerOption);
 
             for (let i = 0; i < producerCount; i++) {
-                amInstance.producers(i).then(function (singleProducer) {
+                acInstance.producers(i).then(function (singleProducer) {
                     var name=singleProducer[2];
                     var address=singleProducer[0];
                     var producerOption = "<option value='" + address + "' >" + name + "</ option>"
@@ -51,7 +51,7 @@ adminApp={
     },
     displayData:function () {
 
-        
+
 
         var producerSelect = $('#producerSelect').val();
 
@@ -67,8 +67,8 @@ adminApp={
             var pid=0;
             var count=0;
             var sumValue=0;
-            
-            App.contracts.Producer.deployed().then(function (instance) {
+
+            App.contracts.NodeContract.deployed().then(function (instance) {
                 pInstance=instance;
                 pInstance.getProductCount().then(function (productCount) {
                 var productList=$('#productList');
@@ -95,7 +95,7 @@ adminApp={
                         }
 
                         //for graph
-                        if (singleProduct[5]==true && singleProduct[6]==true && 
+                        if (singleProduct[5]==true && singleProduct[6]==true &&
                             singleProduct[0]==producerSelect && singleProduct[7]!=0) {
 
                             var rPercentage=singleProduct[7];
@@ -130,17 +130,11 @@ adminApp={
                                 y:reusedPercentages,
                                 type:'line'
                             }],
-                            layout);    
-            },500)
-            
-
+                            layout);
+            },500);
         }else{
             alert("Select a producer");
         }
-
-        
-        
-        
     },
 
     assessment:function () {
@@ -149,7 +143,7 @@ adminApp={
         var amount = $('#amount').val();
 
         if (performanceType=="Incentive") {
-            App.contracts.Producer.deployed().then(function (instance) {
+            App.contracts.NodeContract.deployed().then(function (instance) {
                 instance.sendIncentives(adminApp.idList,producerSelect,{
                     from:App.account,
                     value:web3.toWei(amount,'ether')
@@ -161,10 +155,10 @@ adminApp={
                 })
             })
         }else{
-            App.contracts.AddressManager.deployed().then(function (instance) {
+            App.contracts.AdminContract.deployed().then(function (instance) {
                 instance.addPenalizeAmount(amount,producerSelect).then(function (receipt) {
                     if (receipt!=undefined) {
-                        App.contracts.Producer.deployed().then(function (instance) {
+                        App.contracts.NodeContract.deployed().then(function (instance) {
                             instance.penalizeProducer(adminApp.idList,producerSelect).then(function (receipt) {
                                 if (receipt!=undefined) {
                                     alert("Transaction successful");

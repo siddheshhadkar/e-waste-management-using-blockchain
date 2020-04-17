@@ -6,16 +6,16 @@ ConApp={
         $('.container').hide();
         web3.eth.getCoinbase(function(err, account){
             if(err===null){
-                var amInstance;
+                var acInstance;
                 App.account = account;
                 setTimeout(function(){
-                    App.contracts.AddressManager.deployed().then(function(i){
-                        amInstance = i;
-                        amInstance.checkConsumer(App.account).then(function(exists){
+                    App.contracts.AdminContract.deployed().then(function(i){
+                        acInstance = i;
+                        acInstance.checkConsumer(App.account).then(function(exists){
                             if (!exists) {
                                 alert("Please log in with a Consumer account to access this page");
                             }else{
-                                amInstance.getConsumerName(App.account).then(function(accountName){
+                                acInstance.getConsumerName(App.account).then(function(accountName){
                                     $('#accountaddress').html("Your account name: " + accountName);
                                     $('.loader').hide();
                                     $('.container').show();
@@ -30,13 +30,13 @@ ConApp={
     },
 
     render:function (argument) {
-        var amInstance;
+        var acInstance;
         var pAddress;
         var pInstance;
 
-        App.contracts.AddressManager.deployed().then(function (instance) {
-            amInstance=instance;
-            return amInstance.getRetailerCount();
+        App.contracts.AdminContract.deployed().then(function (instance) {
+            acInstance=instance;
+            return acInstance.getRetailerCount();
         }).then(function (retailerCount) {
             var retailerSelect = $('#retailerSelect');
             retailerSelect.empty();
@@ -44,7 +44,7 @@ ConApp={
             retailerSelect.append(producerOption);
 
             for (let i = 0; i < retailerCount; i++) {
-                amInstance.retailers(i).then(function (singleProducer) {
+                acInstance.retailers(i).then(function (singleProducer) {
                     var name=singleProducer[2];
                     var address=singleProducer[0];
                     var producerOption = "<option value='" + address + "' >" + name + "</ option>"
@@ -55,7 +55,7 @@ ConApp={
 
         var pInstance;
         var pid=0;
-        App.contracts.Producer.deployed().then(function(instance) {
+        App.contracts.NodeContract.deployed().then(function(instance) {
             pInstance=instance;
             return pInstance.getProductCount();
         }).then(function(pCount) {
@@ -98,7 +98,7 @@ ConApp={
     updateRetailer:function() {
         var pAddress;
         var pInstance;
-        App.contracts.Producer.deployed().then(function(instance) {
+        App.contracts.NodeContract.deployed().then(function(instance) {
             pInstance=instance;
             return pInstance.getProductCount();
         }).then(function (pCount) {
@@ -168,7 +168,7 @@ ConApp={
             if(quantity>ConApp.QuantityAvailable || quantity==0){
                 alert("Enter Valid Quantity");
             }else{
-                App.contracts.Producer.deployed().then(function (instance) {
+                App.contracts.NodeContract.deployed().then(function (instance) {
                     pInstance=instance;
                     instance.getCostForConsumer(rAddress,productname,pType,quantity).then(function (amount) {
                         var proceed=confirm("Total Cost of product(s):"+amount+" ethers\nPress ok to continue");
