@@ -1,6 +1,7 @@
 RecApp={
     QuantityAvailable:null,
     frequency:{},
+    returnProductIDs: new Set(),
 
     loadAddress:function (argument) {
         $('.container').hide();
@@ -79,12 +80,18 @@ RecApp={
         }).then(function (pCount) {
             var rid=0;
             var returnList=$('#returnedProductList');
-            returnList.empty();
+            var flag = false;
 
             for(let i=0;i<pCount;i++){
                 pInstance.ProductList(i).then(function (singleProduct) {
                     if (App.account==singleProduct[1] && singleProduct[5]==true && singleProduct[6]==false) {
+                        if (flag == false) {
+                            returnList.empty();
+                            $('#returnProductsButton').show();
+                            flag = true;
+                        }
                         var id=rid;
+                        RecApp.returnProductIDs.add(id);    //used set to avoid duplication because render is called multiple times
                         var name=singleProduct[3];
                         var type=singleProduct[4];
                         var productTemplate = "<tr><td>" + id + "</td><td>" + name + "</td><td>" + type + "</td></tr>";
@@ -229,6 +236,20 @@ RecApp={
             alert("Fill empty fields");
         }
     },
+
+    returnToProducer: function(){
+        App.contracts.NodeContract.deployed().then(function(instance){
+            var ncInstance = instance;
+            var ids = [];
+            RecApp.returnProductIDs.forEach((item) => {
+                ids.push(item);
+            });
+            instance.addReturnProducts(ids).then(function(){
+                RecApp.returnProductIDs.clear();
+                RecApp.render();
+            });
+        });
+    }
 }
 
 $(document).ready(function(){

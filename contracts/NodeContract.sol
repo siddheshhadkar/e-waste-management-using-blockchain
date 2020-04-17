@@ -49,17 +49,21 @@ contract NodeContract {
         return (keccak256(abi.encodePacked((a))) == keccak256(abi.encodePacked((b))));
     }
 
-	function addProduct(string memory _name,string memory _type, uint _weightOfAluminium, uint _weightOfNickel, uint _weightOfGlass, uint _weightOfPlastic, uint _weightOfCopper, uint _weightOfMagnesium, uint _weightOfLead,uint _price) public  {
-		ProductList.push(Product(msg.sender, address(0), address(0), _name,_type, false, false, 0, _price, 0,false));
-        weights.push(weightStruct(_weightOfGlass,_weightOfPlastic, _weightOfNickel,_weightOfAluminium,_weightOfCopper, _weightOfMagnesium,_weightOfLead));
+	function addProduct(string memory _name,string memory _type, uint _weightOfAluminium, uint _weightOfNickel, uint _weightOfGlass, uint _weightOfPlastic, uint _weightOfCopper, uint _weightOfMagnesium, uint _weightOfLead,uint _price, uint _quantity) public{
+        for(uint i=0; i<_quantity;i++){
+            ProductList.push(Product(msg.sender, address(0), address(0), _name,_type, false, false, 0, _price, 0,false));
+            weights.push(weightStruct(_weightOfGlass,_weightOfPlastic, _weightOfNickel,_weightOfAluminium,_weightOfCopper, _weightOfMagnesium,_weightOfLead));
+        }
 	}
 
 	function getProductCount() public view returns(uint){
 	    return ProductList.length;
 	}
 
-	function addReturnProduct(uint _id) public{
-	    ProductList[_id].returnedToProducer = true;
+	function addReturnProducts(uint[] memory _ids) public{
+        for(uint i=0; i<_ids.length; i++){
+            ProductList[_ids[i]].returnedToProducer = true;
+        }
 	}
 
 	function addReturnProductToRetailer(uint _id, address payable _address, uint _percentConsumer) public payable{

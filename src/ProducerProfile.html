@@ -59,6 +59,9 @@
 							<option value="Laptop">Laptop</option>
 							<option value="Speaker">Speaker</option>
 					    </select>
+
+						<label for="quantity">Quantity</label>
+						<input type="number" id="quantity" name="quantity" placeholder="Number of products" min="1">
 					</div>
 					<button type="submit" class="btn-add" style="width: 40%;margin: auto 20% auto 40%; ">Add product</button>
 				</form>
@@ -80,31 +83,22 @@
 				</table>
 			</div>
 
-			<div class="form-div" style="width: 100%">
-				<br><br>
-				<div style="text-align: center;font-size: 20px; width: 40%;margin: auto 20% auto 40%;" id="retformtitle">Add Returned Product Form</div>
-				<form onsubmit="ProApp.addReturnProduct(); return false;">
-					<div class="formclass2" style="width: 40%;margin: auto 20% auto 40%; ">
-					    <label for="productid">Product Id</label>
-					    <input type="number" id="productid" name="productid" placeholder="Enter ID">
-					</div>
-					<button type="submit" class="btn-add" style="width: 40%;margin: auto 20% auto 40%;">Submit</button>
-				</form>
-			</div>
-
 			<div class="list-content">
 				<br><br>
-				<div style="text-align: center;font-size: 20px; width: 40%;margin: auto 20% auto 40%;" id="returnedproducttile">List Of Returned Product</div>
+				<div style="text-align: center;font-size: 20px; width: 40%;margin: auto 20% auto 40%;" id="returnedproducttile">List Of unprocessed Returned Product</div>
 				<table class="w3-table-all w3-hoverable w3-card" style="width: 40%;margin: auto 20% auto 40%;">
-						<thead>
-			                <tr class="w3-blue">
-			                	<th scope="col">ID</th>
-			                	<th scope="col">Name</th>
-			                  	<th scope="col">Type</th>
-			                </tr>
-			            </thead>
-			            <tbody id="returnedProductList">
-			            </tbody>
+					<thead>
+		                <tr class="w3-blue">
+		                	<th scope="col">ID</th>
+		                	<th scope="col">Name</th>
+		                  	<th scope="col">Type</th>
+		                </tr>
+		            </thead>
+		            <tbody id="returnedProductList">
+						<tr>
+							<td style="text-align:center" id="returnProductText" colspan="3">No return products received yet</td>
+						</tr>
+					</tbody>
 				</table>
 			</div>
 		</div>
@@ -113,10 +107,10 @@
 	<div class="penalizeform">
 		<p>You are penalized by admin.Pay the penalty amount to continue the services</p>
 		<form onsubmit="ProApp.payPenalty(); return false;">
-					
+
 		<button type="submit" class="btn-add" style="width: 40%;margin: auto 20% auto 40%;">Pay</button>
 		</form>
-		
+
 	</div>
 
 	<script src="js/jquery.min.js"></script>

@@ -10,13 +10,13 @@ ProApp={
         var weightlead = $('#weightlead').val();
         var producttype = $('#producttype').val();
         var price = $('#price').val();
+        var quantity = $('#quantity').val();
 
-        if(productname!="" && weightglass!="" && weightplastic!="" && weightnickel!="" && weightaluminium!="" && weightcopper!="" && weightmagnesium!="" && weightlead!="" && price!=""){
+        if(productname!="" && weightglass!="" && weightplastic!="" && weightnickel!="" && weightaluminium!="" && weightcopper!="" && weightmagnesium!="" && weightlead!="" && price!="" && quantity!=""){
             App.contracts.NodeContract.deployed().then(function (instance) {
-                instance.addProduct(productname, producttype, weightaluminium, weightnickel, weightglass, weightplastic, weightcopper, weightmagnesium, weightlead, price, {from:App.account}).then(function (receipt) {
+                instance.addProduct(productname, producttype, weightaluminium, weightnickel, weightglass, weightplastic, weightcopper, weightmagnesium, weightlead, price, quantity).then(function (receipt) {
                     ProApp.render();
                 });
-
             });
         }else{
             alert("Fill empty fields");
@@ -58,34 +58,6 @@ ProApp={
         });
     },
 
-    addReturnProduct:function() {
-        var productid=$('#productid').val();
-        var pInstance;
-        if (productid!="") {
-            App.contracts.NodeContract.deployed().then(function(instance) {
-                pInstance=instance;
-                pInstance.getProductCount().then(function (count) {
-                    if(count<productid){
-                        alert("Enter Valid Product Id");
-                    }else{
-                        pInstance.ProductList(productid).then(function (singleProduct) {
-                            if(App.account==singleProduct[0] && singleProduct[5]==true && singleProduct[6]==false){
-                                pInstance.addReturnProduct(productid).then(function (receipt) {
-                                    console.log("Added to returned");
-                                    ProApp.render();
-                                });
-                            }else{
-                                alert("Enter Valid Product Id");
-                            }
-                        });
-                    }
-                });
-            });
-        }else{
-            alert("Fill empty fields");
-        }
-    },
-
     render:function () {
         var pInstance;
         var pid=0;
@@ -114,11 +86,16 @@ ProApp={
         }).then(function (pCount) {
             var rid=0;
             var returnList=$('#returnedProductList');
-            returnList.empty();
+            var flag = false;
 
             for(let i=0;i<pCount;i++){
                 pInstance.ProductList(i).then(function (singleProduct) {
-                    if (App.account==singleProduct[0] && singleProduct[5]==true && singleProduct[6]==true) {
+                    if (App.account==singleProduct[0] && singleProduct[5]==true && singleProduct[6]==true && singleProduct[7]==0) {
+                        if (flag == false) {
+                            returnList.empty();
+                            $('#returnProductButton').show();
+                            flag = true;
+                        }
                         var id=rid;
                         var name=singleProduct[3];
                         var type=singleProduct[4];
@@ -146,9 +123,9 @@ ProApp={
                         ProApp.render();
                         $('.penalizeform').hide();
                     }
-                })
-            })
-        })
+                });
+            });
+        });
     }
 }
 
