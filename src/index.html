@@ -1,31 +1,614 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-    <head>
-        <meta charset="utf-8">
-        <title>Homepage</title>
-        <link rel="stylesheet" href="css/retailer.css">
-    </head>
-    <body>
-        <h1>Welcome</h1>
-
-        <div class="container">
-        <div class="outerbox">
-            <div class="singlebox">
-                <p class="uppertext">Already Have An Account?</p>
-                <button type="button" class="btn-submit" name="loginButton" onclick="window.location.href='./login.html'">Login</button>
-            </div>
-            <div class="singlebox">
-                <p class="uppertext">Create New Account</p>
-                <button type="button" class="btn-submit" name="registerButton" onclick="window.location.href='./register.html'">Register</button>
-
-            </div>  
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>E-waste management page</title>
+  <meta name="keywords" content="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.">
+  <meta name="description" content="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.">
+  
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/flat-icon/flaticon.css">
+  <link rel="stylesheet" href="temp/styles/styles.css">
+</head>
+<body>
+  <div class="main-wrapper">
+    <header class="header header--bg" id="hme">
+      <div class="container">
+        <nav class="navbar">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span> 
+            </button>
+            <a class="navbar-brand" href="#">E-WASTE MANAGEMENT SYSTEM</a>
+          </div>
+          <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav pull-right">
+              <li><a href="#">HOME</a></li>
+              <li><a href="#serv">FEATURES</a></li>
+              <li><a href="#prod">PRODUCTS</a></li>
+              <li><a href="#reg">REGISTER</a></li> 
+              <li><a href="#lgn">LOGIN</a></li> 
+              <li><a href="#cont">CONTACT</a></li>
+              <li><a href="#abt">ABOUT US</a></li> 
+            </ul>
+          </div>
+        </nav>
+        <div class="header__content text-center">
+          <h1 class="header__content__title">E-WASTE MANAGEMENT SYSTEM</h1>
+          <p class="header__content__paragraph">A blockchain based approach is used in our implementation for E-Waste Management. Smart contracts for e-waste management  will bring more coordination among producers, retailers,consumers,collection centres and recyclers of e-waste. It will enable the government to regulate e-waste collection and recycling.
+</p>
+          <a class="button button--margin-right button--hover" href="#reg">CREATE ACCOUNT</a>
+          <a class="button button--hover" href="#lgn" >ALREADY HAVE AN ACCOUNT?</a>
         </div>
-    </div>
+      </div>
+    </header>
+    
+    <section class="service" id="serv">
+      <div class="container">
+        <div class="page-section text-center">
+          <h2 class="page-section__title" >FEATURES WE OFFER</h2>
+          <p class="page-section__paragraph"></p>
+          <div class="row gutters-40">
+            <div class="col-md-4">
+              <div class="thumbnail">
+                <i class="material-icons">transform</i>
+                <h4 class="service__title">Transparent</h4>
+                <p class="service__paragraph">The individuals who are provided authority can view the transaction making it transparent.</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="thumbnail">
+                <i class="material-icons">security</i>
+                <h4 class="service__title">Immutable</h4>
+                <p class="service__paragraph">The use of Blockchain ensures records which cannot be tampered easily thereby creating a robust system.</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="thumbnail">
+                <i class="material-icons">trending_up</i>
+                <h4 class="service__title">Analysis</h4>
+                <p class="service__paragraph">The System does a brief analysis of the recycled waste by each producer.</p>
+              </div>
+            </div> 
+          </div>
+          <div class="row gutters-40">
+            <div class="col-md-4">
+              <div class="thumbnail">
+                <i class="material-icons">monetization_on</i>
+                <h4 class="service__title">Incentivised</h4>
+                <p class="service__paragraph">Customers are incentivised when they return the used product.</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="thumbnail">
+                <i class="material-icons">layers</i>
+                <h4 class="service__title">Distributed Ledger</h4>
+                <p class="service__paragraph">The ledger is distributed across every single node in the blockchain who are the participants.</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="thumbnail">
+                <i class="material-icons">arrow_downward</i>
+                <h4 class="service__title">Reduced E-waste</h4>
+                <p class="service__paragraph">Since, maximum of the products are recycled, the E-waste generated is less.</p>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section class="contact contact--bg" id="cont">
+      <div class="container">
+        <div class="page-section text-center">
+          <h2 class="page-section__title--white">We Always Work To Make A Difference</h2>
+          <p class="page-section__paragraph--white">Feel free to contact us for any queries.</p>
+          <a class="button button--hover" href="#">CONTACT US</a>
+        </div>
+      </div>
+    </section>
+    
+    <section class="about" id="abt">
+      <div class="container">
+        <div class="page-section">
+          <div class="text-center">
+            <h2 class="page-section__title">ABOUT E-WASTE MANAGEMENT SYSTEM</h2>
+            <!--<p class="page-section__paragraph">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>-->
+          </div>
+          <div class="row gutters-50">
+            <div class="about--narrow">
+              <div class="col-md-6">
+                <img class="img-responsive" src="assets/images/about-pic.png" alt="">
+              </div>
+              <div class="col-md-6 about__extra-padding">
+                <h3 class="about__content-title">We Believe <br>The Simple Flow</h3>
+                <p class="about__content-subTitle">E-waste collection and recycling in India is largely dominated by the unorganized sector, which makes the enforcement of laws very difficult.</p>
+                  <p class="about__content-paragraph">Blockchain is a decentralized, distributed, public, digital ledger that is used to record transactions across many computers so that any involved record cannot be altered retroactively, without the alteration of all subsequent blocks.This ledger is shared among all participants, not owned by any, and records events and transactions in a secure, immutable, and irrevocable way.The System keeps a track of an electronic device right from when it is produced to the time when it is discarded as e-waste.</p>
+                  <!--<a class="button--light" href="#">READ MORE</a>-->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-       
+      </section>
+      
+      <section class="letsGo letsGo--bg" id="reg">
+        <div class="container">
+          <div class="page-section page-section--small text-center">
+            <h2 class="page-section__title--white page-section__title--white--less-margin">REGISTER</h2>
+            <p class="page-section__paragraph page-section__paragraph--less-padding">We aim to reduce the E-waste Generated, trying to recycle maximum of the e-waste products by encouraging the customers to return the product when it is a waste.</p>
+            <a class="button button--hover" href="register.html">SIGN UP</a>
+          </div>
+        </div>
+      </section>
+      
+      <div class="container" id="prod">
+        <section class="project">
+          <div class="page-section">
+            <div class="text-center">
+              <h2 class="page-section__title">FEATURED PRODUCTS</h2>
+              <p class="page-section__paragraph">These products can be bought by the cutomers, after whihch they are recycled when the cutomers return them.</p>
+            </div>
+            <div class="row gutters-50">
+              <div class="col-md-4">
+                <div class="thumbnail">
+                  <a href="assets/images/mobile.png" target="_blank">
+                    <img class="img-responsive" src="assets/images/mobile.png" alt="">
+                    <div class="caption">
+                      <h4 class="project__title">MOBILE</h4>
+                      <p class="project__paragraph">Lorem ipsum dolor sit amet </p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="thumbnail">
+                  <a href="assets/images/television.png" target="_blank">
+                    <img class="img-responsive" src="assets/images/television.png" alt="">
+                    <div class="caption">
+                      <h4 class="project__title">TELEVISION</h4>
+                      <p class="project__paragraph">Lorem ipsum dolor sit amet </p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="thumbnail">
+                  <a href="assets/images/laptop.png" target="_blank">
+                    <img class="img-responsive" src="assets/images/laptop.png" alt="">
+                    <div class="caption">
+                      <h4 class="project__title">LAPTOP</h4>
+                      <p class="project__paragraph">Lorem ipsum dolor sit amet </p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="row gutters-50">
+              <div class="col-md-4">
+                <div class="thumbnail">
+                  <a href="assets/images/speaker.png" target="_blank">
+                    <img class="img-responsive" src="assets/images/speaker.png" alt="">
+                    <div class="caption">
+                      <h4 class="project__title">SPEAKER</h4>
+                      <p class="project__paragraph">Lorem ipsum dolor sit amet </p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="thumbnail">
+                  <a href="assets/images/ac.png" target="_blank">
+                    <img class="img-responsive" src="assets/images/ac.png" alt="">
+                    <div class="caption">
+                      <h4 class="project__title">AIR CONDITIONER</h4>
+                      <p class="project__paragraph">Lorem ipsum dolor sit amet </p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="thumbnail">
+                  <a href="assets/images/fridge.png" target="_blank">
+                    <img class="img-responsive" src="assets/images/fridge.png" alt="">
+                    <div class="caption">
+                      <h4 class="project__title">REFRIGERATOR</h4>
+                      <p class="project__paragraph">Lorem ipsum dolor sit amet </p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      
+     <!-- <div class="container">
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+
+                <div class="embed-responsive embed-responsive-16by9">
+                  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/WP_vM301VZA?autoplay=0" frameborder="0" allowfullscreen="" id="video"  allowscriptaccess="always"></iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <section class="video-section video-section--bg">
+        <div class="container">
+          <div class="page-section page-section--large text-center">
+            <button class="video-section__icon" data-toggle="modal" data-target="#myModal"><img src="assets/images/video-icon.png" alt=""></button>
+          </div>
+        </div>
+      </section>-->
+      
+      <!-- <div class="container">
+        <section class="team">
+          <div class="page-section text-center">
+            <h2 class="page-section__title">CREATIVE TEAM</h2>
+            <p class="page-section__paragraph">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+            <div class="row gutters-50">
+              <div class="col-md-6 col-lg-3">
+                <div class="thumbnail">
+                  <a href="assets/images/team-pic1.png" target="_blank">
+                    <img src="assets/images/hadkar.png" alt="">
+                    <div class="caption team__caption">
+                      <h4 class="team__name">Siddhesh HARDCORE</h4>
+                      <p class="team__title">Founder</p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-3">
+                <div class="thumbnail">
+                  <a href="assets/images/team-pic2.png" target="_blank">
+                    <img src="assets/images/herb.png" alt="">
+                    <div class="caption team__caption">
+                      <h4 class="team__name">HERB Chulkarni</h4>
+                      <p class="team__title">Co-Founder</p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-3">
+                <div class="thumbnail">
+                  <a href="assets/images/team-pic3.png" target="_blank">
+                    <img src="assets/images/chacha.png" alt="">
+                    <div class="caption team__caption">
+                      <h4 class="team__name">CHACHA ji Goyal</h4>
+                      <p class="team__title">UI Specialist</p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-3">
+                <div class="thumbnail">
+                  <a href="assets/images/team-pic4.png" target="_blank">
+                    <img src="assets/images/nair.jpg" alt="">
+                    <div class="caption team__caption">
+                      <h4 class="team__name">NAIR bhau</h4>
+                      <p class="team__title">Admin</p>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div> -->
+      
+      <div class="container" id="lgn">
+        <section class="price">
+          <div class="page-section page-section--small text-center">
+            <h2 class="page-section__title">LOGIN</h2>
+            <p class="page-section__paragraph">Registered users can login according to their needs.</p>
+            <div class="price__panel-wrapper">
+              <div class="row gutters-50">
+                <div class="col-md-6 col-lg-3">
+                  <div class="panel text-center">
+                    <div class="panel-heading">
+                      <h4 class="price__title">PRODUCER</h4>
+                    </div>
+                    <div class="panel-body">
+                      <p>For Producers Login</p>
+                    </div>
+                    <div>
+                      <a class="panel__button" href="ProducerProfile.html">LOGIN</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                  <div class="panel text-center">
+                    <div class="panel-heading">
+                      <h4 class="price__title">RETAILER</h4>
+                    </div>
+                    <div class="panel-body">
+                      <p>For Retailers Login</p>
+                      
+                    </div>
+                    <div>
+                      <a class="panel__button" href="RetailerProfile.html">LOGIN</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                  <div class="panel text-center">
+                    <div class="panel-heading">
+                      <h4 class="price__title">CUSTOMER</h4>
+                      
+                    </div>
+                    <div class="panel-body">
+                      <p>For Customers Login</p>
+                      
+                    </div>
+                    <div>
+                      <a class="panel__button" href="ConsumerProfile.html">LOGIN</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                  <div class="panel text-center">
+                    <div class="panel-heading">
+                      <h4 class="price__title">RECYCLE UNIT</h4>
+                     
+                    </div>
+                    <div class="panel-body">
+                      <p>For Recycling Units Login</p>
+                      
+                    </div>
+                    <div>
+                      <a class="panel__button" href="RecyclingUnitprofile.html">LOGIN</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+      
+      <section class="overview overview--bg">
+        <div class="container">
+          <div class="page-section">
+            <div class="overview__wrapper text-center">
+              <ul>
+                <li>
+                  <h1 class="overview__number">800</h1>
+                  <p class="overview__title">PRODUCTS PRODUCED</p>
+                </li>
+                <li>
+                  <h1 class="overview__number">700</h1>
+                  <p class="overview__title">PRODUCTS RECYCLED</p>
+                </li>
+                <li>
+                  <h1 class="overview__number">400</h1>
+                  <p class="overview__title">CUSTOMERS PAID</p>
+                </li>
+                <!--<li>
+                  <h1 class="overview__number">3550</h1>
+                  <p class="overview__title">AWARDS WIN</p>
+                </li>-->
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </section>
+      
+      <!--<div class="container">
+        <section class="slider">
+          <div class="page-section text-center">
+            <h2 class="page-section__title">WHAT CLIENT SAY?</h2>
+            <p class="page-section__paragraph">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+            <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
+
+               Wrapper for slides 
+              <div class="carousel-inner">
+                <div class="item active">
+                  <img class="img-responsive slider__image" src="assets/images/slider-image.png" alt="">
+                  <p class="slider__paragraph">magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.</p>
+                  <h3 class="slider__name">Sheryl D</h3>
+                  <p class="slider__title">UI Design Agency</p>
+                </div>
+
+                <div class="item">
+                  <img class="img-responsive slider__image" src="assets/images/slider-image.png" alt="">
+                  <p class="slider__paragraph">magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.</p>
+                  <h3 class="slider__name">Sheryl D</h3>
+                  <p class="slider__title">UI Design Agency</p>
+                </div>
+
+                <div class="item">
+                  <img class="img-responsive slider__image" src="assets/images/slider-image.png" alt="">
+                  <p class="slider__paragraph">magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.</p>
+                  <h3 class="slider__name">Sheryl D</h3>
+                  <p class="slider__title">UI Design Agency</p>
+                </div>
+              </div>
+
+               Left and right controls 
+              <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                <i class="material-icons">chevron_left</i>
+                <span class="sr-only">Previous</span>
+              </a>
+              <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                <i class="material-icons">chevron_right</i>
+                <span class="sr-only">Next</span>
+              </a>
+            </div>
+          </div>
+        </section>
+      </div>
+      
+      <section class="contact-two contact-two--bg">
+        <div class="container">
+          <div class="page-section text-center">
+            <h2 class="contact-two__title">Keep in touch with us! We are available for 24 hours</h2>
+            <a class="button contact-two__button button--hover" href="#">CONTACT US</a>
+          </div>
+        </div>
+      </section>-->
+      
+      <!--<div class="container">
+        <section class="blog">
+          <div class="page-section">
+            <div class="text-center">
+              <h2 class="page-section__title">OUR BLOG</h2>
+              <p class="page-section__paragraph">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. </p>
+            </div>
+            <div class="row gutters-50">
+              <div class="col-md-4">
+                <div class="thumbnail">
+                  <a href="assets/images/blog-pic1.png" target="_blank">
+                    <img class="img-responsive" src="assets/images/blog-pic1.png" alt="">
+                    <div class="caption">
+                      <h3 class="blog__title">Global Traffic Search</h3>
+                      <p class="blog__paragraph">By Jhon Doe <span class="blog__paragraph--slash">&#47;</span> 12 July, 2017 <span class="blog__paragraph--slash">&#47;</span> 2 Comments</p>
+                      <h4 class="blog__read-more">READ MORE</h4>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="thumbnail">
+                  <a href="assets/images/blog-pic2.png" target="_blank">
+                    <img class="img-responsive" src="assets/images/blog-pic2.png" alt="">
+                    <div class="caption">
+                      <h3 class="blog__title">Global Traffic Search</h3>
+                      <p class="blog__paragraph">By Jhon Doe &#47; 12 July, 2017 &#47; 2 Comments</p>
+                      <h4 class="blog__read-more">READ MORE</h4>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="thumbnail">
+                  <a href="assets/images/blog-pic3.png" target="_blank">
+                    <img class="img-responsive" src="assets/images/blog-pic3.png" alt="">
+                    <div class="caption">
+                      <h3 class="blog__title">Global Traffic Search</h3>
+                      <p class="blog__paragraph">By Jhon Doe &#47; 12 July, 2017 &#47; 2 Comments</p>
+                      <h4 class="blog__read-more">READ MORE</h4>
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>-->
+      
+      <footer class="footer footer--bg">
+        <div class="container">
+          <div class="page-section">
+            <div class="row gutters-100">
+              <div class="col-md-4 col-lg-3">
+                <div class="footer__first">
+                  <h2 class="footer__title">E-WASTE MANAGEMENT SYSTEM</h2>
+                  <p class="footer-first__paragraph">Together lets reduce the production of E-waste by recycling them.</p>
+                  <ul class="footer-first__social-icons">
+                    <li><a href="#"><i class="flaticon-facebook-letter-logo"></i></a></li>
+                    <li><a href="#"><i class="flaticon-twitter-logo"></i></a></li>
+                    <li><a href="#"><i class="flaticon-dribbble-logo"></i></a></li>
+                    <li><a href="#"><i class="flaticon-behance-logo"></i></a></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-2">
+                <div class="footer__second">
+                  <h2 class="footer__title">QUICK LINK</h2>
+                  <ul>
+                    <li><a href="#hme">Home</a></li>
+                 	<li><a href="#serv">Services</a></li>
+              		<li><a href="#reg">Register</a></li> 
+              		<li><a href="#lgn">Login</a></li> 
+              		<li><a href="#cont">Contact</a></li>
+              		<li><a href="#abt">About</a></li> 
+                  </ul>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-3">
+                <div class="footer__third">
+                  <h2 class="footer__title">CONTACT US</h2>
+                  <ul>
+                    <li><span class="glyphicon glyphicon-envelope"></span> <a href="#">ewastemanagementsystem@gmail.com</a></li>
+                    <li><span class="glyphicon glyphicon-earphone"></span> <a href="#">+0123-345-6789</a></li>
+                  </ul>
+                  <h4 class="footer__subscribe__title">Subscribe</h4>
+                  <div class="subscribe-section">
+                    <input type="email" class="form-control" size="50" placeholder="Enter Your Email" required>
+                    <button class="subscribe-section__button" type="button"><img src="assets/images/send-icon.png" alt=""></button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-4">
+                <div class="footer__fourth">
+                  <h4 class="footer__title">INSTAGRAM</h4>
+                  <div class="row">
+                    <ul>
+                      <li><a href="#"><img src="assets/images/instagram-pic1.png" alt=""></a></li>
+                      <li><a href="#"><img src="assets/images/instagram-pic2.png" alt=""></a></li>
+                      <li><a href="#"><img src="assets/images/instagram-pic3.png" alt=""></a></li>
+                    </ul>
+                  </div>
+                  <div class="row">
+                    <ul>
+                      <li><a href="#"><img src="assets/images/instagram-pic4.png" alt=""></a></li>
+                      <li><a href="#"><img src="assets/images/instagram-pic5.png" alt=""></a></li>
+                      <li><a href="#"><img src="assets/images/instagram-pic6.png" alt=""></a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--<hr class="footer__horizontal-bar">
+            <p class="footer__bottom-paragraph">&copy; Copyright 2017 <a href="#" style="color: #00aafe;font-weight:bold;">DartThemes</a>. All Rights Reserved</p>
+          </div>-->
+        </div>
+      </footer>
+  </div>
+    
+    
+  
+
+  <script src="assets/jquery/jquery-3.2.1.min.js"></script>
+  <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+
+
+  <!--<script>
+    $(document).ready(function() {
+
+      var $videoSrc = $("#video").attr("src");
+
+      $('#myModal').on('hide.bs.modal', function (e) {
+        $("#video").attr('src',$videoSrc); 
+      });
+
+
+
+    });
+  </script>-->
         <script src="js/jquery.min.js"></script>
         <script src="js/web3.min.js"></script>
         <script src="js/truffle-contract.js"></script>
         <script src="js/app.js"></script>
-    </body>
+
+</body>
 </html>
+
+
+
+
+
