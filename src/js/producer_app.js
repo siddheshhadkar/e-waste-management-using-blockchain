@@ -45,7 +45,7 @@ ProApp={
                                     if (data[1]==0) {
 
                                         $('.container').show();
-                                        $('.footer footer--bg').show();
+                                        $('.footer').show();
                                         ProApp.render();
                                     }else{
                                         $('.penalizeform').show();

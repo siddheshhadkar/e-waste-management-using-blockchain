@@ -4,7 +4,6 @@ ConApp={
 
 	loadAddress:function() {
         $('.container').hide();
-        $('.footer').hide();
         web3.eth.getCoinbase(function(err, account){
             if(err===null){
                 var acInstance;
