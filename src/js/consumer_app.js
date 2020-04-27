@@ -16,7 +16,7 @@ ConApp={
                                 alert("Please log in with a Consumer account to access this page");
                             }else{
                                 acInstance.getConsumerName(App.account).then(function(accountName){
-                                    $('#accountaddress').html("Your account name: " + accountName);
+                                    $('#accountaddress').html("Welcome, " + accountName);
                                     $('.loader').hide();
                                     $('.container').show();
                                     ConApp.render();

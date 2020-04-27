@@ -2,8 +2,20 @@
 <html>
 <head>
 	<title>Welcome Recycling Unit</title>
+	<meta name="keywords" content="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.">
+  <meta name="description" content="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.">
+  
+  <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/flat-icon/flaticon.css">
+  <link rel="stylesheet" href="temp/styles/styles.css">
 	<link rel="stylesheet" href="css/consumerprofile.css">
+	<link rel="stylesheet" type="text/css" href="css/producerprofile.css">
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	 <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 <body>
 	<div class="loader">
@@ -12,11 +24,28 @@
 
 	<div class="container" style="width: 100% ">
 
-		<h4 id="accountaddress" class="w3-blue" style="width: 100% ">Account Address:0x0</h4>
 
-		<div class="mainbox">
+
+
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+   
+    <ul class="nav navbar-nav">
+     <li><a href="index.html">HOME</a></li>
+     <li><a href="#addformtitle" class="active">ADD PRODUCT</a></li>
+ 
+    </ul>
+  </div>
+</nav>
+
+
+
+		<h1 id="accountaddress">Account Address:0x0</h1>
+
+		<div class="mainbox" style="margin-bottom: 100px;">
 			<div class="form-div" style="width: 100%">
-				<div id="addformtitle" style="text-align: center;font-size: 20px; width: 50%;margin: auto 25% auto 25%; ">Add Product Form</div>
+				<div id="addformtitle" style="text-align: center;font-size: 30px; width: 50%;margin: auto 25% auto 25%; ">Add Product Form</div>
 				<form onsubmit="RecycApp.addPercentage(); return false;">
 					<div class="formclass" style="width: 50%;margin: auto 25% auto 25%; ">
 						<label for="id">Product Id</label>
@@ -44,7 +73,7 @@
 					    <input type="number" id="weightlead" name="weightlead" placeholder="Weight(Grams)" min="0">
 
 					</div>
-					<button type="submit" class="btn-add" style="width: 50%;margin: auto 25% auto 25%; ">Submit</button>
+					<button type="submit" class="button1 btn-add">Submit</button>
 				</form>
 			</div>
 
@@ -56,5 +85,111 @@
     <script src="js/truffle-contract.js"></script>
     <script src="js/app.js"></script>
     <script src="js/recycling_app.js"></script>
+
+
+
+
+
+    <section class="overview overview--bg">
+        <div class="container">
+          <div class="page-section">
+            <div class="overview__wrapper text-center">
+              <ul>
+                <li>
+                  <h1 class="overview__number">800</h1>
+                  <p class="overview__title">PRODUCTS PRODUCED</p>
+                </li>
+                <li>
+                  <h1 class="overview__number">700</h1>
+                  <p class="overview__title">PRODUCTS RECYCLED</p>
+                </li>
+                <li>
+                  <h1 class="overview__number">400</h1>
+                  <p class="overview__title">CUSTOMERS PAID</p>
+                </li>
+                <!--<li>
+                  <h1 class="overview__number">3550</h1>
+                  <p class="overview__title">AWARDS WIN</p>
+                </li>-->
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+
+
+ <footer class="footer footer--bg">
+        <div class="container">
+          <div class="page-section">
+            <div class="row gutters-100">
+              <div class="col-md-4 col-lg-3">
+                <div class="footer__first">
+                  <h2 class="footer__title">E-WASTE MANAGEMENT SYSTEM</h2>
+                  <p class="footer-first__paragraph">Together lets reduce the production of E-waste by recycling them.</p>
+                  <ul class="footer-first__social-icons">
+                    <li><a href="#"><i class="flaticon-facebook-letter-logo"></i></a></li>
+                    <li><a href="#"><i class="flaticon-twitter-logo"></i></a></li>
+                    <li><a href="#"><i class="flaticon-dribbble-logo"></i></a></li>
+                    <li><a href="#"><i class="flaticon-behance-logo"></i></a></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-2">
+                <div class="footer__second">
+                  <h2 class="footer__title">QUICK LINK</h2>
+                  <ul>
+                    <li><a href="#hme">Home</a></li>
+                 	<li><a href="#serv">Services</a></li>
+              		<li><a href="#reg">Register</a></li> 
+              		<li><a href="#lgn">Login</a></li> 
+              		<li><a href="#cont">Contact</a></li>
+              		<li><a href="#abt">About</a></li> 
+                  </ul>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-3">
+                <div class="footer__third">
+                  <h2 class="footer__title">CONTACT US</h2>
+                  <ul>
+                    <li><span class="glyphicon glyphicon-envelope"></span> <a href="#">ewastemanagementsystem@gmail.com</a></li>
+                    <li><span class="glyphicon glyphicon-earphone"></span> <a href="#">+0123-345-6789</a></li>
+                  </ul>
+                  <h4 class="footer__subscribe__title">Subscribe</h4>
+                  <div class="subscribe-section">
+                    <input type="email" class="form-control" size="50" placeholder="Enter Your Email" required>
+                    <button class="subscribe-section__button" type="button"><img src="assets/images/send-icon.png" alt=""></button>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-4">
+                <div class="footer__fourth">
+                  <h4 class="footer__title">INSTAGRAM</h4>
+                  <div class="row">
+                    <ul>
+                      <li><a href="#"><img src="assets/images/instagram-pic1.png" alt=""></a></li>
+                      <li><a href="#"><img src="assets/images/instagram-pic2.png" alt=""></a></li>
+                      <li><a href="#"><img src="assets/images/instagram-pic3.png" alt=""></a></li>
+                    </ul>
+                  </div>
+                  <div class="row">
+                    <ul>
+                      <li><a href="#"><img src="assets/images/instagram-pic4.png" alt=""></a></li>
+                      <li><a href="#"><img src="assets/images/instagram-pic5.png" alt=""></a></li>
+                      <li><a href="#"><img src="assets/images/instagram-pic6.png" alt=""></a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--<hr class="footer__horizontal-bar">
+            <p class="footer__bottom-paragraph">&copy; Copyright 2017 <a href="#" style="color: #00aafe;font-weight:bold;">DartThemes</a>. All Rights Reserved</p>
+          </div>-->
+        </div>
+      </footer>
+
+
+
 </body>
 </html>

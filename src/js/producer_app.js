@@ -38,7 +38,7 @@ ProApp={
                                 alert("Please log in with a Producer account to access this page");
                             }else{
                                 acInstance.getProducerName(App.account).then(function(data){
-                                    $('#accountaddress').html("Your account name: " + data[0]);
+                                    $('#accountaddress').text("Welcome, " + data[0]);
                                     $('.loader').hide();
 
                                     if (data[1]==0) {

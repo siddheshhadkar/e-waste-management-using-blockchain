@@ -17,7 +17,7 @@ RecApp={
                                 alert("Please log in with a Retailer account to access this page");
                             }else{
                                 acInstance.getRetailerName(App.account).then(function(accountName){
-                                    $('#accountaddress').html("Your account name: " + accountName);
+                                    $('#accountaddress').html("Welcome, " + accountName);
                                     $('.loader').hide();
                                     $('.container').show();
                                     RecApp.render();
