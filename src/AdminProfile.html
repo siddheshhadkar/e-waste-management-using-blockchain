@@ -20,25 +20,24 @@
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 <body>
-<nav class="navbar navbar-inverse navbar-fixed-top">
-  <div class="container-fluid">
-   
-    <ul class="nav navbar-nav">
-     <li><a href="index.html">HOME</a></li>
-      <li> <a href="#addformtitle">GET ANALYSIS</a></li>
-     <li><a href="#stockproducttile" class="active">RECENT PRODUCTS</a></li>
-     <li><a href="#retformtitle">ASSESSMENT OF PRODUCTION</a></li>
-    
-    
-    </ul>
-  </div>
-</nav>
 
 
 	<div class="container" style="width: 100% ">
 
-		<h4 id="adminaddress" class="w3-blue" style="width: 100% ">Account Address:0x0</h4>
+		<nav class="navbar navbar-dark bg-primary navbar-fixed-top">
+		  <div class="container-fluid">
 
+		    <ul class="nav navbar-nav" style="float: right;">
+		     <li><a class="adminaddress navbar-dark bg-primary"></a></li>
+		    </ul>
+		   
+		    <ul class="nav navbar-nav" style="float: left;">
+		     <li><a href="index.html" class="navbar-dark bg-primary" >HOME</a></li>
+		  </ul>
+		  </div>
+		</nav>
+
+		<br><br>
 		<div class="mainbox">
 			<div class="form-div1" style="width: 100%">
 				<div id="addformtitle" style="text-align: center;font-size: 20px; width: 50%;margin: auto 25% auto 25%; ">Get Analysis</div>
@@ -96,46 +95,7 @@
 					<button type="submit" class="button1 btn-add" >Submit</button>
 				</form>
 			</div>
-	</div>
 
-	<script src="js/jquery.min.js"></script>
-    <script src="js/web3.min.js"></script>
-    <script src="js/truffle-contract.js"></script>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js" charset="utf-8"></script>
-    <script src="js/app.js"></script>
-    <script src="js/admin.js"></script>
-
-
-
-
-
-<section class="overview overview--bg">
-        <div class="container">
-          <div class="page-section">
-            <div class="overview__wrapper text-center">
-              <ul>
-                <li>
-                  <h1 class="overview__number">800</h1>
-                  <p class="overview__title">PRODUCTS PRODUCED</p>
-                </li>
-                <li>
-                  <h1 class="overview__number">700</h1>
-                  <p class="overview__title">PRODUCTS RECYCLED</p>
-                </li>
-                <li>
-                  <h1 class="overview__number">400</h1>
-                  <p class="overview__title">CUSTOMERS PAID</p>
-                </li>
-                <!--<li>
-                  <h1 class="overview__number">3550</h1>
-                  <p class="overview__title">AWARDS WIN</p>
-                </li>-->
-              </ul>
-            </div>
-
-          </div>
-        </div>
-      </section>
 
 
 
@@ -208,15 +168,14 @@
         </div>
       </footer>
 
+</div>
 
-
-
-
-
-
-
-
-
+	<script src="js/jquery.min.js"></script>
+    <script src="js/web3.min.js"></script>
+    <script src="js/truffle-contract.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js" charset="utf-8"></script>
+    <script src="js/app.js"></script>
+    <script src="js/admin.js"></script>
 
 
 </body>

@@ -11,7 +11,7 @@ adminApp={
                         return acInstance.owner();
                     }).then(function (adminAddress) {
                     	if(adminAddress==App.account){
-                    		$('#adminaddress').html("Your account address: " + adminAddress);
+                    		$('.adminaddress').html("Account Address: " + adminAddress);
                             adminApp.render();
                     	}else{
                             $('.container').hide();

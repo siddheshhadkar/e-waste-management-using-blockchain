@@ -22,17 +22,14 @@
 }
 
 .sidenav a:hover {
-  color: #f1f1f1;
+  color: black;
 }
 
 .container{
   overflow: auto;
   margin: 5px 5px;
 }
-#accountaddress{
-  margin-left: 20%;
-  text-align: center;
-}
+
 #adminaddress{
   text-align: center;
 }
@@ -142,6 +139,7 @@ th, td {
   text-align: center;
 
 }
+
 
 #accountaddress{
 

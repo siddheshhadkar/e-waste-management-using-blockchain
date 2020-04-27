@@ -20,27 +20,28 @@
 	<div class="loader">
 		<h4 id="loaderText" class="w3-blue">Loading...</h4>
 	</div>
+<div class="container" style="width: 100%">
 
-<nav class="navbar navbar-inverse navbar-fixed-top">
+<nav class="navbar navbar-dark bg-primary navbar-fixed-top">
   <div class="container-fluid">
-   
-    <ul class="nav navbar-nav ">
-     <li><a href="index.html">HOME</a></li>
-     <li><a href="#addformtitle" class="active">BUY PRODUCT</a></li>
-     <li><a href="#stockproducttile">PRODUCT FORM</a></li>
-    
-     <li> <a href="#retformtitle">ADD RETURNED PRODUCT</a></li>
-     <li> <a href="#returnedproducttile">RETURNED PRODUCT LIST</a></li>
+
+    <ul class="nav navbar-nav" style="float: left;">
+     <li><a class="accountaddress navbar-dark bg-primary"></a></li>
     </ul>
+   
+    <ul class="nav navbar-nav" style="float: right;">
+     <li><a href="index.html" class="navbar-dark bg-primary" >HOME</a></li>
+     <li><a href="#addformtitle" class="navbar-dark bg-primary">ADD PRODUCT</a></li>
+     <li><a href="#stockproducttile" class="navbar-dark bg-primary">PRODUCT STOCK</a></li>
+     <li> <a href="#retformtitle" class="navbar-dark bg-primary">ADD RETURNED PRODUCT</a></li>
+     <li> <a href="#returnedproducttile" class="navbar-dark bg-primary">RETURNED PRODUCT LIST</a></li>
+  </ul>
   </div>
 </nav>
 
 
-		<h1 id="accountaddress" >Account Address:0x0</h1>
-
-
-
-		<div id="addformtitle" style="text-align: center;font-size: 20px; width: 50%;margin: auto 25% auto 25%; "><h2>Buy Product</h2></div>
+    <br><br>
+		<div id="addformtitle" style="text-align: center;font-size: 20px; width: 50%;margin: auto 25% auto 25%; "><h3>Buy Product</h3></div>
 
 		<div class="mainbox" style="width: 80% margin-left:20%">
 			<div class="form-div" style="width: 100%">
@@ -77,7 +78,7 @@
 
 			<div class="list-content">
 				<br><br>
-				<div style="text-align: center;font-size: 20px; width: 50%;margin: auto 25% auto 25%;" id="stockproducttile"><h2>Product Stock</h2></div>
+				<div style="text-align: center;font-size: 20px; width: 50%;margin: auto 25% auto 25%;" id="stockproducttile"><h3>Product Stock</h3></div>
 				<table class="w3-table-all w3-hoverable w3-card" style="width: 50%;margin: auto 25% auto 25%;">
 						<thead>
 			                <tr class="w3-blue">
@@ -93,7 +94,7 @@
 
 			<div class="form-div" style="width: 100%">
 				<br><br>
-				<div style="text-align: center;font-size: 20px; width: 50%;margin: auto 25% auto 25%;" id="retformtitle"><h2>Add Returned Product Form</h2></div>
+				<div style="text-align: center;font-size: 20px; width: 50%;margin: auto 25% auto 25%;" id="retformtitle"><h3>Add Returned Product Form</h3></div>
 				<form onsubmit="RecApp.addReturnProduct(); return false;">
 					<div class="formclass2" style="width: 50%;margin: auto 25% auto 25%;">
 
@@ -110,7 +111,7 @@
 
 			<div class="list-content" style="margin-bottom: 100px;">
 				<br><br>
-				<div style="text-align: center;font-size: 20px; width: 50%;margin: auto 25% auto 25%;" id="returnedproducttile"><h2>List Of Returned Product</h2></div>
+				<div style="text-align: center;font-size: 20px; width: 50%;margin: auto 25% auto 25%;" id="returnedproducttile"><h3>Returned Product</h3></div>
 				<table class="w3-table-all w3-hoverable w3-card" style="width: 50%;margin: auto 25% auto 25%;">
 						<thead>
 			                <tr class="w3-blue">
@@ -128,48 +129,8 @@
 				<button id="returnProductsButton" class="button1 btn-add" onclick="RecApp.returnToProducer()" hidden>Return to producer</button>
 			</div>
 		</div>
-	</div>
+	
 
-	<script src="js/jquery.min.js"></script>
-    <script src="js/web3.min.js"></script>
-    <script src="js/truffle-contract.js"></script>
-    <script src="js/app.js"></script>
-    <script src="js/retailer_app.js"></script>
-
-
-
-
-
-
-
-
-<section class="overview overview--bg">
-        <div class="container">
-          <div class="page-section">
-            <div class="overview__wrapper text-center">
-              <ul>
-                <li>
-                  <h1 class="overview__number">800</h1>
-                  <p class="overview__title">PRODUCTS PRODUCED</p>
-                </li>
-                <li>
-                  <h1 class="overview__number">700</h1>
-                  <p class="overview__title">PRODUCTS RECYCLED</p>
-                </li>
-                <li>
-                  <h1 class="overview__number">400</h1>
-                  <p class="overview__title">CUSTOMERS PAID</p>
-                </li>
-                <!--<li>
-                  <h1 class="overview__number">3550</h1>
-                  <p class="overview__title">AWARDS WIN</p>
-                </li>-->
-              </ul>
-            </div>
-
-          </div>
-        </div>
-      </section>
 
 
 
@@ -179,7 +140,7 @@
             <div class="row gutters-100">
               <div class="col-md-4 col-lg-3">
                 <div class="footer__first">
-                  <h2 class="footer__title">E-WASTE MANAGEMENT SYSTEM</h2>
+                  <h3 class="footer__title">E-WASTE MANAGEMENT SYSTEM</h3>
                   <p class="footer-first__paragraph">Together lets reduce the production of E-waste by recycling them.</p>
                   <ul class="footer-first__social-icons">
                     <li><a href="#"><i class="flaticon-facebook-letter-logo"></i></a></li>
@@ -191,7 +152,7 @@
               </div>
               <div class="col-md-6 col-lg-2">
                 <div class="footer__second">
-                  <h2 class="footer__title">QUICK LINK</h2>
+                  <h3 class="footer__title">QUICK LINK</h3>
                   <ul>
                     <li><a href="#hme">Home</a></li>
                  	<li><a href="#serv">Services</a></li>
@@ -204,7 +165,7 @@
               </div>
               <div class="col-md-6 col-lg-3">
                 <div class="footer__third">
-                  <h2 class="footer__title">CONTACT US</h2>
+                  <h3 class="footer__title">CONTACT US</h3>
                   <ul>
                     <li><span class="glyphicon glyphicon-envelope"></span> <a href="#">ewastemanagementsystem@gmail.com</a></li>
                     <li><span class="glyphicon glyphicon-earphone"></span> <a href="#">+0123-345-6789</a></li>
@@ -241,9 +202,13 @@
           </div>-->
         </div>
       </footer>
+</div>
 
-
-
+<script src="js/jquery.min.js"></script>
+    <script src="js/web3.min.js"></script>
+    <script src="js/truffle-contract.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/retailer_app.js"></script>
 
 
 

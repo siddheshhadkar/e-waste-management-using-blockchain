@@ -25,6 +25,7 @@ ProApp={
 
     loadAddress:function() {
         $('.container').hide();
+        $('.footer').hide();
         $('.penalizeform').hide();
         web3.eth.getCoinbase(function(err, account){
             if(err===null){
@@ -38,12 +39,13 @@ ProApp={
                                 alert("Please log in with a Producer account to access this page");
                             }else{
                                 acInstance.getProducerName(App.account).then(function(data){
-                                    $('#accountaddress').text("Welcome, " + data[0]);
+                                    $('.accountaddress').html("Welcome, " + data[0]);
                                     $('.loader').hide();
 
                                     if (data[1]==0) {
 
                                         $('.container').show();
+                                        $('.footer footer--bg').show();
                                         ProApp.render();
                                     }else{
                                         $('.penalizeform').show();

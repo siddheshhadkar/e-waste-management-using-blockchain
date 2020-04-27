@@ -4,6 +4,7 @@ ConApp={
 
 	loadAddress:function() {
         $('.container').hide();
+        $('.footer').hide();
         web3.eth.getCoinbase(function(err, account){
             if(err===null){
                 var acInstance;
@@ -16,7 +17,7 @@ ConApp={
                                 alert("Please log in with a Consumer account to access this page");
                             }else{
                                 acInstance.getConsumerName(App.account).then(function(accountName){
-                                    $('#accountaddress').html("Welcome, " + accountName);
+                                    $('.accountaddress').html("Welcome, " + accountName);
                                     $('.loader').hide();
                                     $('.container').show();
                                     ConApp.render();

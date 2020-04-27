@@ -1,8 +1,10 @@
 $(document).ready(function(){
-    $('.mainbox').hide();
+    $('.container').hide();
+    $('.footer').hide();
     setTimeout(function(){
         $('.loader').hide();
-        $('.mainbox').show();
+        $('.footer').show();
+        $('.container').show();
         $('#accountAddress').val(App.account);
     }, 1000);
 });
